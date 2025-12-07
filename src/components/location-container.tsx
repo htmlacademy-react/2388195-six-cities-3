@@ -1,22 +1,26 @@
-import {CITIES} from '../const';
+type LocationContainerProps = {
+  cities: string[];
+  defaultCity: string;
+}
 
 type LocationContainerItemProps = {
   city: string;
+  defaultCity: string;
 }
 
-function LocationContainerItem({city}: LocationContainerItemProps): JSX.Element {
+function LocationContainerItem({city, defaultCity}: LocationContainerItemProps): JSX.Element {
   return (
     <li className="locations__item">
-      <a className="locations__item-link tabs__item" href="#">
+      <a className={city === defaultCity ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item '} href="#">
         <span>{city}</span>
       </a>
     </li>
   );
 }
 
-export default function LocationContainer(): JSX.Element {
+export default function LocationContainer({cities, defaultCity}: LocationContainerProps): JSX.Element {
   const locationContainerItems =
-    CITIES.map((city) => <LocationContainerItem city={city} key={city}/>);
+    cities.map((city) => <LocationContainerItem city={city} key={city} defaultCity={defaultCity}/>);
 
   return (
     <section className="locations container">
@@ -26,11 +30,3 @@ export default function LocationContainer(): JSX.Element {
     </section>
   );
 }
-
-
-/*<a className="locations__item-link tabs__item ${city === {defaultCity} : tabs__item--active" ? " href="#"}>*/
-/* <li className="locations__item">
-          <a className="locations__item-link tabs__item tabs__item--active">
-            <span>Amsterdam</span>
-          </a>
-        </li> */

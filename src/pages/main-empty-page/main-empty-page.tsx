@@ -1,11 +1,16 @@
 import LocationContainer from '../../components/location-container';
 
-export default function MainEmptyPage(): JSX.Element {
+type MainEmptyPageProp = {
+  defaultCity: string;
+  cities: string[];
+}
+
+export default function MainEmptyPage({cities, defaultCity}: MainEmptyPageProp): JSX.Element {
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
-        <LocationContainer/>
+        <LocationContainer cities={cities} defaultCity={defaultCity}/>
       </div>
       <div className="cities">
         <div className="cities__places-container cities__places-container--empty container">

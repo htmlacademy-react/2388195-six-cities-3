@@ -2,7 +2,6 @@ import OfferGallery from '../../components/offer-gallery';
 import OfferMap from '../../components/offer-map';
 import OfferNearPlaces from '../../components/offer-near-places';
 import OfferReviews from '../../components/offer-reviews';
-import {widthStyleEighty} from '../../const';
 
 export default function OfferNotLogged(): JSX.Element {
   return (
@@ -27,7 +26,7 @@ export default function OfferNotLogged(): JSX.Element {
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">
-                <span style={widthStyleEighty}></span>
+                <span style={{width: '80%'}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
               <span className="offer__rating-value rating__value">4.8</span>

@@ -1,5 +1,3 @@
-import { widthStyleEighty } from '../const';
-
 export default function OfferReviews(): JSX.Element {
   return (
     <ul className="reviews__list">
@@ -15,7 +13,7 @@ export default function OfferReviews(): JSX.Element {
         <div className="reviews__info">
           <div className="reviews__rating rating">
             <div className="reviews__stars rating__stars">
-              <span style={widthStyleEighty}></span>
+              <span style={{width: '80%'}}></span>
               <span className="visually-hidden">Rating</span>
             </div>
           </div>

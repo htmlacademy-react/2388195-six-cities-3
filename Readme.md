@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Ирина Ильченко](https://up.htmlacademy.ru/react-individual/3/user/2388195).
-* Наставник: [Руслан Лукоянов](https://htmlacademy.ru/profile/id1537321).
+* Наставник: [Максим Боровик](https://htmlacademy.ru/profile/id1025673).
 
 ---
 

@@ -1,20 +1,50 @@
 import CitiesMap from '../../components/cities-map';
 import LocationContainer from '../../components/location-container';
 import PlaceCard from '../../components/place-card';
-import {PLACES_NUMBER, defaultCity} from '../../const';
 
-export default function MainPage(): JSX.Element {
+type MainPageProp = {
+  cityOffersNumber: number;
+  defaultCity: string;
+  cities: string[];
+  offers: {
+    id: string;
+    title: string;
+    type: string;
+    price: number;
+    city: {
+        name: string;
+        location: {
+            latitude: number;
+            longitude: number;
+            zoom: number;
+        };
+    };
+    location: {
+        latitude: number;
+        longitude: number;
+        zoom: number;
+    };
+    isFavorite: boolean;
+    isPremium: boolean;
+    rating: number;
+    previewImage: string;
+  }[];
+}
+
+export default function MainPage({cityOffersNumber, defaultCity, cities, offers}: MainPageProp): JSX.Element {
+  const placeCards = offers.map((offer) => <PlaceCard offer={offer} key={offer.id}/>);
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
-        <LocationContainer/>
+        <LocationContainer cities={cities} defaultCity={defaultCity}/>
       </div>
       <div className="cities">
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{PLACES_NUMBER} places to     stay in {defaultCity}</b>
+            <b className="places__found">{cityOffersNumber} places to stay in {defaultCity}</b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
               <span className="places__sorting-type" tabIndex={0}>
@@ -31,11 +61,7 @@ export default function MainPage(): JSX.Element {
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              <PlaceCard/>
-              <PlaceCard/>
-              <PlaceCard/>
-              <PlaceCard/>
-              <PlaceCard/>
+              {placeCards}
             </div>
           </section>
           <CitiesMap/>

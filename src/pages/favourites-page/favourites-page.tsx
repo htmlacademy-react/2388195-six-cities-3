@@ -1,5 +1,3 @@
-import {widthStyleHundred} from '../../const';
-
 function FavouritePagePlaceCard(): JSX.Element {
   return (
     <article className="favorites__card place-card">
@@ -28,7 +26,7 @@ function FavouritePagePlaceCard(): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={widthStyleHundred}></span>
+            <span style={{width: '100%'}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
