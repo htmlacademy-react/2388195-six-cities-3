@@ -47,15 +47,15 @@ export default function App({userName, favouriteCount, randomCity, defaultCity, 
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<Layout />}
+          element={<Layout favouriteCount={favouriteCount} userName={userName} />}
         >
           <Route
             index
-            element={<MainPage favouriteCount={favouriteCount} userName={userName} cityOffersNumber={cityOffersNumber} defaultCity={defaultCity} cities={cities} offers={cityOffers} />}
+            element={<MainPage cityOffersNumber={cityOffersNumber} defaultCity={defaultCity} cities={cities} offers={cityOffers} />}
           />
           <Route
             path={AppRoute.Login}
-            element={<LoginPage favouriteCount = {0} userName = {''} randomCity={randomCity}/>}
+            element={<LoginPage randomCity={randomCity}/>}
           />
           <Route
             path={AppRoute.Favorites}
@@ -63,17 +63,17 @@ export default function App({userName, favouriteCount, randomCity, defaultCity, 
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.NoAuth}
               >
-                <FavouritePage favouriteCount={favouriteCount} userName={userName} />
+                <FavouritePage />
               </PrivateRoute>
             }
           />
           <Route
             path={AppRoute.Offer}
-            element={<OfferPage favouriteCount={favouriteCount} userName={userName}/>}
+            element={<OfferPage />}
           />
           <Route
             path="*"
-            element={<NotFoundPage favouriteCount = {0} userName = {''} randomCity={randomCity}/>}
+            element={<NotFoundPage randomCity={randomCity}/>}
           />
         </Route>
       </Routes>

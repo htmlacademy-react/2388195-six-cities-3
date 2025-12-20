@@ -1,12 +1,4 @@
-import Header from '../../components/header';
 import Footer from '../../components/footer';
-
-
-type FavouritePageProp = {
-  userName: string;
-  favouriteCount: number;
-}
-
 
 function FavouritePagePlaceCard(): JSX.Element {
   return (
@@ -68,11 +60,10 @@ function FavouritePageCityCard(): JSX.Element {
   );
 }
 
-export default function FavouritePage({favouriteCount, userName}: FavouritePageProp): JSX.Element {
+export default function FavouritePage(): JSX.Element {
   const favouritePageCityCard = FavouritePageCityCard();
   return (
-    <div className="page">
-      <Header favouriteCount={favouriteCount} userName={userName} />
+    <>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
@@ -85,6 +76,6 @@ export default function FavouritePage({favouriteCount, userName}: FavouritePageP
         </div>
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
