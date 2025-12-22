@@ -1,5 +1,3 @@
-import Footer from '../../components/footer';
-
 function FavouritePagePlaceCard(): JSX.Element {
   return (
     <article className="favorites__card place-card">
@@ -63,19 +61,16 @@ function FavouritePageCityCard(): JSX.Element {
 export default function FavouritePage(): JSX.Element {
   const favouritePageCityCard = FavouritePageCityCard();
   return (
-    <>
-      <main className="page__main page__main--favorites">
-        <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {favouritePageCityCard}
-              {favouritePageCityCard}
-            </ul>
-          </section>
-        </div>
-      </main>
-      <Footer />
-    </>
+    <main className="page__main page__main--favorites">
+      <div className="page__favorites-container container">
+        <section className="favorites">
+          <h1 className="favorites__title">Saved listing</h1>
+          <ul className="favorites__list">
+            {favouritePageCityCard}
+            {favouritePageCityCard}
+          </ul>
+        </section>
+      </div>
+    </main>
   );
 }

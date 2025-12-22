@@ -1,12 +1,13 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../const';
+import { AppRoute } from '../const';
 import MainPage from './../pages/main-page/main-page';
 import FavouritePage from './../pages/favourites-page/favourites-page';
 import LoginPage from './../pages/login-page/login-page';
 import OfferPage from './../pages/offer-page/offer-page';
 import NotFoundPage from './../pages/not-found-page/not-found-page';
 import PrivateRoute from './private-route';
-import Layout from './Layout';
+import Layout from './layout/layout';
+import { getAuthorizationStatus } from '../authorizationStatus';
 
 type AppScreenProps = {
   userName: string;
@@ -42,6 +43,7 @@ type AppScreenProps = {
 export default function App({userName, favouriteCount, randomCity, defaultCity, cities, offers}: AppScreenProps): JSX.Element {
   const cityOffers = offers.filter((offer) => offer.city.name === defaultCity);
   const cityOffersNumber = cityOffers.length;
+  const authorizationStatus = getAuthorizationStatus();
   return (
     <BrowserRouter>
       <Routes>
@@ -55,13 +57,19 @@ export default function App({userName, favouriteCount, randomCity, defaultCity, 
           />
           <Route
             path={AppRoute.Login}
-            element={<LoginPage randomCity={randomCity}/>}
+            element={
+              <PrivateRoute
+                authorizationStatus={authorizationStatus} isReverse
+              >
+                <LoginPage randomCity={randomCity}/>
+              </PrivateRoute>
+            }
           />
           <Route
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.NoAuth}
+                authorizationStatus={authorizationStatus}
               >
                 <FavouritePage />
               </PrivateRoute>

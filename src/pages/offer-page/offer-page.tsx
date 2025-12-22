@@ -3,9 +3,12 @@ import OfferGallery from '../../components/offer-gallery';
 import OfferMap from '../../components/offer-map';
 import OfferNearPlaces from '../../components/offer-near-places';
 import OfferReviews from '../../components/offer-reviews';
+import { getAuthorizationStatus } from '../../authorizationStatus';
+import { AuthorizationStatus } from '../../const';
 
 
 export default function OfferPage(): JSX.Element {
+  const authorizationStatus = getAuthorizationStatus();
   return (
     <main className="page__main page__main--offer">
       <section className="offer">
@@ -108,7 +111,9 @@ export default function OfferPage(): JSX.Element {
             <section className="offer__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
               <OfferReviews/>
-              <OfferForm/>
+              {authorizationStatus === AuthorizationStatus.Auth ?
+                <OfferForm/> :
+                null}
             </section>
           </div>
         </div>
