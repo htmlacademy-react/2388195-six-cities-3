@@ -38,7 +38,7 @@ export default function MainPage({cityOffersNumber, defaultCity, cities, offers}
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
-        <LocationContainer cities={cities} defaultCity={defaultCity}/>
+        <LocationContainer cities={cities} defaultCity={defaultCity} />
       </div>
       <div className="cities">
         <div className="cities__places-container container">
@@ -64,7 +64,7 @@ export default function MainPage({cityOffersNumber, defaultCity, cities, offers}
               {placeCards}
             </div>
           </section>
-          <CitiesMap/>
+          <CitiesMap />
         </div>
       </div>
     </main>
