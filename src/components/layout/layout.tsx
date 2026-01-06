@@ -43,13 +43,13 @@ export default function Layout({userName, favouriteCount} : LayoutProps): JSX.El
                         ) : <span className="header__login">Sign in</span>}
                       </Link>
                     </li>
-                    {authorizationStatus === AuthorizationStatus.Auth ? (
+                    {authorizationStatus === AuthorizationStatus.Auth && (
                       <li className="header__nav-item">
                         <Link className="header__nav-link" to={AppRoute.Root}>
                           <span className="header__signout">Sign out</span>
                         </Link>
                       </li>
-                    ) : null}
+                    )}
                   </ul>
                 </nav>
               ) : null

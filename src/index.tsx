@@ -10,6 +10,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App userName={Setting.USER_NAME} favouriteCount={Setting.FAVOURITE_COUNT} randomCity= {randomiseCity(CITIES)} defaultCity={Setting.DEFAULT_CITY} cities={CITIES} offers={OFFERS}/>
+    <App userName={Setting.USER_NAME} favouriteCount={Setting.FAVOURITE_COUNT} randomCity={randomiseCity(CITIES)} defaultCity={Setting.DEFAULT_CITY} cities={CITIES} offers={OFFERS}/>
   </React.StrictMode>
 );
