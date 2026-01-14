@@ -1,26 +1,53 @@
 import OfferForm from '../../components/offer-form';
-import OfferGallery from '../../components/offer-gallery';
+import OfferImage from '../../components/offer-image';
 import OfferMap from '../../components/offer-map';
 import OfferNearPlaces from '../../components/offer-near-places';
 import OfferReviews from '../../components/offer-reviews';
-import { getAuthorizationStatus } from '../../authorizationStatus';
 import { AuthorizationStatus } from '../../const';
+import { TOffers, TOffer, TListOffers } from '../../types';
+import { getStarActiveWidth } from '../../util';
+import NotFoundPage from '../not-found-page/not-found-page';
+import { useParams } from 'react-router-dom';
 
+type OfferPageProps = {
+  offers: TOffers;
+  authorizationStatus: AuthorizationStatus;
+  randomCity: string;
+  nearbyOffers: TListOffers;
+}
 
-export default function OfferPage(): JSX.Element {
-  const authorizationStatus = getAuthorizationStatus();
+export default function OfferPage({offers, nearbyOffers, authorizationStatus, randomCity}: OfferPageProps): JSX.Element {
+  //параметры из текущего URL
+  const {id} = useParams();
+  const currentOffer: TOffer | undefined = offers.find((offer: TOffer) => offer.id === id);
+
+  if (!currentOffer) {
+    return <NotFoundPage type='offer' randomCity={randomCity} />;
+  }
+
+  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description} = currentOffer;
+  const isAuth: boolean = authorizationStatus === AuthorizationStatus.Auth;
+  const starActiveWidth: string = getStarActiveWidth(rating);
+
   return (
     <main className="page__main page__main--offer">
       <section className="offer">
-        <OfferGallery/>
+        <div className="offer__gallery-container container">
+          <div className="offer__gallery">
+            {images.map((image) => (
+              <OfferImage image={image} key={image}/>)
+            )}
+          </div>
+        </div>
         <div className="offer__container container">
           <div className="offer__wrapper">
+            {isPremium &&
             <div className="offer__mark">
               <span>Premium</span>
-            </div>
+            </div>}
             <div className="offer__name-wrapper">
               <h1 className="offer__name">
-                    Beautiful &amp; luxurious studio at great location
+                {title}
               </h1>
               <button className="offer__bookmark-button button" type="button">
                 <svg className="offer__bookmark-icon" width="31" height="33">
@@ -31,96 +58,68 @@ export default function OfferPage(): JSX.Element {
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">
-                <span style={{width: '80%'}}></span>
+                <span style={{width: starActiveWidth}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
-              <span className="offer__rating-value rating__value">4.8</span>
+              <span className="offer__rating-value rating__value">{rating}</span>
             </div>
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
-                    Apartment
+                {type ? type[0].toUpperCase() + type.slice(1) : ''}
               </li>
               <li className="offer__feature offer__feature--bedrooms">
-                    3 Bedrooms
+                {bedrooms > 1 ? `${bedrooms} Bedrooms` : `${bedrooms} Bedroom`}
               </li>
               <li className="offer__feature offer__feature--adults">
-                    Max 4 adults
+                Max {maxAdults > 1 ? `${maxAdults} adults` : `${maxAdults} adult`}
               </li>
             </ul>
             <div className="offer__price">
-              <b className="offer__price-value">&euro;120</b>
+              <b className="offer__price-value">&euro;{price}</b>
               <span className="offer__price-text">&nbsp;night</span>
             </div>
             <div className="offer__inside">
               <h2 className="offer__inside-title">What&apos;s inside</h2>
               <ul className="offer__inside-list">
-                <li className="offer__inside-item">
-                      Wi-Fi
-                </li>
-                <li className="offer__inside-item">
-                      Washing machine
-                </li>
-                <li className="offer__inside-item">
-                      Towels
-                </li>
-                <li className="offer__inside-item">
-                      Heating
-                </li>
-                <li className="offer__inside-item">
-                      Coffee machine
-                </li>
-                <li className="offer__inside-item">
-                      Baby seat
-                </li>
-                <li className="offer__inside-item">
-                      Kitchen
-                </li>
-                <li className="offer__inside-item">
-                      Dishwasher
-                </li>
-                <li className="offer__inside-item">
-                      Cabel TV
-                </li>
-                <li className="offer__inside-item">
-                      Fridge
-                </li>
+                {goods.map((good) => (
+                  <li key={good} className="offer__inside-item">
+                    {good}
+                  </li>)
+                )}
               </ul>
             </div>
             <div className="offer__host">
               <h2 className="offer__host-title">Meet the host</h2>
               <div className="offer__host-user user">
                 <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                  <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar"/>
+                  <img className="offer__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                 </div>
                 <span className="offer__user-name">
-                      Angelina
+                  {host.name}
                 </span>
                 <span className="offer__user-status">
-                      Pro
+                  {host.isPro && 'Pro'}
                 </span>
               </div>
               <div className="offer__description">
                 <p className="offer__text">
-                      A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                </p>
-                <p className="offer__text">
-                      An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                  {description}
                 </p>
               </div>
             </div>
             <section className="offer__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
+              <h2 className="reviews__title">Reviews &middot;
+                <span className="reviews__amount">1</span>
+              </h2>
               <OfferReviews/>
-              {authorizationStatus === AuthorizationStatus.Auth ?
-                <OfferForm/> :
-                null}
+              {isAuth && <OfferForm />}
             </section>
           </div>
         </div>
         <OfferMap/>
       </section>
       <div className="container">
-        <OfferNearPlaces/>
+        <OfferNearPlaces nearbyOffers={nearbyOffers} />
       </div>
     </main>
   );

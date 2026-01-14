@@ -1,38 +1,16 @@
 import CitiesMap from '../../components/cities-map';
+import ListCards from '../../components/list-cards';
 import LocationContainer from '../../components/location-container';
-import PlaceCard from '../../components/place-card';
+import { TListOffers } from '../../types';
 
 type MainPageProp = {
   cityOffersNumber: number;
   defaultCity: string;
   cities: string[];
-  offers: {
-    id: string;
-    title: string;
-    type: string;
-    price: number;
-    city: {
-        name: string;
-        location: {
-            latitude: number;
-            longitude: number;
-            zoom: number;
-        };
-    };
-    location: {
-        latitude: number;
-        longitude: number;
-        zoom: number;
-    };
-    isFavorite: boolean;
-    isPremium: boolean;
-    rating: number;
-    previewImage: string;
-  }[];
+  listOffers: TListOffers;
 }
 
-export default function MainPage({cityOffersNumber, defaultCity, cities, offers}: MainPageProp): JSX.Element {
-  const placeCards = offers.map((offer) => <PlaceCard offer={offer} key={offer.id}/>);
+export default function MainPage({cityOffersNumber, defaultCity, cities, listOffers}: MainPageProp): JSX.Element {
 
   return (
     <main className="page__main page__main--index">
@@ -61,7 +39,7 @@ export default function MainPage({cityOffersNumber, defaultCity, cities, offers}
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              {placeCards}
+              <ListCards listOffers={listOffers}/>
             </div>
           </section>
           <CitiesMap />
