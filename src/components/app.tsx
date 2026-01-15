@@ -30,7 +30,7 @@ export default function App({userName, favouriteCount, randomCity, defaultCity, 
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<Layout favouriteCount={favouriteCount} userName={userName} />}
+          element={<Layout authorizationStatus={authorizationStatus} favouriteCount={favouriteCount} userName={userName} />}
         >
           <Route
             index
