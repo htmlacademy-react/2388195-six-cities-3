@@ -1,6 +1,6 @@
+import {Link} from 'react-router-dom';
 import { AppRoute } from '../const';
 import { TListOffer } from '../types';
-import {Link} from 'react-router-dom';
 import { getStarActiveWidth } from '../util';
 
 type PlaceCardProp = {

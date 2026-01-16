@@ -1,12 +1,10 @@
 import {useState } from 'react';
-import { TListOffers, TListOffer } from '../types';
+import { TListOffers, TListOffer, Nullable} from '../types';
 import PlaceCard from './place-card';
 
 type ListCardsProp = {
   listOffers: TListOffers;
 }
-
-type Nullable<T> = T | null;
 
 export default function ListCards({listOffers}: ListCardsProp): JSX.Element {
   // Первонач. состояние null (карточки не выделены) если наведен курсор - то TListOffer

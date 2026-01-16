@@ -1,3 +1,4 @@
+import { useParams } from 'react-router-dom';
 import OfferForm from '../../components/offer-form';
 import OfferImage from '../../components/offer-image';
 import OfferMap from '../../components/offer-map';
@@ -7,7 +8,6 @@ import { AuthorizationStatus } from '../../const';
 import { TOffers, TOffer, TListOffers } from '../../types';
 import { getStarActiveWidth } from '../../util';
 import NotFoundPage from '../not-found-page/not-found-page';
-import { useParams } from 'react-router-dom';
 
 type OfferPageProps = {
   offers: TOffers;

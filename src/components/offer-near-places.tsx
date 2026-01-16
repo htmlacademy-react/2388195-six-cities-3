@@ -1,5 +1,4 @@
-import { Nullable } from 'vitest';
-import { TListOffers, TListOffer } from '../types';
+import { TListOffers, TListOffer, Nullable } from '../types';
 import PlaceCard from './place-card';
 import { useState } from 'react';
 
