@@ -8,6 +8,7 @@ import NotFoundPage from './../pages/not-found-page/not-found-page';
 import PrivateRoute from './private-route';
 import Layout from './layout/layout';
 import { getAuthorizationStatus } from '../authorizationStatus';
+import { TListOffers, TOffers } from '../types';
 
 type AppScreenProps = {
   userName: string;
@@ -15,33 +16,13 @@ type AppScreenProps = {
   randomCity: string;
   defaultCity: string;
   cities: string[];
-  offers: {
-    id: string;
-    title: string;
-    type: string;
-    price: number;
-    city: {
-        name: string;
-        location: {
-            latitude: number;
-            longitude: number;
-            zoom: number;
-        };
-    };
-    location: {
-        latitude: number;
-        longitude: number;
-        zoom: number;
-    };
-    isFavorite: boolean;
-    isPremium: boolean;
-    rating: number;
-    previewImage: string;
-  }[];
+  listOffers: TListOffers;
+  offers: TOffers;
+  nearbyOffers: TListOffers;
 }
 
-export default function App({userName, favouriteCount, randomCity, defaultCity, cities, offers}: AppScreenProps): JSX.Element {
-  const cityOffers = offers.filter((offer) => offer.city.name === defaultCity);
+export default function App({userName, favouriteCount, randomCity, defaultCity, cities, listOffers, offers, nearbyOffers}: AppScreenProps): JSX.Element {
+  const cityOffers = listOffers.filter((listOffer) => listOffer.city.name === defaultCity);
   const cityOffersNumber = cityOffers.length;
   const authorizationStatus = getAuthorizationStatus();
   return (
@@ -49,11 +30,11 @@ export default function App({userName, favouriteCount, randomCity, defaultCity, 
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<Layout favouriteCount={favouriteCount} userName={userName} />}
+          element={<Layout authorizationStatus={authorizationStatus} favouriteCount={favouriteCount} userName={userName} />}
         >
           <Route
             index
-            element={<MainPage cityOffersNumber={cityOffersNumber} defaultCity={defaultCity} cities={cities} offers={cityOffers} />}
+            element={<MainPage cityOffersNumber={cityOffersNumber} defaultCity={defaultCity} cities={cities} listOffers={cityOffers} />}
           />
           <Route
             path={AppRoute.Login}
@@ -76,12 +57,12 @@ export default function App({userName, favouriteCount, randomCity, defaultCity, 
             }
           />
           <Route
-            path={AppRoute.Offer}
-            element={<OfferPage />}
+            path={`${AppRoute.Offer}/:id`}
+            element={<OfferPage offers={offers} authorizationStatus={authorizationStatus} nearbyOffers={nearbyOffers} randomCity={randomCity} />}
           />
           <Route
             path="*"
-            element={<NotFoundPage randomCity={randomCity}/>}
+            element={<NotFoundPage type='page' randomCity={randomCity}/>}
           />
         </Route>
       </Routes>

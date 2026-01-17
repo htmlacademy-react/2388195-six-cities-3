@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+
 type LoginPageProps = {
   randomCity: string;
 }
@@ -23,9 +26,9 @@ export default function LoginPage({ randomCity}: LoginPageProps): JSX.Element {
         </section>
         <section className="locations locations--login locations--current">
           <div className="locations__item">
-            <a className="locations__item-link" href="#">
+            <Link to={AppRoute.Root} className="locations__item-link">
               <span>{randomCity}</span>
-            </a>
+            </Link>
           </div>
         </section>
       </div>
