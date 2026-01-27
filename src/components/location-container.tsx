@@ -1,18 +1,20 @@
+import { TCity } from '../types';
+
 type LocationContainerProps = {
-  currentCity:string;
-  cities: string[];
+  currentCity:TCity;
+  cities: TCity[];
 }
 
 type LocationContainerItemProps = {
-  currentCity:string;
-  city: string;
+  currentCity:TCity;
+  city: TCity;
 }
 
 function LocationContainerItem({city, currentCity}: LocationContainerItemProps): JSX.Element {
   return (
     <li className="locations__item">
       <a className={city === currentCity ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item '} href="#">
-        <span>{city}</span>
+        <span>{city.name}</span>
       </a>
     </li>
   );
@@ -20,7 +22,7 @@ function LocationContainerItem({city, currentCity}: LocationContainerItemProps):
 
 export default function LocationContainer({cities, currentCity}: LocationContainerProps): JSX.Element {
   const locationContainerItems =
-    cities.map((city) => <LocationContainerItem city={city} key={city} currentCity={currentCity}/>);
+    cities.map((city) => <LocationContainerItem city={city} key={city.name} currentCity={currentCity}/>);
 
   return (
     <section className="locations container">

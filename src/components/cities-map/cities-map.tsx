@@ -3,12 +3,12 @@ import leaflet, { LayerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { TListOffers } from '../../types';
 import useMap from './use-map';
-import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CITIES_POINTS} from '../../const';
+import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 import {TCity} from '../../types';
 
 
 type CitiesMapProps = {
-  currentCity: string;
+  currentCity: TCity;
   currentOffers: TListOffers;
   activeOfferId?: string | null;
 }
@@ -26,18 +26,17 @@ const currentCustomIcon = leaflet.icon({
 });
 
 export default function CitiesMap({currentCity, currentOffers, activeOfferId}: CitiesMapProps): JSX.Element {
-  const cityPoint: TCity = CITIES_POINTS.find((city) => currentCity === city.name);
   const containerMapRef = useRef<HTMLDivElement>(null);
-  const map = useMap({containerMapRef: containerMapRef, location: cityPoint.location});
+  const map = useMap({containerMapRef: containerMapRef, location: currentCity.location});
   const markerLayer = useRef<LayerGroup>(leaflet.layerGroup());
 
   useEffect(() => {
     if (map) {
-      map.setView([cityPoint.location.latitude, cityPoint.location.longitude], cityPoint.location.zoom);
+      map.setView([currentCity.location.latitude, currentCity.location.longitude], currentCity.location.zoom);
       markerLayer.current.addTo(map);
       markerLayer.current.clearLayers();
     }
-  }, [cityPoint, map]);
+  }, [currentCity, map]);
 
 
   useEffect((): void => {
@@ -59,7 +58,7 @@ export default function CitiesMap({currentCity, currentOffers, activeOfferId}: C
     <div className="cities__right-section">
       <section className="cities__map map">
         <div
-          style={{height: '500px'}}
+          style={{height: '100%'}}
           ref={containerMapRef}
         >
         </div>

@@ -13,8 +13,7 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
-export const CITIES_POINTS: TCity[] = [
+export const CITIES: TCity[] = [
   { name: 'Paris',
     location: {
       latitude: 40.835292,
@@ -38,9 +37,9 @@ export const CITIES_POINTS: TCity[] = [
   },
   { name: 'Amsterdam',
     location: {
-      latitude: 40.835292,
-      longitude: -73.916236,
-      zoom: 10,
+      latitude: 52.35514938496378,
+      longitude: 4.673877537499948,
+      zoom: 8,
     }
   },
   { name: 'Hamburg',
@@ -58,7 +57,6 @@ export const CITIES_POINTS: TCity[] = [
     }
   },
 ];
-
 
 export const Setting = {
   FAVOURITE_COUNT: 3,

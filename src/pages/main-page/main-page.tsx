@@ -1,16 +1,16 @@
 import CurrentOffers from '../../components/current-offers';
 import LocationContainer from '../../components/location-container';
-import { TListOffers } from '../../types';
+import { TCity, TListOffers } from '../../types';
 
 type MainPageProp = {
-  defaultCity:string;
-  cities: string[];
+  // defaultCity:string;
+  cities: TCity[];
   listOffers: TListOffers;
 }
 
-export default function MainPage({ defaultCity, cities, listOffers}: MainPageProp): JSX.Element {
-  const currentCity = defaultCity;
-  const currentOffers = listOffers.filter((listOffer) => listOffer.city.name === currentCity);
+export default function MainPage({ cities, listOffers}: MainPageProp): JSX.Element {
+  const currentCity = cities[3];
+  const currentOffers = listOffers.filter((listOffer) => listOffer.city.name === currentCity.name);
 
   return (
     <main className="page__main page__main--index">

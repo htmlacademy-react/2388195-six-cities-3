@@ -8,20 +8,19 @@ import NotFoundPage from './../pages/not-found-page/not-found-page';
 import PrivateRoute from './private-route';
 import Layout from './layout/layout';
 import { getAuthorizationStatus } from '../authorizationStatus';
-import {TListOffers, TOffers } from '../types';
+import {TCity, TListOffers, TOffers } from '../types';
 
 type AppScreenProps = {
   userName: string;
   favouriteCount: number;
   randomCity: string;
-  defaultCity: string;
-  cities: string[];
+  cities: TCity[];
   listOffers: TListOffers;
   offers: TOffers;
   nearbyOffers: TListOffers;
 }
 
-export default function App({userName, favouriteCount, randomCity, defaultCity, cities, listOffers, offers, nearbyOffers}: AppScreenProps): JSX.Element {
+export default function App({userName, favouriteCount, randomCity, cities, listOffers, offers, nearbyOffers}: AppScreenProps): JSX.Element {
 
   const authorizationStatus = getAuthorizationStatus();
   return (
@@ -33,7 +32,7 @@ export default function App({userName, favouriteCount, randomCity, defaultCity, 
         >
           <Route
             index
-            element={<MainPage defaultCity={defaultCity} cities={cities} listOffers={listOffers} />}
+            element={<MainPage cities={cities} listOffers={listOffers} />}
           />
           <Route
             path={AppRoute.Login}

@@ -1,11 +1,11 @@
 import {useState } from 'react';
-import { TListOffers, TListOffer, Nullable} from '../types';
+import { TListOffers, TListOffer, Nullable, TCity} from '../types';
 import PlaceCard from './place-card';
 import CitiesMap from './cities-map/cities-map';
 
 type ListCardsProp = {
   currentOffers: TListOffers;
-  currentCity: string;
+  currentCity: TCity;
 }
 
 export default function CurrentOffers({currentOffers, currentCity}: ListCardsProp): JSX.Element {
@@ -20,7 +20,7 @@ export default function CurrentOffers({currentOffers, currentCity}: ListCardsPro
     <div className="cities__places-container container">
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
-        <b className="places__found">{currentOffersNumber} places to stay in {currentCity}</b>
+        <b className="places__found">{currentOffersNumber} places to stay in {currentCity.name}</b>
         <form className="places__sorting" action="#" method="get">
           <span className="places__sorting-caption">Sort by</span>
           <span className="places__sorting-type" tabIndex={0}>
