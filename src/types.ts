@@ -61,3 +61,12 @@ export type TOffer = {
 export type TOffers = TOffer[]
 
 export type Nullable<T> = T | null | undefined;
+
+export type TCity = {
+  name: string;
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
+};

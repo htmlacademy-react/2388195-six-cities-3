@@ -8,7 +8,7 @@ import NotFoundPage from './../pages/not-found-page/not-found-page';
 import PrivateRoute from './private-route';
 import Layout from './layout/layout';
 import { getAuthorizationStatus } from '../authorizationStatus';
-import { TListOffers, TOffers } from '../types';
+import {TListOffers, TOffers } from '../types';
 
 type AppScreenProps = {
   userName: string;
@@ -22,8 +22,7 @@ type AppScreenProps = {
 }
 
 export default function App({userName, favouriteCount, randomCity, defaultCity, cities, listOffers, offers, nearbyOffers}: AppScreenProps): JSX.Element {
-  const cityOffers = listOffers.filter((listOffer) => listOffer.city.name === defaultCity);
-  const cityOffersNumber = cityOffers.length;
+
   const authorizationStatus = getAuthorizationStatus();
   return (
     <BrowserRouter>
@@ -34,7 +33,7 @@ export default function App({userName, favouriteCount, randomCity, defaultCity, 
         >
           <Route
             index
-            element={<MainPage cityOffersNumber={cityOffersNumber} defaultCity={defaultCity} cities={cities} listOffers={cityOffers} />}
+            element={<MainPage defaultCity={defaultCity} cities={cities} listOffers={listOffers} />}
           />
           <Route
             path={AppRoute.Login}

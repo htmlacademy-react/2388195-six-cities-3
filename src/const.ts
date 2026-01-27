@@ -1,3 +1,5 @@
+import { TCity } from './types';
+
 export enum AppRoute {
   Root = '/',
   Login = '/login',
@@ -12,6 +14,51 @@ export enum AuthorizationStatus {
 }
 
 export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const CITIES_POINTS: TCity[] = [
+  { name: 'Paris',
+    location: {
+      latitude: 40.835292,
+      longitude: -73.916236,
+      zoom: 10,
+    }
+  },
+  { name: 'Cologne',
+    location: {
+      latitude: 40.835292,
+      longitude: -73.916236,
+      zoom: 10,
+    }
+  },
+  { name: 'Brussels',
+    location: {
+      latitude: 40.835292,
+      longitude: -73.916236,
+      zoom: 10,
+    }
+  },
+  { name: 'Amsterdam',
+    location: {
+      latitude: 40.835292,
+      longitude: -73.916236,
+      zoom: 10,
+    }
+  },
+  { name: 'Hamburg',
+    location: {
+      latitude: 40.835292,
+      longitude: -73.916236,
+      zoom: 10,
+    }
+  },
+  { name: 'Dusseldorf',
+    location: {
+      latitude: 40.835292,
+      longitude: -73.916236,
+      zoom: 10,
+    }
+  },
+];
+
 
 export const Setting = {
   FAVOURITE_COUNT: 3,
@@ -28,3 +75,7 @@ export const RATING = [
 ];
 
 export const MIN_STAR_WIDTH: number = 20;
+
+export const URL_MARKER_DEFAULT = './img/pin.svg';
+
+export const URL_MARKER_CURRENT = './img/pin-active.svg';

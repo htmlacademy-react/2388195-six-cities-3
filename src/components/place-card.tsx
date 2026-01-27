@@ -4,20 +4,20 @@ import { TListOffer } from '../types';
 import { getStarActiveWidth } from '../util';
 
 type PlaceCardProp = {
-  listOffer: TListOffer;
+  currentOffer: TListOffer;
   handleHover: (listOffer?: TListOffer) => void;
 }
 
-export default function PlaceCard({listOffer, handleHover}: PlaceCardProp): JSX.Element {
+export default function PlaceCard({currentOffer, handleHover}: PlaceCardProp): JSX.Element {
   const handleMouseOn = () => {
-    handleHover(listOffer);
+    handleHover(currentOffer);
   };
 
   const handleMouseOff = () => {
     handleHover();
   };
 
-  const {id, isPremium, previewImage, price, title, type, rating} = listOffer;
+  const {id, isPremium, previewImage, price, title, type, rating} = currentOffer;
   const starActiveWidth: string = getStarActiveWidth(rating);
 
   return (
