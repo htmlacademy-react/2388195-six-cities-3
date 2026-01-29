@@ -3,7 +3,6 @@ import LocationContainer from '../../components/location-container';
 import { TCity, TListOffers } from '../../types';
 
 type MainPageProp = {
-  // defaultCity:string;
   cities: TCity[];
   listOffers: TListOffers;
 }

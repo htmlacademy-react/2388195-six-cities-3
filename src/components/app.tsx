@@ -8,7 +8,7 @@ import NotFoundPage from './../pages/not-found-page/not-found-page';
 import PrivateRoute from './private-route';
 import Layout from './layout/layout';
 import { getAuthorizationStatus } from '../authorizationStatus';
-import {TCity, TListOffers, TOffers } from '../types';
+import {TCity, TComments, TListOffers, TOffers } from '../types';
 
 type AppScreenProps = {
   userName: string;
@@ -18,9 +18,10 @@ type AppScreenProps = {
   listOffers: TListOffers;
   offers: TOffers;
   nearbyOffers: TListOffers;
+  comments: TComments;
 }
 
-export default function App({userName, favouriteCount, randomCity, cities, listOffers, offers, nearbyOffers}: AppScreenProps): JSX.Element {
+export default function App({userName, favouriteCount, randomCity, cities, listOffers, offers, nearbyOffers, comments}: AppScreenProps): JSX.Element {
 
   const authorizationStatus = getAuthorizationStatus();
   return (
@@ -56,7 +57,7 @@ export default function App({userName, favouriteCount, randomCity, cities, listO
           />
           <Route
             path={`${AppRoute.Offer}/:id`}
-            element={<OfferPage offers={offers} authorizationStatus={authorizationStatus} nearbyOffers={nearbyOffers} randomCity={randomCity} />}
+            element={<OfferPage offers={offers} authorizationStatus={authorizationStatus} nearbyOffers={nearbyOffers} randomCity={randomCity} comments={comments}/>}
           />
           <Route
             path="*"

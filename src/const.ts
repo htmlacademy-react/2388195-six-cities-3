@@ -13,6 +13,8 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export const CITIES_LIST: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
 export const CITIES: TCity[] = [
   { name: 'Paris',
     location: {
@@ -77,3 +79,4 @@ export const MIN_STAR_WIDTH: number = 20;
 export const URL_MARKER_DEFAULT = './img/pin.svg';
 
 export const URL_MARKER_CURRENT = './img/pin-active.svg';
+

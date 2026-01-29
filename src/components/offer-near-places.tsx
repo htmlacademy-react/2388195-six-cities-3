@@ -13,8 +13,8 @@ export default function OfferNearPlaces({nearbyOffers}: OfferNearPlaces): JSX.El
   }
 
   const [, setActiveOffer] = useState<Nullable<TListOffer>>(null);
-  const handleHover = (listOffer?: TListOffer) => {
-    setActiveOffer(listOffer || null);
+  const handleHover = (nearbyOffer?: TListOffer) => {
+    setActiveOffer(nearbyOffer || null);
   };
 
   return (
@@ -23,7 +23,7 @@ export default function OfferNearPlaces({nearbyOffers}: OfferNearPlaces): JSX.El
       <div className="near-places__list places__list">
         {nearbyOffers.map((nearbyOffer) => (
           <PlaceCard
-            listOffer={nearbyOffer}
+            currentOffer={nearbyOffer}
             key={nearbyOffer.id}
             handleHover={handleHover}
           />

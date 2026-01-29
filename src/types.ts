@@ -70,3 +70,27 @@ export type TCity = {
     zoom: number;
   };
 };
+
+export type TComment = {
+  id: string;
+  date: string;
+  user: {
+      name: string;
+      avatarUrl: string;
+      isPro: boolean;
+  };
+  comment: string;
+  rating: number;
+};
+
+export type TComments = {
+  id: string;
+  date: string;
+  user: {
+      name: string;
+      avatarUrl: string;
+      isPro: boolean;
+  };
+  comment: string;
+  rating: number;
+}[];

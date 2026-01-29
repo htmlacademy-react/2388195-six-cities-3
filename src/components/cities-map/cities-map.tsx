@@ -8,6 +8,7 @@ import {TCity} from '../../types';
 
 
 type CitiesMapProps = {
+  className?: string;
   currentCity: TCity;
   currentOffers: TListOffers;
   activeOfferId?: string | null;
@@ -25,7 +26,7 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [20, 40],
 });
 
-export default function CitiesMap({currentCity, currentOffers, activeOfferId}: CitiesMapProps): JSX.Element {
+export default function CitiesMap({className, currentCity, currentOffers, activeOfferId}: CitiesMapProps): JSX.Element {
   const containerMapRef = useRef<HTMLDivElement>(null);
   const map = useMap({containerMapRef: containerMapRef, location: currentCity.location});
   const markerLayer = useRef<LayerGroup>(leaflet.layerGroup());
@@ -55,14 +56,7 @@ export default function CitiesMap({currentCity, currentOffers, activeOfferId}: C
   }, [activeOfferId, map, currentOffers]);
 
   return (
-    <div className="cities__right-section">
-      <section className="cities__map map">
-        <div
-          style={{height: '100%'}}
-          ref={containerMapRef}
-        >
-        </div>
-      </section>
-    </div>
+    <section className={`map ${className}`} ref={containerMapRef}>
+    </section>
   );
 }

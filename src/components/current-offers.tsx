@@ -49,7 +49,9 @@ export default function CurrentOffers({currentOffers, currentCity}: ListCardsPro
           </div>
         </div>
       </section>
-      <CitiesMap currentOffers={currentOffers} currentCity={currentCity} activeOfferId={activeOffer?.id} />
+      <div className="cities__right-section">
+        <CitiesMap className='cities__map' currentOffers={currentOffers} currentCity={currentCity} activeOfferId={activeOffer?.id} />
+      </div>
     </div>
 
   );

@@ -73,7 +73,7 @@ export const OFFERS: TOffers = [{
   'maxAdults': 4
 },
 {
-  'id': '3',
+  'id': '14',
   'title': 'Beautiful & luxurious studio at great location',
   'type': 'apartment',
   'price': 120,
