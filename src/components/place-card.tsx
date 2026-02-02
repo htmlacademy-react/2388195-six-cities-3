@@ -5,16 +5,17 @@ import { getStarActiveWidth } from '../util';
 
 type PlaceCardProp = {
   currentOffer: TListOffer;
-  handleHover: (listOffer?: TListOffer) => void;
+  handleHover?: (listOffer?: TListOffer) => void;
+  block: string;
 }
 
-export default function PlaceCard({currentOffer, handleHover}: PlaceCardProp): JSX.Element {
+export default function PlaceCard({currentOffer, handleHover, block}: PlaceCardProp): JSX.Element {
   const handleMouseOn = () => {
-    handleHover(currentOffer);
+    handleHover?.(currentOffer);
   };
 
   const handleMouseOff = () => {
-    handleHover();
+    handleHover?.();
   };
 
   const {id, isPremium, previewImage, price, title, type, rating} = currentOffer;
@@ -23,7 +24,7 @@ export default function PlaceCard({currentOffer, handleHover}: PlaceCardProp): J
   return (
     <Link to={`${AppRoute.Offer}/${id}`}>
       <article
-        className="cities__card place-card"
+        className={`${block}__card place-card`}
         onMouseEnter={handleMouseOn}
         onMouseLeave={handleMouseOff}
       >

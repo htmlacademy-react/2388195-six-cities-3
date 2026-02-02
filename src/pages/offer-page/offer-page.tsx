@@ -4,7 +4,7 @@ import OfferImage from '../../components/offer-image';
 import OfferNearPlaces from '../../components/offer-near-places';
 import OfferReviews from '../../components/offer-reviews';
 import { AuthorizationStatus } from '../../const';
-import { TOffers, TOffer, TListOffers, TComments } from '../../types';
+import { TOffers, TOffer, TListOffers, TComments, TListOffer } from '../../types';
 import { getNearOffers, getStarActiveWidth } from '../../util';
 import NotFoundPage from '../not-found-page/not-found-page';
 import CitiesMap from '../../components/cities-map/cities-map';
@@ -13,20 +13,27 @@ type OfferPageProps = {
   offers: TOffers;
   authorizationStatus: AuthorizationStatus;
   randomCity: string;
-  nearbyOffers: TListOffers;
+  listOffers: TListOffers;
   comments: TComments;
 }
 
-export default function OfferPage({offers, nearbyOffers, authorizationStatus, randomCity, comments}: OfferPageProps): JSX.Element {
+export default function OfferPage({offers, listOffers, authorizationStatus, randomCity, comments}: OfferPageProps): JSX.Element {
   //параметры из текущего URL
   const {id} = useParams();
   const currentOffer: TOffer | undefined = offers.find((offer: TOffer) => offer.id === id);
-  if (currentOffer) {
-    const nearOffers: TOffers = getNearOffers(nearbyOffers, currentOffer);
-  }
+  const currentListOffer: TListOffer | undefined = listOffers.find((listOffer: TListOffer) => listOffer.id === id);
+
   if (!currentOffer) {
     return <NotFoundPage type='offer' randomCity={randomCity} />;
   }
+
+  if (!currentListOffer) {
+    return <NotFoundPage type='offer' randomCity={randomCity} />;
+  }
+
+  const currentCity: string = currentOffer.city.name;
+  const nearOffers: TListOffers = getNearOffers(listOffers, currentCity, id);
+  const nearOffersWithCurrent: TListOffers = [...nearOffers, currentListOffer];
 
   const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, city} = currentOffer;
   const isAuth: boolean = authorizationStatus === AuthorizationStatus.Auth;
@@ -116,10 +123,10 @@ export default function OfferPage({offers, nearbyOffers, authorizationStatus, ra
             </section>
           </div>
         </div>
-        <CitiesMap className='offer__map' currentOffers={nearbyOffers} currentCity={city} />
+        <CitiesMap className='offer__map' currentOffers={nearOffersWithCurrent} currentCity={city} activeOfferId={currentListOffer.id} />
       </section>
       <div className="container">
-        <OfferNearPlaces nearbyOffers={nearbyOffers} />
+        <OfferNearPlaces nearOffers={nearOffers} />
       </div>
     </main>
   );

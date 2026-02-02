@@ -17,13 +17,12 @@ type AppScreenProps = {
   cities: TCity[];
   listOffers: TListOffers;
   offers: TOffers;
-  nearbyOffers: TListOffers;
   comments: TComments;
 }
 
-export default function App({userName, favouriteCount, randomCity, cities, listOffers, offers, nearbyOffers, comments}: AppScreenProps): JSX.Element {
-
+export default function App({userName, favouriteCount, randomCity, cities, listOffers, offers, comments}: AppScreenProps): JSX.Element {
   const authorizationStatus = getAuthorizationStatus();
+
   return (
     <BrowserRouter>
       <Routes>
@@ -57,7 +56,7 @@ export default function App({userName, favouriteCount, randomCity, cities, listO
           />
           <Route
             path={`${AppRoute.Offer}/:id`}
-            element={<OfferPage offers={offers} authorizationStatus={authorizationStatus} nearbyOffers={nearbyOffers} randomCity={randomCity} comments={comments}/>}
+            element={<OfferPage offers={offers} authorizationStatus={authorizationStatus} listOffers={listOffers} randomCity={randomCity} comments={comments}/>}
           />
           <Route
             path="*"

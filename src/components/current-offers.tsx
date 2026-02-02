@@ -44,6 +44,7 @@ export default function CurrentOffers({currentOffers, currentCity}: ListCardsPro
                   currentOffer={currentOffer}
                   key={currentOffer.id}
                   handleHover={handleHover}
+                  block="cities"
                 />))
             }
           </div>
