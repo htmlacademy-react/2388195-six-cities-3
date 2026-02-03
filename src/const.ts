@@ -1,5 +1,3 @@
-import { TCity } from './types';
-
 export enum AppRoute {
   Root = '/',
   Login = '/login',
@@ -15,7 +13,7 @@ export enum AuthorizationStatus {
 
 export const CITIES_LIST: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-export const CITIES: TCity[] = [
+export const CITIES = [
   { name: 'Paris',
     location: {
       latitude: 40.835292,
@@ -58,7 +56,9 @@ export const CITIES: TCity[] = [
       zoom: 10,
     }
   },
-];
+] as const;
+
+export type TCityName = (typeof CITIES)[number]['name'];
 
 export const Setting = {
   FAVOURITE_COUNT: 3,

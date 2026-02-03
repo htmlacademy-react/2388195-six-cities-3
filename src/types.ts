@@ -71,6 +71,15 @@ export type TCity = {
   };
 };
 
+export type TCities = {
+  name: string;
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
+}[];
+
 export type TComment = {
   id: string;
   date: string;
