@@ -1,19 +1,24 @@
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import CurrentOffers from '../../components/current-offers';
-import { AppRoute, CITIES } from '../../const';
+import { AppRoute, CITIES, TCityName } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { offersActions, offersSelectors } from '../../store/slices/offers';
 // import {useActionCreators} from '../../hooks/store';
 
-export default function MainPage(): JSX.Element {
+type MainPageProps = {
+  currentCity: TCityName;
+}
+
+export default function MainPage({currentCity}: MainPageProps): JSX.Element {
 
   const listOffers = useAppSelector(offersSelectors.offers);
-  const currentCity = useAppSelector(offersSelectors.city);
   const dispatch = useAppDispatch();
   // const {setCity}  = useActionCreators(offersActions);
   // setCity(city.name) вместо dispatch(offersActions.setCity(city.name));
-  const currentOffers = listOffers.filter((listOffer) => listOffer.city.name === currentCity);
+  // const currentOffers = listOffers.filter((listOffer) => listOffer.city.name === currentCity);
+  const offersByCity = Object.groupBy(listOffers, (listOffer) => listOffer.city.name);
+  const currentOffers = offersByCity[city] ?? [];
 
   const isEmpty: boolean = currentOffers.length === 0;
 

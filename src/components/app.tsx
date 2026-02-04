@@ -1,5 +1,5 @@
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import { AppRoute } from '../const';
+import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
+import { AppRoute, CITIES } from '../const';
 import MainPage from './../pages/main-page/main-page';
 import FavouritePage from './../pages/favourites-page/favourites-page';
 import LoginPage from './../pages/login-page/login-page';
@@ -21,9 +21,15 @@ export default function App(): JSX.Element {
           element={<Layout authorizationStatus={authorizationStatus} />}
         >
           <Route
-            index
-            element={<MainPage />}
+            element={<Navigate to={`/${CITIES[3].name}`} />} index path={AppRoute.Root}
           />
+          {CITIES.map((city)=> (
+            <Route
+              element={<MainPage city={city.name} />} index key={city.id} path={`/${city.id}`}
+            />
+          ))}
+
+
           <Route
             path={AppRoute.Login}
             element={

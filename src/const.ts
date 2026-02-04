@@ -14,42 +14,48 @@ export enum AuthorizationStatus {
 export const CITIES_LIST: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 export const CITIES = [
-  { name: 'Paris',
+  { id: 'paris',
+    name: 'Paris',
     location: {
       latitude: 40.835292,
       longitude: -73.916236,
       zoom: 10,
     }
   },
-  { name: 'Cologne',
+  { id: 'cologne',
+    name: 'Cologne',
     location: {
       latitude: 40.835292,
       longitude: -73.916236,
       zoom: 10,
     }
   },
-  { name: 'Brussels',
+  { id: 'brussels',
+    name: 'Brussels',
     location: {
       latitude: 40.835292,
       longitude: -73.916236,
       zoom: 10,
     }
   },
-  { name: 'Amsterdam',
+  { id: 'amsterdam',
+    name: 'Amsterdam',
     location: {
       latitude: 52.35514938496378,
       longitude: 4.673877537499948,
       zoom: 8,
     }
   },
-  { name: 'Hamburg',
+  { id: 'hamburg',
+    name: 'Hamburg',
     location: {
       latitude: 40.835292,
       longitude: -73.916236,
       zoom: 10,
     }
   },
-  { name: 'Dusseldorf',
+  { id: 'dusseldorf',
+    name: 'Dusseldorf',
     location: {
       latitude: 40.835292,
       longitude: -73.916236,
