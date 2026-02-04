@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {incrementStep} from './action';
+import {setCity} from './action';
 import { LIST_OFFERS } from '../mocks/list-offers';
 import { CITIES, TCityName } from '../const';
 import { TListOffers } from '../types';
@@ -10,20 +10,20 @@ import { TListOffers } from '../types';
 // } Интерфейсы поддерживают декларативное слияние, а псевдонимы типов нет.
 // Объявив два или более интерфейса с одинаковыми идентификаторами (именами), мы получим один общий интерфейс
 
-type OffersState = {
+type TOffersState = {
   city: TCityName;
   offers: TListOffers;
 }
 
-const initialState: OffersState = {
+const initialState: TOffersState = {
   city: CITIES[3].name,
   offers: LIST_OFFERS,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(incrementStep, (state) => {
-      state.step = state.step + STEP_COUNT;
+    .addCase(setCity, (state, action) => {
+      state.city = action.payload;
     });
 });
 

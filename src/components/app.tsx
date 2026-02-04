@@ -8,19 +8,9 @@ import NotFoundPage from './../pages/not-found-page/not-found-page';
 import PrivateRoute from './private-route';
 import Layout from './layout/layout';
 import { getAuthorizationStatus } from '../authorizationStatus';
-import {TCity, TComments, TListOffers, TOffers } from '../types';
 
-type AppScreenProps = {
-  userName: string;
-  favouriteCount: number;
-  randomCity: string;
-  cities: TCity[];
-  listOffers: TListOffers;
-  offers: TOffers;
-  comments: TComments;
-}
 
-export default function App({userName, favouriteCount, randomCity, cities, listOffers, offers, comments}: AppScreenProps): JSX.Element {
+export default function App(): JSX.Element {
   const authorizationStatus = getAuthorizationStatus();
 
   return (
@@ -28,11 +18,11 @@ export default function App({userName, favouriteCount, randomCity, cities, listO
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<Layout authorizationStatus={authorizationStatus} favouriteCount={favouriteCount} userName={userName} />}
+          element={<Layout authorizationStatus={authorizationStatus} />}
         >
           <Route
             index
-            element={<MainPage cities={cities} listOffers={listOffers} />}
+            element={<MainPage />}
           />
           <Route
             path={AppRoute.Login}
@@ -40,7 +30,7 @@ export default function App({userName, favouriteCount, randomCity, cities, listO
               <PrivateRoute
                 authorizationStatus={authorizationStatus} isReverse
               >
-                <LoginPage randomCity={randomCity}/>
+                <LoginPage />
               </PrivateRoute>
             }
           />
@@ -56,11 +46,11 @@ export default function App({userName, favouriteCount, randomCity, cities, listO
           />
           <Route
             path={`${AppRoute.Offer}/:id`}
-            element={<OfferPage offers={offers} authorizationStatus={authorizationStatus} listOffers={listOffers} randomCity={randomCity} comments={comments}/>}
+            element={<OfferPage />}
           />
           <Route
             path="*"
-            element={<NotFoundPage type='page' randomCity={randomCity}/>}
+            element={<NotFoundPage type='page' />}
           />
         </Route>
       </Routes>

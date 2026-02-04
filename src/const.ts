@@ -59,6 +59,8 @@ export const CITIES = [
 ] as const;
 
 export type TCityName = (typeof CITIES)[number]['name'];
+// export type TCityName = 'Paris' | 'Cologne' | 'Brussels' | 'Amsterdam' | 'Hamburg' | 'Dusseldorf';
+
 
 export const Setting = {
   FAVOURITE_COUNT: 3,
