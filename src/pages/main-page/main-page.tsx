@@ -1,21 +1,25 @@
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 import CurrentOffers from '../../components/current-offers';
 import { AppRoute, CITIES } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { setCity } from '../../store/action';
-
+import { offersActions, offersSelectors } from '../../store/slices/offers';
+// import {useActionCreators} from '../../hooks/store';
 
 export default function MainPage(): JSX.Element {
 
-  const listOffers = useAppSelector((state) => state.offers);
-  const currentCity = useAppSelector((state) => state.city);
+  const listOffers = useAppSelector(offersSelectors.offers);
+  const currentCity = useAppSelector(offersSelectors.city);
   const dispatch = useAppDispatch();
+  // const {setCity}  = useActionCreators(offersActions);
+  // setCity(city.name) вместо dispatch(offersActions.setCity(city.name));
   const currentOffers = listOffers.filter((listOffer) => listOffer.city.name === currentCity);
 
   const isEmpty: boolean = currentOffers.length === 0;
 
+  // <main className={`page__main, page__main--index, ${isEmpty && 'page__main--index-empty'}`}></main>
   return (
-    <main className={`page__main, page__main--index, ${isEmpty && 'page__main--index-empty'}`}>
+    <main className={classNames('page__main', 'page__main--index', {'page__main--index-empty' : isEmpty})}>
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         {/* <LocationContainer cities={CITIES} currentCity={currentCity} />
@@ -29,7 +33,7 @@ export default function MainPage(): JSX.Element {
                   to={AppRoute.Root}
                   onClick={(evt) => {
                     evt.preventDefault();
-                    dispatch(setCity(city.name));
+                    dispatch(offersActions.setCity(city.name));
                   }}
                 >
                   <span>{city.name}</span>
