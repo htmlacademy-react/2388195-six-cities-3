@@ -4,12 +4,14 @@ import 'leaflet/dist/leaflet.css';
 import { TListOffers } from '../../types';
 import useMap from './use-map';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CITIES, TCityName} from '../../const';
+import { useAppSelector } from '../../hooks/store';
+import { offersSelectors } from '../../store/slices/offers';
 
 type CitiesMapProps = {
   className?: string;
   currentCity: TCityName;
   currentOffers: TListOffers;
-  activeOfferId?: string | null;
+  // activeOfferId?: string | null;
 }
 
 const defaultCustomIcon = leaflet.icon({
@@ -24,7 +26,8 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [20, 40],
 });
 
-export default function CitiesMap({className, currentCity, currentOffers, activeOfferId}: CitiesMapProps): JSX.Element {
+export default function CitiesMap({className, currentCity, currentOffers}: CitiesMapProps): JSX.Element {
+  const activeId = useAppSelector(offersSelectors.activeId);
   const containerMapRef = useRef<HTMLDivElement>(null);
   const city = CITIES.find((item)=> item.name === currentCity)!;
   const map = useMap({containerMapRef: containerMapRef, location: city.location});
@@ -47,12 +50,12 @@ export default function CitiesMap({className, currentCity, currentOffers, active
             lat: currentOffer.location.latitude,
             lng: currentOffer.location.longitude,
           }, {
-            icon: currentOffer.id === activeOfferId ? currentCustomIcon : defaultCustomIcon,
+            icon: currentOffer.id === activeId ? currentCustomIcon : defaultCustomIcon,
           })
           .addTo(markerLayer.current);
       });
     }
-  }, [activeOfferId, map, currentOffers]);
+  }, [activeId, map, currentOffers]);
 
   return (
     <section className={`map ${className}`} ref={containerMapRef}>

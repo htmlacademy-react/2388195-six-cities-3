@@ -1,8 +1,10 @@
 import { MIN_STAR_WIDTH } from './const';
 import { TListOffers } from './types';
+import type {CITIES, TCityName} from'./const';
 
-export default function randomiseCity (array: string[]) : string {
-  return array[Math.floor(Math.random() * array.length)];
+
+export default function getRandomCity (array: typeof CITIES) : TCityName {
+  return array[Math.floor(Math.random() * array.length)].name;
 }
 
 export function getStarActiveWidth (rating: number): string {

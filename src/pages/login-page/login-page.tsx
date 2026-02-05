@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, TCityName } from '../../const';
 
 type LoginPageProps = {
-  randomCity: string;
+  randomCity: TCityName;
 }
 
 export default function LoginPage({ randomCity}: LoginPageProps): JSX.Element {

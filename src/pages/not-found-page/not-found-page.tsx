@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, TCityName } from '../../const';
 
 const variants = {
   page: 'Page Not Found',
@@ -7,7 +7,7 @@ const variants = {
 };
 
 type TNotFoundPageProp ={
-  randomCity: string;
+  randomCity: TCityName;
   type: keyof typeof variants;
 }
 

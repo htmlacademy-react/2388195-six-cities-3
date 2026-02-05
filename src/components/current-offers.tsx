@@ -1,25 +1,28 @@
-import {useState } from 'react';
-import { TListOffers, TListOffer, Nullable} from '../types';
+// import {useState } from 'react';
+import {MouseEvent} from 'react';
+import { TListOffers, TListOffer} from '../types';
 import PlaceCard from './place-card';
 import CitiesMap from './cities-map/cities-map';
 import { TCityName } from '../const';
 
+
 type ListCardsProp = {
   currentOffers: TListOffers;
   currentCity: TCityName;
+  isEmpty:boolean;
 }
 
-export default function CurrentOffers({currentOffers, currentCity}: ListCardsProp): JSX.Element {
+export default function CurrentOffers({currentOffers, currentCity, isEmpty}: ListCardsProp): JSX.Element {
   const currentOffersNumber = currentOffers.length;
 
   // Первонач. состояние null (карточки не выделены) если наведен курсор - то TListOffer
-  const [activeOffer, setActiveOffer] = useState<Nullable<TListOffer>>(null);
+  // const [activeOffer, setActiveOffer] = useState<Nullable<TListOffer>>(null);
   const handleHover = (currentOffer?: TListOffer) => {
     setActiveOffer(currentOffer || null);
   };
 
   return (
-    <div className="cities__places-container container">
+    <div className={classNames('cities__places-container', 'container',{'cities__places-container--empty': isEmpty})}>
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">{currentOffersNumber} place{currentOffersNumber > 1 && 's'} to stay in {currentCity}</b>
@@ -53,7 +56,8 @@ export default function CurrentOffers({currentOffers, currentCity}: ListCardsPro
         </div>
       </section>
       <div className="cities__right-section">
-        <CitiesMap className='cities__map' currentOffers={currentOffers} currentCity={currentCity} activeOfferId={activeOffer?.id} />
+        {/* <CitiesMap className='cities__map' currentOffers={currentOffers} currentCity={currentCity} activeOfferId={activeOffer?.id} /> */}
+        <CitiesMap className='cities__map' currentOffers={currentOffers} currentCity={currentCity} />
       </div>
     </div>
 
