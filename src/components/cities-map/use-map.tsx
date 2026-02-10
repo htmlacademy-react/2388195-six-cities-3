@@ -8,7 +8,7 @@ type UseMapProps = {
     longitude: number;
     zoom: number;
   };
-  containerMapRef: React.RefObject<HTMLDivElement | null>;
+  containerMapRef: React.RefObject<HTMLElement | null>;
 }
 
 export default function useMap({containerMapRef, location}: UseMapProps) {

@@ -1,10 +1,9 @@
-// import {useState } from 'react';
-import {MouseEvent} from 'react';
-import { TListOffers, TListOffer} from '../types';
+import { useState } from 'react';
+import classNames from 'classnames';
+import { TListOffers, TListOffer, Nullable} from '../types';
 import PlaceCard from './place-card';
 import CitiesMap from './cities-map/cities-map';
 import { TCityName } from '../const';
-
 
 type ListCardsProp = {
   currentOffers: TListOffers;
@@ -16,7 +15,7 @@ export default function CurrentOffers({currentOffers, currentCity, isEmpty}: Lis
   const currentOffersNumber = currentOffers.length;
 
   // Первонач. состояние null (карточки не выделены) если наведен курсор - то TListOffer
-  // const [activeOffer, setActiveOffer] = useState<Nullable<TListOffer>>(null);
+  const [activeOffer, setActiveOffer] = useState<Nullable<TListOffer>>(null);
   const handleHover = (currentOffer?: TListOffer) => {
     setActiveOffer(currentOffer || null);
   };
@@ -25,11 +24,11 @@ export default function CurrentOffers({currentOffers, currentCity, isEmpty}: Lis
     <div className={classNames('cities__places-container', 'container',{'cities__places-container--empty': isEmpty})}>
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
-        <b className="places__found">{currentOffersNumber} place{currentOffersNumber > 1 && 's'} to stay in {currentCity}</b>
+        <b className="places__found">{currentOffersNumber} place{currentOffersNumber !== 1 && 's'} to stay in {currentCity}</b>
         <form className="places__sorting" action="#" method="get">
           <span className="places__sorting-caption">Sort by</span>
           <span className="places__sorting-type" tabIndex={0}>
-                      Popular
+            Popular
             <svg className="places__sorting-arrow" width="7" height="4">
               <use xlinkHref="#icon-arrow-select"></use>
             </svg>
@@ -56,10 +55,81 @@ export default function CurrentOffers({currentOffers, currentCity, isEmpty}: Lis
         </div>
       </section>
       <div className="cities__right-section">
-        {/* <CitiesMap className='cities__map' currentOffers={currentOffers} currentCity={currentCity} activeOfferId={activeOffer?.id} /> */}
-        <CitiesMap className='cities__map' currentOffers={currentOffers} currentCity={currentCity} />
+        <CitiesMap className='cities__map' currentOffers={currentOffers} currentCity={currentCity} activeOfferId={activeOffer?.id}/>
       </div>
     </div>
-
   );
 }
+
+
+////////////////////////////////////////
+// // import {MouseEvent, useState} from 'react';
+// import { useState } from 'react';
+// import classNames from 'classnames';
+// import { TListOffers, TListOffer, Nullable} from '../types';
+// import PlaceCard from './place-card';
+// import CitiesMap from './cities-map/cities-map';
+// import { TCityName } from '../const';
+// import { useAppDispatch } from '../hooks/store-hooks';
+// import { useAppDispatch } from '../hooks/store-hooks';
+// import { offersActions } from '../store/slices/offers-slice';
+
+
+// type ListCardsProp = {
+//   currentOffers: TListOffers;
+//   currentCity: TCityName;
+//   isEmpty:boolean;
+// }
+
+// export default function CurrentOffers({currentOffers, currentCity, isEmpty}: ListCardsProp): JSX.Element {
+//   const currentOffersNumber = currentOffers.length;
+//     const dispatch = useAppDispatch();
+// const handleSetActive = (id: string) => {
+//   dispatch(offersActions.setActiveId(id));
+// };
+//   // Первонач. состояние null (карточки не выделены) если наведен курсор - то TListOffer
+//   const [activeOffer, setActiveOffer] = useState<Nullable<TListOffer>>(null);
+//   const handleHover = (currentOffer?: TListOffer) => {
+//     setActiveOffer(currentOffer || null);
+//   };
+
+//   return (
+//     <div className={classNames('cities__places-container', 'container',{'cities__places-container--empty': isEmpty})}>
+//       <section className="cities__places places">
+//         <h2 className="visually-hidden">Places</h2>
+//         <b className="places__found">{currentOffersNumber} place{currentOffersNumber !== 1 && 's'} to stay in {currentCity}</b>
+//         <form className="places__sorting" action="#" method="get">
+//           <span className="places__sorting-caption">Sort by</span>
+//           <span className="places__sorting-type" tabIndex={0}>
+//                       Popular
+//             <svg className="places__sorting-arrow" width="7" height="4">
+//               <use xlinkHref="#icon-arrow-select"></use>
+//             </svg>
+//           </span>
+//           <ul className="places__options places__options--custom places__options--opened">
+//             <li className="places__option places__option--active" tabIndex={0}>Popular</li>
+//             <li className="places__option" tabIndex={0}>Price: low to high</li>
+//             <li className="places__option" tabIndex={0}>Price: high to low</li>
+//             <li className="places__option" tabIndex={0}>Top rated first</li>
+//           </ul>
+//         </form>
+//         <div className="cities__places-list places__list tabs__content">
+//           <div className="cities__places-list places__list tabs__content">
+//             {
+//               currentOffers.map((currentOffer) => (
+//                 <PlaceCard
+//                   currentOffer={currentOffer}
+//                   key={currentOffer.id}
+//                   handleHover={handleHover}
+//                   block="cities"
+//                 />))
+//             }
+//           </div>
+//         </div>
+//       </section>
+//       <div className="cities__right-section">
+//         <CitiesMap className='cities__map' currentOffers={currentOffers} currentCity={currentCity} activeOfferId={activeOffer?.id}/>
+//       </div>
+//     </div>
+//   );
+// }

@@ -2,8 +2,8 @@ import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import CurrentOffers from '../../components/current-offers';
 import { CITIES, TCityName } from '../../const';
-import { useAppSelector } from '../../hooks/store';
-import { offersSelectors } from '../../store/slices/offers';
+import { useAppSelector } from '../../hooks/store-hooks';
+import { offersSelectors } from '../../store/slices/offers-slice';
 
 type MainPageProps = {
   currentCity: TCityName;

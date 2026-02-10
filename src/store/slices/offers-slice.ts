@@ -3,7 +3,7 @@ import { TListOffer } from '../../types';
 import { LIST_OFFERS } from '../../mocks/list-offers';
 
 type TOffersState = {
-  activeId?: TListOffer['id'];
+  activeId?: TListOffer['id'] | null;
   offers: TListOffer[];
 }
 
@@ -16,7 +16,7 @@ export const offersSlice = createSlice({
   name: 'offers',
   initialState,
   reducers: {
-    setActiveId(state, action: PayloadAction<TListOffer['id'] | undefined>) {
+    setActiveId(state, action: PayloadAction<TListOffer['id'] | undefined | null>) {
       state.activeId = action.payload;
     },
   },
