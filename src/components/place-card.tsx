@@ -5,7 +5,7 @@ import { getStarActiveWidth } from '../util';
 
 type PlaceCardProp = {
   currentOffer: TListOffer;
-  handleHover?: (listOffer?: TListOffer) => void;
+  handleHover?: (currentOffer?: TListOffer) => void;
   block: string;
 }
 

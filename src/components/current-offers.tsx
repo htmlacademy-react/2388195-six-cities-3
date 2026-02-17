@@ -1,6 +1,8 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import classNames from 'classnames';
-import { TListOffers, TListOffer, Nullable} from '../types';
+import { useAppDispatch, useAppSelector } from '../hooks/store-hooks';
+import { offersActions, selectActiveId } from '../store/slices/offers-slice';
+import { TListOffers, TListOffer} from '../types';
 import PlaceCard from './place-card';
 import CitiesMap from './cities-map/cities-map';
 import { TCityName } from '../const';
@@ -14,10 +16,20 @@ type ListCardsProp = {
 export default function CurrentOffers({currentOffers, currentCity, isEmpty}: ListCardsProp): JSX.Element {
   const currentOffersNumber = currentOffers.length;
 
-  // Первонач. состояние null (карточки не выделены) если наведен курсор - то TListOffer
-  const [activeOffer, setActiveOffer] = useState<Nullable<TListOffer>>(null);
+  // // Первонач. состояние null (карточки не выделены) если наведен курсор - то TListOffer
+  // const [activeOffer, setActiveOffer] = useState<Nullable<TListOffer>>(null);
+  // const handleHover = (currentOffer?: TListOffer) => {
+  //   setActiveOffer(currentOffer || null);
+  // };
+
+  const dispatch = useAppDispatch();
+
+  // Получаем активный ID из стора
+  const activeOfferId = useAppSelector(selectActiveId);
+
+  // Обработчик теперь отправляет action в стор
   const handleHover = (currentOffer?: TListOffer) => {
-    setActiveOffer(currentOffer || null);
+    dispatch(offersActions.setActiveId(currentOffer ? currentOffer.id : null));
   };
 
   return (
@@ -41,21 +53,19 @@ export default function CurrentOffers({currentOffers, currentCity, isEmpty}: Lis
           </ul>
         </form>
         <div className="cities__places-list places__list tabs__content">
-          <div className="cities__places-list places__list tabs__content">
-            {
-              currentOffers.map((currentOffer) => (
-                <PlaceCard
-                  currentOffer={currentOffer}
-                  key={currentOffer.id}
-                  handleHover={handleHover}
-                  block="cities"
-                />))
-            }
-          </div>
+          {
+            currentOffers.map((currentOffer) => (
+              <PlaceCard
+                currentOffer={currentOffer}
+                key={currentOffer.id}
+                handleHover={handleHover}
+                block="cities"
+              />))
+          }
         </div>
       </section>
       <div className="cities__right-section">
-        <CitiesMap className='cities__map' currentOffers={currentOffers} currentCity={currentCity} activeOfferId={activeOffer?.id}/>
+        <CitiesMap className='cities__map' currentOffers={currentOffers} currentCity={currentCity} activeOfferId={activeOfferId}/>
       </div>
     </div>
   );

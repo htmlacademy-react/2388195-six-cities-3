@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TListOffer } from '../../types';
 import { LIST_OFFERS } from '../../mocks/list-offers';
+import { TRootState } from '../../types/store';
 
 type TOffersState = {
-  activeId?: TListOffer['id'] | null;
+  activeId: TListOffer['id'] | null;
   offers: TListOffer[];
 }
 
 const initialState: TOffersState = {
-  activeId: undefined,
+  activeId: null,
   offers: LIST_OFFERS,
 };
 
@@ -16,19 +17,20 @@ export const offersSlice = createSlice({
   name: 'offers',
   initialState,
   reducers: {
-    setActiveId(state, action: PayloadAction<TListOffer['id'] | undefined | null>) {
+    setActiveId(state, action: PayloadAction<TListOffer['id'] | null>) {
       state.activeId = action.payload;
     },
   },
   selectors: {
-    activeId: (state: TOffersState) => state.activeId,
-    offers: (state: TOffersState) => state.offers,
+    activeId: (state: TOffersState): TListOffer['id'] | null => state.activeId,
+    offers: (state: TOffersState): TListOffer[] => state.offers,
   }
 });
 
 export const offersActions = offersSlice.actions;
-export const offersSelectors = offersSlice.selectors;
-
+// export const offersSelectors = offersSlice.selectors;
+export const selectActiveId = (state: TRootState) => state.offers.activeId;
+export const selectOffers = (state: TRootState) => state.offers.offers;
 
 /////////////////////////////////////////////////////////
 // import { createSlice, PayloadAction } from '@reduxjs/toolkit';

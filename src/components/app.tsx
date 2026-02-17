@@ -56,10 +56,10 @@ export default function App(): JSX.Element {
               </PrivateRoute>
             }
           />
-          {/* <Route
+          <Route
             path={`${AppRoute.Offer}/:id`}
             element={<OfferPage randomCity={randomCity} authorizationStatus={authorizationStatus} />}
-          /> */}
+          />
           <Route
             path="*"
             element={<NotFoundPage randomCity={randomCity} type='page' />}

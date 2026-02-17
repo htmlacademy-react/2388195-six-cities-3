@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import CurrentOffers from '../../components/current-offers';
 import { CITIES, TCityName } from '../../const';
 import { useAppSelector } from '../../hooks/store-hooks';
-import { offersSelectors } from '../../store/slices/offers-slice';
+import { selectOffers } from '../../store/slices/offers-slice';
 
 type MainPageProps = {
   currentCity: TCityName;
@@ -11,7 +11,7 @@ type MainPageProps = {
 
 export default function MainPage({currentCity}: MainPageProps): JSX.Element {
 
-  const listOffers = useAppSelector(offersSelectors.offers);
+  const listOffers = useAppSelector(selectOffers);
   const currentOffers = listOffers.filter((listOffer) => listOffer.city.name === currentCity);
   const isEmpty: boolean = currentOffers.length === 0;
 
