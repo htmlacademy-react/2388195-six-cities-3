@@ -1,4 +1,3 @@
-// import { useParams } from 'react-router-dom';
 import OfferForm from '../../components/offer-form';
 import OfferImage from '../../components/offer-image';
 import OfferNearPlaces from '../../components/offer-near-places';
@@ -28,8 +27,6 @@ export default function OfferPage({offers, authorizationStatus, randomCity, comm
   const listOffers = useAppSelector(selectOffers);
   const currentListOffer: TListOffer = listOffers.find((listOffer: TListOffer) => listOffer.id === id)!;
   const currentCity = currentListOffer.city.name;
-  // const isEmpty: boolean = currentOffers.length === 0;
-
 
   if (!currentOffer) {
     return <NotFoundPage type='offer' randomCity={randomCity} />;
