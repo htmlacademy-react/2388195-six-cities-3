@@ -1,10 +1,12 @@
+import { TCityName } from './const';
+
 export type TListOffer = {
     id: string;
     title: string;
     type: string;
     price: number;
     city: {
-        name: string;
+        name: TCityName;
         location: {
             latitude: number;
             longitude: number;
@@ -31,7 +33,7 @@ export type TOffer = {
     type: string;
     price: number;
     city: {
-        name: string;
+        name: TCityName;
         location: {
             latitude: number;
             longitude: number;
@@ -63,7 +65,7 @@ export type TOffers = TOffer[]
 export type Nullable<T> = T | null | undefined;
 
 export type TCity = {
-  name: string;
+  name: TCityName;
   location: {
     latitude: number;
     longitude: number;
@@ -72,7 +74,7 @@ export type TCity = {
 };
 
 export type TCities = {
-  name: string;
+  name: TCityName;
   location: {
     latitude: number;
     longitude: number;

@@ -11,7 +11,7 @@ export function getStarActiveWidth (rating: number): string {
   return `${MIN_STAR_WIDTH * rating}%`;
 }
 
-export function getNearOffers (offers: TListOffers, city: string | undefined, id: string | undefined): TListOffers {
+export function getNearOffers (offers: TListOffers, city: string | undefined, id: string | null): TListOffers {
   const MAX_NEAR_OFFERS = 3;
   const nearOffers: TListOffers = [];
 

@@ -3,12 +3,14 @@ import { AppRoute, CITIES, Setting } from '../const';
 import MainPage from './../pages/main-page/main-page';
 import FavouritePage from './../pages/favourites-page/favourites-page';
 import LoginPage from './../pages/login-page/login-page';
-// import OfferPage from './../pages/offer-page/offer-page';
 import NotFoundPage from './../pages/not-found-page/not-found-page';
 import PrivateRoute from './private-route';
 import Layout from './layout/layout';
 import { getAuthorizationStatus } from '../authorizationStatus';
 import getRandomCity from '../util';
+import OfferPage from '../pages/offer-page/offer-page';
+import { COMMENTS } from '../mocks/comments';
+import { OFFERS } from '../mocks/offers';
 
 
 export default function App(): JSX.Element {
@@ -58,7 +60,7 @@ export default function App(): JSX.Element {
           />
           <Route
             path={`${AppRoute.Offer}/:id`}
-            element={<OfferPage randomCity={randomCity} authorizationStatus={authorizationStatus} />}
+            element={<OfferPage offers={OFFERS} comments={COMMENTS} randomCity={randomCity} authorizationStatus={authorizationStatus} />}
           />
           <Route
             path="*"
