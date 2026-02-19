@@ -1,7 +1,7 @@
 import { Offers } from '../types';
 
 export const OFFERS: Offers = [{
-  'id': '1',
+  'id': 'fbb92630-ceb0-4ddf-a594-a4ae39ecaa91',
   'title': 'Beautiful & luxurious studio at great location',
   'type': 'apartment',
   'price': 120,
