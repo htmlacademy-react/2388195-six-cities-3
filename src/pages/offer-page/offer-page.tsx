@@ -19,9 +19,6 @@ type OfferPageProps = {
 
 export default function OfferPage({offers, authorizationStatus, randomCity, comments}: OfferPageProps): JSX.Element {
 
-  // Как лучше 25 или 26 строка???
-  //параметры из текущего URL
-  // const {id} = useParams();
   const id = useAppSelector(selectActiveId);
   const currentOffer: Offer = offers.find((offer: Offer) => offer.id === id)!;
   const listOffers = useAppSelector(selectOffers);
