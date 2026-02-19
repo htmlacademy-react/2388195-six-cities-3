@@ -3,7 +3,7 @@ import { ListOffer } from '../../types';
 import { LIST_OFFERS } from '../../mocks/list-offers';
 import { RootState } from '../../types/store';
 
-type OffersState = {
+interface OffersState {
   activeId: ListOffer['id'] | null;
   offers: ListOffer[];
 }

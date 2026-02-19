@@ -1,7 +1,7 @@
 import { Comments } from '../types';
 import OfferReviewsItem from './offer-reviews-item';
 
-type OfferReviewsProps = {
+interface OfferReviewsProps {
   comments: Comments;
 }
 

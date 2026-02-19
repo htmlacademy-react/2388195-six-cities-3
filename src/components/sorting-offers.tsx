@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { SortType } from '../const';
 
 
-type SortingOffersProp = {
+interface SortingOffersProps {
   onChangeSort: (type: SortType) => void;
   currentSortType: SortType;
 }
 
-export default function SortingOffers({onChangeSort, currentSortType}: SortingOffersProp): JSX.Element {
+export default function SortingOffers({onChangeSort, currentSortType}: SortingOffersProps): JSX.Element {
 
   const [isOpened, setIsOpened] = useState(false);
 

@@ -5,7 +5,7 @@ import { CITIES, CityName } from '../../const';
 import { useAppSelector } from '../../hooks/store-hooks';
 import { selectOffers } from '../../store/slices/offers-slice';
 
-type MainPageProps = {
+interface MainPageProps {
   currentCity: CityName;
 }
 

@@ -1,11 +1,11 @@
-import { City } from '../types';
+import { Cities, City } from '../types';
 
-type LocationContainerProps = {
+interface LocationContainerProps {
   currentCity:City;
-  cities: City[];
+  cities: Cities;
 }
 
-type LocationContainerItemProps = {
+interface LocationContainerItemProps {
   currentCity:City;
   city: City;
 }

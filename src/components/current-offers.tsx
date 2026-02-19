@@ -9,13 +9,13 @@ import { SortType, CityName } from '../const';
 import SortingOffers from './sorting-offers';
 import { getSortedOffers } from '../util';
 
-type ListCardsProp = {
+interface ListCardsProps {
   currentOffers: ListOffers;
   currentCity: CityName;
   isEmpty:boolean;
 }
 
-export default function CurrentOffers({currentOffers, currentCity, isEmpty}: ListCardsProp): JSX.Element {
+export default function CurrentOffers({currentOffers, currentCity, isEmpty}: ListCardsProps): JSX.Element {
   const currentOffersNumber = currentOffers.length;
 
   const dispatch = useAppDispatch();

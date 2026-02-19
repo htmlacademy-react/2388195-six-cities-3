@@ -1,7 +1,7 @@
 import { Comment } from '../types';
 import { getStarActiveWidth } from '../util';
 
-type OfferReviewsItemProps = {
+interface OfferReviewsItemProps {
   commentItem: Comment;
 }
 

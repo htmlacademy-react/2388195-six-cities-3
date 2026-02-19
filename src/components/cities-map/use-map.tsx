@@ -2,7 +2,7 @@ import {useEffect, useState, useRef} from 'react';
 import leaflet, { Map } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-type UseMapProps = {
+interface UseMapProps {
   location: {
     latitude: number;
     longitude: number;

@@ -5,7 +5,7 @@ import { ListOffers } from '../../types';
 import useMap from './use-map';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CITIES, CityName} from '../../const';
 
-type CitiesMapProps = {
+interface CitiesMapProps {
   className?: string;
   currentCity: CityName;
   currentOffers: ListOffers;

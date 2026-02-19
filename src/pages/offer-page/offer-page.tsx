@@ -10,7 +10,7 @@ import CitiesMap from '../../components/cities-map/cities-map';
 import { useAppSelector } from '../../hooks/store-hooks';
 import { selectActiveId, selectOffers } from '../../store/slices/offers-slice';
 
-type OfferPageProps = {
+interface OfferPageProps {
   offers: Offers;
   authorizationStatus: AuthorizationStatus;
   randomCity: CityName;

@@ -3,13 +3,13 @@ import { AppRoute } from '../const';
 import { ListOffer } from '../types';
 import { getStarActiveWidth } from '../util';
 
-type PlaceCardProp = {
+interface PlaceCardProps {
   currentOffer: ListOffer;
   handleHover?: (currentOffer?: ListOffer) => void;
   block: string;
 }
 
-export default function PlaceCard({currentOffer, handleHover, block}: PlaceCardProp): JSX.Element {
+export default function PlaceCard({currentOffer, handleHover, block}: PlaceCardProps): JSX.Element {
   const handleMouseOn = () => {
     handleHover?.(currentOffer);
   };

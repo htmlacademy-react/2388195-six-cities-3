@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, CityName } from '../../const';
 
-type LoginPageProps = {
+interface LoginPageProps {
   randomCity: CityName;
 }
 

@@ -6,12 +6,12 @@ const variants = {
   offer: 'We have no offers with that ID'
 };
 
-type TNotFoundPageProp ={
+interface NotFoundPageProps {
   randomCity: CityName;
   type: keyof typeof variants;
 }
 
-export default function NotFoundPage({randomCity, type}: TNotFoundPageProp): JSX.Element {
+export default function NotFoundPage({randomCity, type}: NotFoundPageProps): JSX.Element {
   return (
     <div className="page page--gray page--login">
       <main className="page__main page__main--login">
