@@ -61,3 +61,36 @@ export type TOffer = {
 export type TOffers = TOffer[]
 
 export type Nullable<T> = T | null | undefined;
+
+export type TCity = {
+  name: string;
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
+};
+
+export type TComment = {
+  id: string;
+  date: string;
+  user: {
+      name: string;
+      avatarUrl: string;
+      isPro: boolean;
+  };
+  comment: string;
+  rating: number;
+};
+
+export type TComments = {
+  id: string;
+  date: string;
+  user: {
+      name: string;
+      avatarUrl: string;
+      isPro: boolean;
+  };
+  comment: string;
+  rating: number;
+}[];

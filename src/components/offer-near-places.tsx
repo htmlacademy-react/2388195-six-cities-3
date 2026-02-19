@@ -1,31 +1,25 @@
-import { TListOffers, TListOffer, Nullable } from '../types';
+import { TListOffers } from '../types';
 import PlaceCard from './place-card';
-import { useState } from 'react';
 
 type OfferNearPlaces = {
-  nearbyOffers: TListOffers;
+  nearOffers: TListOffers;
 }
 
-export default function OfferNearPlaces({nearbyOffers}: OfferNearPlaces): JSX.Element {
+export default function OfferNearPlaces({nearOffers}: OfferNearPlaces): JSX.Element {
 
-  if (!nearbyOffers) {
+  if (!nearOffers) {
     <p>No offers found</p>;
   }
-
-  const [, setActiveOffer] = useState<Nullable<TListOffer>>(null);
-  const handleHover = (listOffer?: TListOffer) => {
-    setActiveOffer(listOffer || null);
-  };
 
   return (
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
       <div className="near-places__list places__list">
-        {nearbyOffers.map((nearbyOffer) => (
+        {nearOffers.map((nearOffer) => (
           <PlaceCard
-            listOffer={nearbyOffer}
-            key={nearbyOffer.id}
-            handleHover={handleHover}
+            currentOffer={nearOffer}
+            key={nearOffer.id}
+            block="near-places"
           />
         ))}
       </div>

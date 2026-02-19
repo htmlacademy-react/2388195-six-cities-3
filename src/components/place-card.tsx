@@ -4,26 +4,27 @@ import { TListOffer } from '../types';
 import { getStarActiveWidth } from '../util';
 
 type PlaceCardProp = {
-  listOffer: TListOffer;
-  handleHover: (listOffer?: TListOffer) => void;
+  currentOffer: TListOffer;
+  handleHover?: (listOffer?: TListOffer) => void;
+  block: string;
 }
 
-export default function PlaceCard({listOffer, handleHover}: PlaceCardProp): JSX.Element {
+export default function PlaceCard({currentOffer, handleHover, block}: PlaceCardProp): JSX.Element {
   const handleMouseOn = () => {
-    handleHover(listOffer);
+    handleHover?.(currentOffer);
   };
 
   const handleMouseOff = () => {
-    handleHover();
+    handleHover?.();
   };
 
-  const {id, isPremium, previewImage, price, title, type, rating} = listOffer;
+  const {id, isPremium, previewImage, price, title, type, rating} = currentOffer;
   const starActiveWidth: string = getStarActiveWidth(rating);
 
   return (
     <Link to={`${AppRoute.Offer}/${id}`}>
       <article
-        className="cities__card place-card"
+        className={`${block}__card place-card`}
         onMouseEnter={handleMouseOn}
         onMouseLeave={handleMouseOff}
       >
@@ -53,7 +54,7 @@ export default function PlaceCard({listOffer, handleHover}: PlaceCardProp): JSX.
             </div>
           </div>
           <h2 className="place-card__name">
-            <a href="#">{title}</a>
+            {title}
           </h2>
           <p className="place-card__type">{type}</p>
         </div>

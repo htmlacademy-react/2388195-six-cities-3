@@ -8,23 +8,21 @@ import NotFoundPage from './../pages/not-found-page/not-found-page';
 import PrivateRoute from './private-route';
 import Layout from './layout/layout';
 import { getAuthorizationStatus } from '../authorizationStatus';
-import { TListOffers, TOffers } from '../types';
+import {TCity, TComments, TListOffers, TOffers } from '../types';
 
 type AppScreenProps = {
   userName: string;
   favouriteCount: number;
   randomCity: string;
-  defaultCity: string;
-  cities: string[];
+  cities: TCity[];
   listOffers: TListOffers;
   offers: TOffers;
-  nearbyOffers: TListOffers;
+  comments: TComments;
 }
 
-export default function App({userName, favouriteCount, randomCity, defaultCity, cities, listOffers, offers, nearbyOffers}: AppScreenProps): JSX.Element {
-  const cityOffers = listOffers.filter((listOffer) => listOffer.city.name === defaultCity);
-  const cityOffersNumber = cityOffers.length;
+export default function App({userName, favouriteCount, randomCity, cities, listOffers, offers, comments}: AppScreenProps): JSX.Element {
   const authorizationStatus = getAuthorizationStatus();
+
   return (
     <BrowserRouter>
       <Routes>
@@ -34,7 +32,7 @@ export default function App({userName, favouriteCount, randomCity, defaultCity, 
         >
           <Route
             index
-            element={<MainPage cityOffersNumber={cityOffersNumber} defaultCity={defaultCity} cities={cities} listOffers={cityOffers} />}
+            element={<MainPage cities={cities} listOffers={listOffers} />}
           />
           <Route
             path={AppRoute.Login}
@@ -58,7 +56,7 @@ export default function App({userName, favouriteCount, randomCity, defaultCity, 
           />
           <Route
             path={`${AppRoute.Offer}/:id`}
-            element={<OfferPage offers={offers} authorizationStatus={authorizationStatus} nearbyOffers={nearbyOffers} randomCity={randomCity} />}
+            element={<OfferPage offers={offers} authorizationStatus={authorizationStatus} listOffers={listOffers} randomCity={randomCity} comments={comments}/>}
           />
           <Route
             path="*"

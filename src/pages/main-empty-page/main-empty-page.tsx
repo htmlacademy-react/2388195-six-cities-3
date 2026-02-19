@@ -1,8 +1,9 @@
 import LocationContainer from '../../components/location-container';
+import { TCity } from '../../types';
 
 type MainEmptyPageProp = {
-  defaultCity: string;
-  cities: string[];
+  defaultCity: TCity;
+  cities: TCity[];
 }
 
 export default function MainEmptyPage({cities, defaultCity}: MainEmptyPageProp): JSX.Element {
@@ -10,7 +11,7 @@ export default function MainEmptyPage({cities, defaultCity}: MainEmptyPageProp):
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
-        <LocationContainer cities={cities} defaultCity={defaultCity}/>
+        <LocationContainer cities={cities} currentCity={defaultCity}/>
       </div>
       <div className="cities">
         <div className="cities__places-container cities__places-container--empty container">
