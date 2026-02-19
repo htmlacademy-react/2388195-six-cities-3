@@ -1,4 +1,4 @@
-import { MIN_STAR_WIDTH } from './const';
+import { MIN_STAR_WIDTH, SortType } from './const';
 import { TListOffers } from './types';
 import type {CITIES, TCityName} from'./const';
 
@@ -26,3 +26,17 @@ export function getNearOffers (offers: TListOffers, city: string | undefined, id
 
   return nearOffers;
 }
+
+
+export const getSortedOffers = (offers: TListOffers, type: SortType) => {
+  switch (type) {
+    case SortType.LowToHigh:
+      return [...offers].sort((a, b) => a.price - b.price);
+    case SortType.HighToLow:
+      return [...offers].sort((a, b) => b.price - a.price);
+    case SortType.TopRated:
+      return [...offers].sort((a, b) => b.rating - a.rating);
+    default:
+      return offers;
+  }
+};

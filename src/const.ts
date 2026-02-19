@@ -74,6 +74,13 @@ export const Setting = {
   DEFAULT_CITY: 'Paris',
 } as const;
 
+export enum SortType {
+  Popular = 'Popular',
+  LowToHigh = 'Price: low to high',
+  HighToLow = 'Price: high to low',
+  TopRated = 'Top rated first',
+}
+
 export const RATING = [
   {value: 5, label: 'perfect'},
   {value: 4, label: 'good'},

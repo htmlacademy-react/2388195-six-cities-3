@@ -1,11 +1,13 @@
-// import { useState } from 'react';
+import { useState } from 'react';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../hooks/store-hooks';
 import { offersActions, selectActiveId } from '../store/slices/offers-slice';
 import { TListOffers, TListOffer} from '../types';
 import PlaceCard from './place-card';
 import CitiesMap from './cities-map/cities-map';
-import { TCityName } from '../const';
+import { SortType, TCityName } from '../const';
+import SortingOffers from './sorting-offers';
+import { getSortedOffers } from '../util';
 
 type ListCardsProp = {
   currentOffers: TListOffers;
@@ -32,6 +34,10 @@ export default function CurrentOffers({currentOffers, currentCity, isEmpty}: Lis
     dispatch(offersActions.setActiveId(currentOffer ? currentOffer.id : null));
   };
 
+  const [activeSort, setActiveSort] = useState(SortType.Popular);
+
+  const sortedOffers = getSortedOffers(currentOffers, activeSort);
+
   return (
     <div className={classNames('cities__places-container', 'container',{'cities__places-container--empty': isEmpty})}>
       {isEmpty ? (
@@ -45,24 +51,10 @@ export default function CurrentOffers({currentOffers, currentCity, isEmpty}: Lis
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found">{currentOffersNumber} place{currentOffersNumber !== 1 && 's'} to stay in {currentCity}</b>
-          <form className="places__sorting" action="#" method="get">
-            <span className="places__sorting-caption">Sort by</span>
-            <span className="places__sorting-type" tabIndex={0}>
-              Popular
-              <svg className="places__sorting-arrow" width="7" height="4">
-                <use xlinkHref="#icon-arrow-select"></use>
-              </svg>
-            </span>
-            <ul className="places__options places__options--custom places__options--opened">
-              <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-              <li className="places__option" tabIndex={0}>Price: low to high</li>
-              <li className="places__option" tabIndex={0}>Price: high to low</li>
-              <li className="places__option" tabIndex={0}>Top rated first</li>
-            </ul>
-          </form>
+          <SortingOffers currentSortType={activeSort} onChangeSort={setActiveSort} />
           <div className="cities__places-list places__list tabs__content">
             {
-              currentOffers.map((currentOffer) => (
+              sortedOffers.map((currentOffer) => (
                 <PlaceCard
                   currentOffer={currentOffer}
                   key={currentOffer.id}
@@ -74,7 +66,7 @@ export default function CurrentOffers({currentOffers, currentCity, isEmpty}: Lis
         </section>
       )}
       <div className="cities__right-section">
-        <CitiesMap className='cities__map' currentOffers={currentOffers} currentCity={currentCity} activeOfferId={activeOfferId}/>
+        <CitiesMap className='cities__map' currentOffers={sortedOffers} currentCity={currentCity} activeOfferId={activeOfferId}/>
       </div>
     </div>
   );
