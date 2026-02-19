@@ -1,6 +1,6 @@
-import { TOffers } from '../types';
+import { Offers } from '../types';
 
-export const OFFERS: TOffers = [{
+export const OFFERS: Offers = [{
   'id': '1',
   'title': 'Beautiful & luxurious studio at great location',
   'type': 'apartment',

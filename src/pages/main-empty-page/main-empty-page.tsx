@@ -1,9 +1,9 @@
 import LocationContainer from '../../components/location-container';
-import { TCity } from '../../types';
+import { City } from '../../types';
 
 type MainEmptyPageProp = {
-  defaultCity: TCity;
-  cities: TCity[];
+  defaultCity: City;
+  cities: City[];
 }
 
 export default function MainEmptyPage({cities, defaultCity}: MainEmptyPageProp): JSX.Element {

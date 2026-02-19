@@ -2,25 +2,25 @@ import { useState } from 'react';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../hooks/store-hooks';
 import { offersActions, selectActiveId } from '../store/slices/offers-slice';
-import { TListOffers, TListOffer} from '../types';
+import { ListOffers, ListOffer} from '../types';
 import PlaceCard from './place-card';
 import CitiesMap from './cities-map/cities-map';
-import { SortType, TCityName } from '../const';
+import { SortType, CityName } from '../const';
 import SortingOffers from './sorting-offers';
 import { getSortedOffers } from '../util';
 
 type ListCardsProp = {
-  currentOffers: TListOffers;
-  currentCity: TCityName;
+  currentOffers: ListOffers;
+  currentCity: CityName;
   isEmpty:boolean;
 }
 
 export default function CurrentOffers({currentOffers, currentCity, isEmpty}: ListCardsProp): JSX.Element {
   const currentOffersNumber = currentOffers.length;
 
-  // // Первонач. состояние null (карточки не выделены) если наведен курсор - то TListOffer
-  // const [activeOffer, setActiveOffer] = useState<Nullable<TListOffer>>(null);
-  // const handleHover = (currentOffer?: TListOffer) => {
+  // // Первонач. состояние null (карточки не выделены) если наведен курсор - то ListOffer
+  // const [activeOffer, setActiveOffer] = useState<Nullable<ListOffer>>(null);
+  // const handleHover = (currentOffer?: ListOffer) => {
   //   setActiveOffer(currentOffer || null);
   // };
 
@@ -30,7 +30,7 @@ export default function CurrentOffers({currentOffers, currentCity, isEmpty}: Lis
   const activeOfferId = useAppSelector(selectActiveId);
 
   // Обработчик теперь отправляет action в стор
-  const handleHover = (currentOffer?: TListOffer) => {
+  const handleHover = (currentOffer?: ListOffer) => {
     dispatch(offersActions.setActiveId(currentOffer ? currentOffer.id : null));
   };
 
@@ -77,18 +77,18 @@ export default function CurrentOffers({currentOffers, currentCity, isEmpty}: Lis
 // // import {MouseEvent, useState} from 'react';
 // import { useState } from 'react';
 // import classNames from 'classnames';
-// import { TListOffers, TListOffer, Nullable} from '../types';
+// import { ListOffers, ListOffer, Nullable} from '../types';
 // import PlaceCard from './place-card';
 // import CitiesMap from './cities-map/cities-map';
-// import { TCityName } from '../const';
+// import { CityName } from '../const';
 // import { useAppDispatch } from '../hooks/store-hooks';
 // import { useAppDispatch } from '../hooks/store-hooks';
 // import { offersActions } from '../store/slices/offers-slice';
 
 
 // type ListCardsProp = {
-//   currentOffers: TListOffers;
-//   currentCity: TCityName;
+//   currentOffers: ListOffers;
+//   currentCity: CityName;
 //   isEmpty:boolean;
 // }
 
@@ -98,9 +98,9 @@ export default function CurrentOffers({currentOffers, currentCity, isEmpty}: Lis
 // const handleSetActive = (id: string) => {
 //   dispatch(offersActions.setActiveId(id));
 // };
-//   // Первонач. состояние null (карточки не выделены) если наведен курсор - то TListOffer
-//   const [activeOffer, setActiveOffer] = useState<Nullable<TListOffer>>(null);
-//   const handleHover = (currentOffer?: TListOffer) => {
+//   // Первонач. состояние null (карточки не выделены) если наведен курсор - то ListOffer
+//   const [activeOffer, setActiveOffer] = useState<Nullable<ListOffer>>(null);
+//   const handleHover = (currentOffer?: ListOffer) => {
 //     setActiveOffer(currentOffer || null);
 //   };
 

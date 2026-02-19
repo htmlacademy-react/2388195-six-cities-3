@@ -1,12 +1,12 @@
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import CurrentOffers from '../../components/current-offers';
-import { CITIES, TCityName } from '../../const';
+import { CITIES, CityName } from '../../const';
 import { useAppSelector } from '../../hooks/store-hooks';
 import { selectOffers } from '../../store/slices/offers-slice';
 
 type MainPageProps = {
-  currentCity: TCityName;
+  currentCity: CityName;
 }
 
 export default function MainPage({currentCity}: MainPageProps): JSX.Element {
@@ -46,13 +46,13 @@ export default function MainPage({currentCity}: MainPageProps): JSX.Element {
 // import { NavLink } from 'react-router-dom';
 // import classNames from 'classnames';
 // import CurrentOffers from '../../components/current-offers';
-// import { AppRoute, CITIES, TCityName } from '../../const';
+// import { AppRoute, CITIES, CityName } from '../../const';
 // import { useAppDispatch, useAppSelector } from '../../hooks/store';
 // import { offersActions, offersSelectors } from '../../store/slices/offers';
 // // import {useActionCreators} from '../../hooks/store';
 
 // type MainPageProps = {
-//   currentCity: TCityName;
+//   currentCity: CityName;
 // }
 
 // export default function MainPage({currentCity}: MainPageProps): JSX.Element {

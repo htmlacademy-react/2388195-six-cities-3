@@ -1,11 +1,11 @@
 import {Link} from 'react-router-dom';
 import { AppRoute } from '../const';
-import { TListOffer } from '../types';
+import { ListOffer } from '../types';
 import { getStarActiveWidth } from '../util';
 
 type PlaceCardProp = {
-  currentOffer: TListOffer;
-  handleHover?: (currentOffer?: TListOffer) => void;
+  currentOffer: ListOffer;
+  handleHover?: (currentOffer?: ListOffer) => void;
   block: string;
 }
 

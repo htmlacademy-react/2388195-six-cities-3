@@ -1,14 +1,14 @@
 import { useEffect, useRef } from 'react';
 import leaflet, { LayerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { TListOffers } from '../../types';
+import { ListOffers } from '../../types';
 import useMap from './use-map';
-import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CITIES, TCityName} from '../../const';
+import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CITIES, CityName} from '../../const';
 
 type CitiesMapProps = {
   className?: string;
-  currentCity: TCityName;
-  currentOffers: TListOffers;
+  currentCity: CityName;
+  currentOffers: ListOffers;
   activeOfferId?: string | null;
 }
 
@@ -66,16 +66,16 @@ export default function CitiesMap({className, currentCity, currentOffers, active
 // import { useEffect, useRef } from 'react';
 // import leaflet, { LayerGroup } from 'leaflet';
 // import 'leaflet/dist/leaflet.css';
-// import { TListOffers } from '../../types';
+// import { ListOffers } from '../../types';
 // import useMap from './use-map';
-// import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CITIES, TCityName} from '../../const';
+// import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CITIES, CityName} from '../../const';
 // // import { useAppSelector } from '../../hooks/store';
 // // import { offersSelectors } from '../../store/slices/offers';
 
 // type CitiesMapProps = {
 //   className?: string;
-//   currentCity: TCityName;
-//   currentOffers: TListOffers;
+//   currentCity: CityName;
+//   currentOffers: ListOffers;
 //   activeOfferId?: string | null;
 // }
 

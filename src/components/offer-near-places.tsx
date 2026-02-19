@@ -1,8 +1,8 @@
-import { TListOffers } from '../types';
+import { ListOffers } from '../types';
 import PlaceCard from './place-card';
 
 type OfferNearPlaces = {
-  nearOffers: TListOffers;
+  nearOffers: ListOffers;
 }
 
 export default function OfferNearPlaces({nearOffers}: OfferNearPlaces): JSX.Element {

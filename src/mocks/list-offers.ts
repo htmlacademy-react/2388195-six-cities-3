@@ -1,6 +1,6 @@
-import { TListOffers } from '../types';
+import { ListOffers } from '../types';
 
-export const LIST_OFFERS : TListOffers = [
+export const LIST_OFFERS : ListOffers = [
   {
     'id': 'fbb92630-ceb0-4ddf-a594-a4ae39ecaa91',
     'title': 'Beautiful & luxurious apartment at great location',

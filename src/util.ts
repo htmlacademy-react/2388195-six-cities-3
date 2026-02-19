@@ -1,9 +1,9 @@
 import { MIN_STAR_WIDTH, SortType } from './const';
-import { TListOffers } from './types';
-import type {CITIES, TCityName} from'./const';
+import { ListOffers } from './types';
+import type {CITIES, CityName} from'./const';
 
 
-export default function getRandomCity (array: typeof CITIES) : TCityName {
+export default function getRandomCity (array: typeof CITIES) : CityName {
   return array[Math.floor(Math.random() * array.length)].name;
 }
 
@@ -11,9 +11,9 @@ export function getStarActiveWidth (rating: number): string {
   return `${MIN_STAR_WIDTH * rating}%`;
 }
 
-export function getNearOffers (offers: TListOffers, city: string | undefined, id: string | null): TListOffers {
+export function getNearOffers (offers: ListOffers, city: string | undefined, id: string | null): ListOffers {
   const MAX_NEAR_OFFERS = 3;
-  const nearOffers: TListOffers = [];
+  const nearOffers: ListOffers = [];
 
   for (let i = 0; i < offers.length; i++) {
     if (offers[i].id !== id && offers[i].city.name === city) {
@@ -28,7 +28,7 @@ export function getNearOffers (offers: TListOffers, city: string | undefined, id
 }
 
 
-export const getSortedOffers = (offers: TListOffers, type: SortType) => {
+export const getSortedOffers = (offers: ListOffers, type: SortType) => {
   switch (type) {
     case SortType.LowToHigh:
       return [...offers].sort((a, b) => a.price - b.price);

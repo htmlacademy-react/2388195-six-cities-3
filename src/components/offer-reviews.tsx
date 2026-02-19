@@ -1,8 +1,8 @@
-import { TComments } from '../types';
+import { Comments } from '../types';
 import OfferReviewsItem from './offer-reviews-item';
 
 type OfferReviewsProps = {
-  comments: TComments;
+  comments: Comments;
 }
 
 export default function OfferReviews({comments}: OfferReviewsProps): JSX.Element {

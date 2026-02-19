@@ -1,12 +1,12 @@
-import { TCityName } from './const';
+import { CityName } from './const';
 
-export type TListOffer = {
+export type ListOffer = {
     id: string;
     title: string;
     type: string;
     price: number;
     city: {
-        name: TCityName;
+        name: CityName;
         location: {
             latitude: number;
             longitude: number;
@@ -25,15 +25,15 @@ export type TListOffer = {
   }
 
 
-export type TListOffers = TListOffer[]
+export type ListOffers = ListOffer[]
 
-export type TOffer = {
+export type Offer = {
     id: string;
     title: string;
     type: string;
     price: number;
     city: {
-        name: TCityName;
+        name: CityName;
         location: {
             latitude: number;
             longitude: number;
@@ -60,12 +60,12 @@ export type TOffer = {
     maxAdults: number;
 }
 
-export type TOffers = TOffer[]
+export type Offers = Offer[]
 
 export type Nullable<T> = T | null | undefined;
 
-export type TCity = {
-  name: TCityName;
+export type City = {
+  name: CityName;
   location: {
     latitude: number;
     longitude: number;
@@ -73,16 +73,9 @@ export type TCity = {
   };
 };
 
-export type TCities = {
-  name: TCityName;
-  location: {
-    latitude: number;
-    longitude: number;
-    zoom: number;
-  };
-}[];
+export type Cities = City[];
 
-export type TComment = {
+export type Comment = {
   id: string;
   date: string;
   user: {
@@ -94,14 +87,4 @@ export type TComment = {
   rating: number;
 };
 
-export type TComments = {
-  id: string;
-  date: string;
-  user: {
-      name: string;
-      avatarUrl: string;
-      isPro: boolean;
-  };
-  comment: string;
-  rating: number;
-}[];
+export type Comments = Comment[];
