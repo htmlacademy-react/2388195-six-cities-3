@@ -27,7 +27,7 @@ export default function App(): JSX.Element {
         >
           <Route
             index
-            element={<Navigate to={`/${CITIES[3].name}`} replace />}
+            element={<Navigate to={`/${Setting.DEFAULT_CITY}`} replace />}
           />
           {CITIES.map((city)=> (
             <Route
@@ -69,7 +69,5 @@ export default function App(): JSX.Element {
         </Route>
       </Routes>
     </BrowserRouter>
-
-
   );
 }
