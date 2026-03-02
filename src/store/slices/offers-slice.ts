@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ListOffer } from '../../types';
-import { LIST_OFFERS } from '../../mocks/list-offers';
+// import { LIST_OFFERS } from '../../mocks/list-offers';
 import { RootState } from '../../types/store';
 import { RequestStatus } from '../../const';
 import { fetchAllOffers } from '../thunk/offers';
