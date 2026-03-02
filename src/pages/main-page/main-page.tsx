@@ -11,8 +11,8 @@ interface MainPageProps {
 
 export default function MainPage({currentCity}: MainPageProps): JSX.Element {
 
-  const listOffers = useAppSelector(selectOffers);
   const status = useAppSelector(selectStatus);
+  const listOffers = useAppSelector(selectOffers);
 
   if (status === RequestStatus.Loading) {
     return <div>Loading...</div>;

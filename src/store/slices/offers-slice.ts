@@ -9,14 +9,14 @@ import { fetchAllOffers } from '../thunk/offers';
 // ListOffer['id'] - это индексный тип (index signature) в TypeScript. Он извлекает точный тип поля id из интерфейса ListOffer.
 //activeId?
 interface OffersState {
-  activeId?: ListOffer['id'] | null;
+  activeId: ListOffer['id'] | null;
   offers: ListOffer[];
   status: RequestStatus;
 }
 
 const initialState: OffersState = {
   activeId: null,
-  offers: LIST_OFFERS,
+  offers: [],
   status: RequestStatus.Idle,
 };
 
@@ -51,7 +51,7 @@ export const offersSlice = createSlice({
     },
   },
   selectors: {
-    activeId: (state: OffersState): ListOffer['id'] | null | undefined => state.activeId,
+    activeId: (state: OffersState): ListOffer['id'] | null => state.activeId,
     offers: (state: OffersState): ListOffer[] => state.offers,
     status: (state: OffersState): RequestStatus => state.status,
   }
