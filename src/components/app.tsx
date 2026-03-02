@@ -1,4 +1,7 @@
 import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../hooks/store-hooks';
+import { fetchAllOffers } from '../store/thunk/offers';
 import { AppRoute, CITIES, Setting } from '../const';
 import MainPage from './../pages/main-page/main-page';
 import FavouritePage from './../pages/favourites-page/favourites-page';
@@ -17,6 +20,12 @@ export default function App(): JSX.Element {
   const authorizationStatus = getAuthorizationStatus();
   const randomCity = getRandomCity(CITIES);
   const {USER_NAME, FAVOURITE_COUNT} = Setting;
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllOffers());
+  });
 
   return (
     <BrowserRouter>

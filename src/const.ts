@@ -2,6 +2,22 @@ export const BACKEND_URL = 'https://15.design.htmlacademy.pro/six-cities';
 export const REQUEST_TIMEOUT = 5000;
 export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 
+export const enum RequestStatus {
+  Idle,
+  Loading,
+  Success,
+  Failed
+}
+//Idle- нач. состояние, ничего не произошло
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+  Comments = '/comments',
+  Favorite = '/favorite',
+}
+
 export enum AppRoute {
   Root = '/',
   Login = '/login',
