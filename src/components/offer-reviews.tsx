@@ -1,8 +1,8 @@
-import { Comments } from '../types';
+import { UserComments } from '../types';
 import OfferReviewsItem from './offer-reviews-item';
 
 interface OfferReviewsProps {
-  comments: Comments;
+  comments: UserComments;
 }
 
 export default function OfferReviews({comments}: OfferReviewsProps): JSX.Element {

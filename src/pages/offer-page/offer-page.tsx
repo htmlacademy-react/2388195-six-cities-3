@@ -3,7 +3,7 @@ import OfferImage from '../../components/offer-image';
 import OfferNearPlaces from '../../components/offer-near-places';
 import OfferReviews from '../../components/offer-reviews';
 import { AuthorizationStatus, CityName } from '../../const';
-import { Offers, Offer, Comments, ListOffer } from '../../types';
+import { Offers, Offer, UserComments, ListOffer } from '../../types';
 import { getNearOffers, getStarActiveWidth } from '../../util';
 import NotFoundPage from '../not-found-page/not-found-page';
 import CitiesMap from '../../components/cities-map/cities-map';
@@ -14,7 +14,7 @@ interface OfferPageProps {
   offers: Offers;
   authorizationStatus: AuthorizationStatus;
   randomCity: CityName;
-  comments: Comments;
+  comments: UserComments;
 }
 
 export default function OfferPage({offers, authorizationStatus, randomCity, comments}: OfferPageProps): JSX.Element {
