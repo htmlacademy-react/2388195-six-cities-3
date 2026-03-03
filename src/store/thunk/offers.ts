@@ -1,15 +1,62 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import { ServerOffer } from '../../types/offer';
+import { FullOffer, ServerOffer } from '../../types/offer';
 import { APIRoute } from '../../const';
+import { UserComments, UserComment } from '../../types';
 
-// import {AppDispatch, State} from '../types/state.js';
-// import {Questions} from '../types/question';
-// import {loadQuestions, requireAuthorization} from './action';
-// import {saveToken, dropToken} from '../services/token';
-// import {APIRoute, AuthorizationStatus} from '../const';
-// import {AuthData} from '../types/auth-data';
-// import {UserData} from '../types/user-data';
+export const fetchAllOffers = createAsyncThunk<ServerOffer[], void, {extra: AxiosInstance}>
+(
+  'fetchOffers/all',
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<ServerOffer[]>(APIRoute.Offers);
+    return data;
+  },
+);
+
+export const fetchOffer = createAsyncThunk<FullOffer, string, {extra: AxiosInstance}>
+(
+  'fetchOffers/offer',
+  async (offerId, {extra: api}) => {
+    const {data} = await api.get<FullOffer>(`${APIRoute.Offers}/${offerId}`);
+    return data;
+  },
+);
+
+export const fetchNearby = createAsyncThunk<ServerOffer[], string, {extra: AxiosInstance}>
+(
+  'fetchOffers/nearby',
+  async (offerId, {extra: api}) => {
+    const {data} = await api.get<ServerOffer[]>(`${APIRoute.Offers}/${offerId}/nearby`);
+    return data;
+  },
+);
+
+export const fetchComments = createAsyncThunk<UserComments, void, {extra: AxiosInstance}>
+(
+  'fetchOffers/comments',
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<UserComments>(APIRoute.Offers);
+    return data;
+  },
+);
+
+export const postComment = createAsyncThunk<UserComment, PostCommentProps, {extra: AxiosInstance}>
+(
+  'comments/post',
+  async ({body, offerId}, {extra: api}) => {
+    const {data} = await api.post<UserComment>(`${APIRoute.Offers}/${offerId}`, body);
+    return data;
+  },
+);
+
+// export const postComment = createAsyncThunk<UserComment, void, {extra: AxiosInstance}>
+// (
+//   'fetchOffers/comments',
+//   async (_arg, {extra: api}) => {
+//     const {data} = await api.get<UserComment>(APIRoute.Offers);
+//     return data;
+//   },
+// );
 
 //createAsyncThunk<ReturnType, ArgType, ConfigType>
 // ServerOffer[] — тип возвращаемого значения (payload) при успешном выполнении thunk'а
@@ -33,8 +80,8 @@ import { APIRoute } from '../../const';
 
 
 //console.dir(fetchAllOffers)
-//функция createAsyncThunk возвращает в переменную fetchAllOffers ...
-//функция createAsyncThunk является функцией у которой усть свойства // методы:
+
+//функция createAsyncThunk является функцией у которой есть свойства // методы:
 //fulfilled
 //pending
 //rejected
@@ -69,15 +116,8 @@ import { APIRoute } from '../../const';
 // const {data} = await api.get<ServerOffer[]>(APIRoute.Offers);
 //запрос отправляется и ответ вернется с типом, указанным в джененрике <ServerOffer[]> и указываются данные куда отправляем
 
-export const fetchAllOffers = createAsyncThunk<ServerOffer[], void, {extra: AxiosInstance}>
-(
-  'fetchOffers/all',
-  async (_arg, {extra: api}) => {
-    const {data} = await api.get<ServerOffer[]>(APIRoute.Offers);
-    return data;
-  },
-);
 
+////////////////////////
 // export const fetchAllOffers = createAsyncThunk<void, undefined, {
 //   dispatch: AppDispatch;
 //   state: State;

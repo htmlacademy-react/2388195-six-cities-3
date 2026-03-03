@@ -1,8 +1,8 @@
-import { Comment } from '../types';
+import { UserComment } from '../types';
 import { getStarActiveWidth } from '../util';
 
 interface OfferReviewsItemProps {
-  commentItem: Comment;
+  commentItem: UserComment;
 }
 
 export default function OfferReviewsItem({commentItem}: OfferReviewsItemProps): JSX.Element {

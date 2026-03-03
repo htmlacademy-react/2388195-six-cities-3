@@ -1,22 +1,22 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ListOffer } from '../../types';
+import { createSlice } from '@reduxjs/toolkit';
 // import { LIST_OFFERS } from '../../mocks/list-offers';
 import { RootState } from '../../types/store';
 import { RequestStatus } from '../../const';
-import { fetchAllOffers } from '../thunk/offers';
+import { fetchComments, postComment } from '../thunk/offers';
+import { UserComments } from '../../types';
 
 
 // ListOffer['id'] - это индексный тип (index signature) в TypeScript. Он извлекает точный тип поля id из интерфейса ListOffer.
 //activeId?
-interface OffersState {
-  activeId: ListOffer['id'] | null;
-  offers: ListOffer[];
+interface CommentsState {
+  comments: UserComments;
   status: RequestStatus;
 }
 
-const initialState: OffersState = {
-  activeId: null,
-  offers: [],
+//Как лучше comments: UserComments; или comments: UserComment[];
+
+const initialState: CommentsState = {
+  comments: [],
   status: RequestStatus.Idle,
 };
 
@@ -30,37 +30,41 @@ const initialState: OffersState = {
 //Прямо в функции мы можем менять наше состояние на Loading, ...
 //fetchAllOffers - возвращает то, что попадает в срезе в переменную state.offers = action.payload;
 
-export const offersSlice = createSlice({
+export const commentsSlice = createSlice({
   extraReducers: (builder) =>
     builder
-      .addCase(fetchAllOffers.pending, (state) => {
+      .addCase(fetchComments.pending, (state) => {
         state.status = RequestStatus.Loading;
       })
-      .addCase(fetchAllOffers.fulfilled, (state, action) => {
+      .addCase(fetchComments.fulfilled, (state, action) => {
         state.status = RequestStatus.Success;
-        state.offers = action.payload;
+        state.comments = action.payload;
       })
-      .addCase(fetchAllOffers.rejected, (state) => {
+      .addCase(fetchComments.rejected, (state) => {
+        state.status = RequestStatus.Failed;
+      })
+      .addCase(postComment.pending, (state) => {
+        state.status = RequestStatus.Loading;
+      })
+      .addCase(postComment.fulfilled, (state, action) => {
+        // state.status = RequestStatus.Success;
+        state.comments.push(action.payload);
+      })
+      .addCase(postComment.rejected, (state) => {
         state.status = RequestStatus.Failed;
       }),
-  name: 'offers',
+  name: 'comments',
   initialState,
-  reducers: {
-    setActiveId(state, action: PayloadAction<ListOffer['id'] | null>) {
-      state.activeId = action.payload;
-    },
-  },
+  reducers: {},
   selectors: {
-    activeId: (state: OffersState) => state.activeId,
-    offers: (state: OffersState) => state.offers,
-    status: (state: OffersState) => state.status,
+    comments: (state: CommentsState) => state.comments,
+    status: (state: CommentsState) => state.status,
   }
 });
 
 
-export const offersActions = {...offersSlice.actions, fetchAllOffers};
+export const commentsActions = {...commentsSlice.actions, ...fetchComments, ...postComment};
 // console.dir(offersSlice.actions);
 // console.dir(offersActions);???
-export const selectActiveId = (state: RootState) => state.offers.activeId;
-export const selectOffers = (state: RootState) => state.offers.offers;
-export const selectStatus = (state: RootState) => state.offers.status;
+export const selectComments = (state: RootState) => state.comments.comments;
+export const selectStatus = (state: RootState) => state.comments.status;

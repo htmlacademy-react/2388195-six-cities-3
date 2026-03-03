@@ -75,7 +75,7 @@ export type City = {
 
 export type Cities = City[];
 
-export type Comment = {
+export type UserComment = {
   id: string;
   date: string;
   user: {
@@ -87,4 +87,4 @@ export type Comment = {
   rating: number;
 };
 
-export type Comments = Comment[];
+export type UserComments = UserComment[];
