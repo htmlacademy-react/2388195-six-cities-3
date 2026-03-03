@@ -3,20 +3,20 @@ import {TypedUseSelectorHook, useDispatch, useSelector, useStore} from 'react-re
 // import { useMemo } from 'react';
 import {RootState, AppDispatch} from '../types/store';
 import {store} from '../store';
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosInstance } from 'axios';
+// import { createAsyncThunk } from '@reduxjs/toolkit';
+// import { AxiosInstance } from 'axios';
 
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const useAppStore: ()=> typeof store = useStore;
 
-export const createAppAsyncThunk = createAsyncThunk.withTypes<{
-  state: RootState;
-  dispatch: AppDispatch;
-  // rejectValue: string;
-  extra: AxiosInstance;
-}>();
+// export const createAppAsyncThunk = createAsyncThunk.withTypes<{
+//   state: RootState;
+//   dispatch: AppDispatch;
+//   rejectValue: string;
+//   extra: AxiosInstance;
+// }>();
 
 // ////////////////////////////////////////////////////////
 // // //useActionCreators

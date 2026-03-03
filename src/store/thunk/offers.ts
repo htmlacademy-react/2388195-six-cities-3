@@ -3,15 +3,24 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import { FullOffer, ServerOffer } from '../../types/offer';
 import { APIRoute } from '../../const';
 import { UserComments, UserComment } from '../../types';
+// import { createAppAsyncThunk } from '../../hooks/store-hooks';
 
-export const fetchAllOffers = createAsyncThunk<ServerOffer[], void, {extra: AxiosInstance}>
-(
+export const fetchAllOffers = createAsyncThunk<ServerOffer[], void, { extra: AxiosInstance}>(
   'fetchOffers/all',
   async (_arg, {extra: api}) => {
     const {data} = await api.get<ServerOffer[]>(APIRoute.Offers);
     return data;
-  },
+  }
 );
+
+// export const fetchAllOffers = createAppAsyncThunk<ServerOffer[], void>(
+//   'fetchOffers/all',
+//   async (_arg, {extra: api}) => {
+//     const {data} = await api.get<ServerOffer[]>(APIRoute.Offers);
+//     return data;
+//   }
+// );
+// //проблема: Unsafe assignment of an `any` value.  видео 56:53
 
 export const fetchOffer = createAsyncThunk<FullOffer, string, {extra: AxiosInstance}>
 (
@@ -31,14 +40,22 @@ export const fetchNearby = createAsyncThunk<ServerOffer[], string, {extra: Axios
   },
 );
 
-export const fetchComments = createAsyncThunk<UserComments, void, {extra: AxiosInstance}>
+export const fetchComments = createAsyncThunk<UserComments, FullOffer['id'], {extra: AxiosInstance}>
 (
   'fetchOffers/comments',
-  async (_arg, {extra: api}) => {
-    const {data} = await api.get<UserComments>(APIRoute.Offers);
+  async (offerId, {extra: api}) => {
+    const {data} = await api.get<UserComments>(`${APIRoute.Offers}/${offerId}`);
     return data;
   },
 );
+
+interface PostCommentProps {
+  body: {
+    comment: string;
+    rating: number;
+  };
+  offerId: FullOffer['id'];
+}
 
 export const postComment = createAsyncThunk<UserComment, PostCommentProps, {extra: AxiosInstance}>
 (
