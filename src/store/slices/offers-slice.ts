@@ -57,7 +57,7 @@ export const offersSlice = createSlice({
   }
 });
 
-export const offersActions = offersSlice.actions;
+// export const offersActions = {...offersSlice.actions, fetchAllOffers};
 export const selectActiveId = (state: RootState) => state.offers.activeId;
 export const selectOffers = (state: RootState) => state.offers.offers;
 export const selectStatus = (state: RootState) => state.offers.status;

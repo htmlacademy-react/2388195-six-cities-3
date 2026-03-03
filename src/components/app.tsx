@@ -14,6 +14,8 @@ import getRandomCity from '../util';
 import OfferPage from '../pages/offer-page/offer-page';
 import { COMMENTS } from '../mocks/comments';
 import { OFFERS } from '../mocks/offers';
+// import { offersActions } from '../store/slices/offers-slice';
+// import { useActionCreators } from '../hooks/store-hooks';
 
 
 export default function App(): JSX.Element {
@@ -23,9 +25,36 @@ export default function App(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
+  //dispatch(fetchAllOffers()) - асинхронный диспатч возвращает промис,
+  // поэтому мы можем использовать then и catch,
+  // но нужно использовать метод unwrap() чтобы обработать ошибку
+  // именно внутри fetchAllOffers()
+  //метод unwrap() - достает оригинальное состояние промиса then и catch - будут отрабатывать как надо
+
   useEffect(() => {
-    dispatch(fetchAllOffers());
+    dispatch(fetchAllOffers())
+      .unwrap()
+      .then(() => {
+        console.log('success');
+      })
+      .catch(()=> {
+        console.log('error');
+      });
   });
+
+  //   const { fetchAllOffers } = useActionCreators(offersActions);
+  //   useEffect(() => {
+  //     fetchAllOffers()
+  //       .unwrap()
+  //       .then(() => {
+  //         console.log('success');
+  //       })
+  //       .catch(()=> {
+  //         console.log('error');
+  //       });
+  //   }, [fetchAllOffers]);
+  // //зависимость [fetchAllOffers] в useEffect исправляет бесконечный цикл запросов
+
 
   return (
     <BrowserRouter>
