@@ -35,7 +35,7 @@ export default function OfferPage({authorizationStatus, randomCity}: OfferPagePr
   const offerStatus = useAppSelector(selectOfferStatus);
   const nearbyOffers = useAppSelector(selectNearbyOffers);
   const comments = useAppSelector(selectComments);
-  const activeOfferId = useAppSelector(selectActiveId);
+  // const activeOfferId = useAppSelector(selectActiveId);
 
   const dispatch = useAppDispatch();
 
@@ -166,7 +166,7 @@ export default function OfferPage({authorizationStatus, randomCity}: OfferPagePr
             </section>
           </div>
         </div>
-        <CitiesMap className='offer__map' currentOffers={nearOffersWithCurrent} currentCity={city.name} activeOfferId={activeOfferId} />
+        <CitiesMap className='offer__map' currentOffers={nearOffersWithCurrent} currentCity={city.name} activeOfferId={id} />
       </section>
       <div className="container">
         <OfferNearPlaces nearOffers={nearbyOffers} />
