@@ -27,7 +27,14 @@ const currentCustomIcon = leaflet.icon({
 export default function CitiesMap({className, currentCity, currentOffers, activeOfferId}: CitiesMapProps): JSX.Element {
 
   const containerMapRef = useRef<HTMLElement>(null);
-  const city = CITIES.find((item)=> item.name === currentCity)!;
+  let city = CITIES.find((item)=> item.name === currentCity);
+
+  // Можно как-то заменить: !
+  // const city = CITIES.find((item)=> item.name === currentCity)!;
+  if (!city) {
+    city = CITIES[0];
+  }
+
   const map = useMap({containerMapRef, location: city.location});
   const markerLayer = useRef<LayerGroup>(leaflet.layerGroup());
 

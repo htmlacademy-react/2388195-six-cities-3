@@ -20,6 +20,7 @@ export default function OfferNearPlaces({nearOffers}: OfferNearPlacesProps): JSX
             currentOffer={nearOffer}
             key={nearOffer.id}
             block="near-places"
+            hovered
           />
         ))}
       </div>

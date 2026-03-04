@@ -15,6 +15,7 @@ import { selectOffer, selectOfferStatus, selectNearbyOffers } from '../../store/
 import { selectComments } from '../../store/slices/comments-slice';
 import { fetchComments, fetchNearby, fetchOffer } from '../../store/thunk/offers';
 import { useEffect } from 'react';
+import { selectActiveId } from '../../store/slices/offers-slice';
 
 interface OfferPageProps {
   authorizationStatus: AuthorizationStatus;
@@ -34,6 +35,7 @@ export default function OfferPage({authorizationStatus, randomCity}: OfferPagePr
   const offerStatus = useAppSelector(selectOfferStatus);
   const nearbyOffers = useAppSelector(selectNearbyOffers);
   const comments = useAppSelector(selectComments);
+  const activeOfferId = useAppSelector(selectActiveId);
 
   const dispatch = useAppDispatch();
 
@@ -78,6 +80,7 @@ export default function OfferPage({authorizationStatus, randomCity}: OfferPagePr
   const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, city} = offer;
   const isAuth: boolean = authorizationStatus === AuthorizationStatus.Auth;
   const starActiveWidth: string = getStarActiveWidth(rating);
+
 
   return (
     <main className="page__main page__main--offer">
@@ -163,7 +166,7 @@ export default function OfferPage({authorizationStatus, randomCity}: OfferPagePr
             </section>
           </div>
         </div>
-        <CitiesMap className='offer__map' currentOffers={nearOffersWithCurrent} currentCity={city.name} activeOfferId={id} />
+        <CitiesMap className='offer__map' currentOffers={nearOffersWithCurrent} currentCity={city.name} activeOfferId={activeOfferId} />
       </section>
       <div className="container">
         <OfferNearPlaces nearOffers={nearbyOffers} />
