@@ -60,10 +60,10 @@ export const offerSlice = createSlice({
   }
 });
 
-// export const offerActions = {...offerSlice.actions, fetchOffer, fetchNearby};
+export const offerActions = {...offerSlice.actions, fetchOffer, fetchNearby};
 export const selectNearbyOffers = (state: RootState) => state.offer.nearbyOffers;
-export const selectOffers = (state: RootState) => state.offer.offer;
-export const selectStatus = (state: RootState) => state.offer.offerStatus;
+export const selectOffer = (state: RootState) => state.offer.offer;
+export const selectOfferStatus = (state: RootState) => state.offer.offerStatus;
 // export const offerSelector = offerSlice.selectors;
 // console.dir(offerSelector);
 // console.dir();

@@ -12,8 +12,8 @@ import Layout from './layout/layout';
 import { getAuthorizationStatus } from '../authorizationStatus';
 import getRandomCity from '../util';
 import OfferPage from '../pages/offer-page/offer-page';
-import { COMMENTS } from '../mocks/comments';
-import { OFFERS } from '../mocks/offers';
+// import { COMMENTS } from '../mocks/comments';
+// import { OFFERS } from '../mocks/offers';
 // import { offersActions } from '../store/slices/offers-slice';
 // import { useActionCreators } from '../hooks/store-hooks';
 
@@ -98,7 +98,8 @@ export default function App(): JSX.Element {
           />
           <Route
             path={`${AppRoute.Offer}/:id`}
-            element={<OfferPage offers={OFFERS} comments={COMMENTS} randomCity={randomCity} authorizationStatus={authorizationStatus} />}
+            element={<OfferPage randomCity={randomCity} authorizationStatus={authorizationStatus} />}
+            // element={<OfferPage offers={OFFERS} comments={COMMENTS} randomCity={randomCity} authorizationStatus={authorizationStatus} />}
           />
           <Route
             path="*"

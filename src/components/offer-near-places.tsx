@@ -7,8 +7,8 @@ interface OfferNearPlacesProps {
 
 export default function OfferNearPlaces({nearOffers}: OfferNearPlacesProps): JSX.Element {
 
-  if (!nearOffers) {
-    <p>No offers found</p>;
+  if (nearOffers.length === 0) {
+    return <h2 className="near-places__title">No offers found</h2>;
   }
 
   return (

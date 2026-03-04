@@ -2,43 +2,80 @@ import OfferForm from '../../components/offer-form';
 import OfferImage from '../../components/offer-image';
 import OfferNearPlaces from '../../components/offer-near-places';
 import OfferReviews from '../../components/offer-reviews';
-import { AuthorizationStatus, CityName } from '../../const';
-import { Offers, Offer, UserComments, ListOffer } from '../../types';
-import { getNearOffers, getStarActiveWidth } from '../../util';
+import { AuthorizationStatus, CityName, RequestStatus } from '../../const';
+// import { Offers, Offer, UserComments, ListOffer } from '../../types';
+import { getStarActiveWidth } from '../../util';
 import NotFoundPage from '../not-found-page/not-found-page';
 import CitiesMap from '../../components/cities-map/cities-map';
-import { useAppSelector } from '../../hooks/store-hooks';
-import { selectActiveId, selectOffers } from '../../store/slices/offers-slice';
+import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
+// import { selectActiveId, selectOffers } from '../../store/slices/offers-slice';
+import { useParams } from 'react-router-dom';
+// import { useDocumentTitle } from '../../hooks/store-hooks';
+import { selectOffer, selectOfferStatus, selectNearbyOffers } from '../../store/slices/offer-slice';
+import { selectComments } from '../../store/slices/comments-slice';
+import { fetchComments, fetchNearby, fetchOffer } from '../../store/thunk/offers';
+import { useEffect } from 'react';
 
 interface OfferPageProps {
-  offers: Offers;
   authorizationStatus: AuthorizationStatus;
   randomCity: CityName;
-  comments: UserComments;
 }
 
-export default function OfferPage({offers, authorizationStatus, randomCity, comments}: OfferPageProps): JSX.Element {
+export default function OfferPage({authorizationStatus, randomCity}: OfferPageProps): JSX.Element {
 
-  const id = useAppSelector(selectActiveId);
-  const currentOffer = offers.find((offer: Offer) => offer.id === id);
-  const listOffers = useAppSelector(selectOffers);
+  //Зачем:
+  // useDocumentTitle('Offer');
+  // const id = useAppSelector(selectActiveId);
+  const {id} = useParams();
+  //useParams() возвращает объект с параметрами, а не строку
+  //Деструктуризация параметра: const { id } = useParams(); - извлекает конкретный параметр id из объекта параметров.
 
-  if (!currentOffer) {
-    return <NotFoundPage type='offer' randomCity={randomCity} />;
+  const offer = useAppSelector(selectOffer);
+  const offerStatus = useAppSelector(selectOfferStatus);
+  const nearbyOffers = useAppSelector(selectNearbyOffers);
+  const comments = useAppSelector(selectComments);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (id) {
+      Promise.all(
+        [dispatch(fetchOffer(id)), dispatch(fetchNearby(id)), dispatch(fetchComments(id))]
+      );
+    }
+  }, [dispatch, id]);
+  //[dispatch, id] - Массив зависимостей (выполняется при изменении зависимостей):
+  // Перенос в useEffect: Вызовы dispatch должны быть внутри useEffect,
+  // иначе они будут выполняться при каждом рендере компонента, что может привести к бесконечным запросам.
+
+  //Promise.all - чтобы эти промисы отработали одновременно. (избежать лишний ререндер)
+
+  if (offerStatus === RequestStatus.Loading) {
+    return <div>Loading...</div>;
   }
 
-  const currentListOffer = listOffers.find((listOffer: ListOffer) => listOffer.id === id);
-
-  if (!currentListOffer) {
+  if (offerStatus === RequestStatus.Failed || !offer) {
     return <NotFoundPage type='offer' randomCity={randomCity} />;
   }
+  // const currentOffer = offers.find((offer: Offer) => offer.id === id);
+  // const listOffers = useAppSelector(selectOffers);
 
-  const currentCity = currentListOffer.city.name;
+  // if (!currentOffer) {
+  //   return <NotFoundPage type='offer' randomCity={randomCity} />;
+  // }
 
-  const nearOffers = getNearOffers(listOffers, currentCity, id);
-  const nearOffersWithCurrent = [...nearOffers, currentListOffer];
+  // const currentListOffer = listOffers.find((listOffer: ListOffer) => listOffer.id === id);
 
-  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, city} = currentOffer;
+  // if (!currentListOffer) {
+  //   return <NotFoundPage type='offer' randomCity={randomCity} />;
+  // }
+
+  // const currentCity = offer.city.name;
+
+  // const nearOffers = getNearOffers(listOffers, currentCity, id);
+  const nearOffersWithCurrent = [...nearbyOffers, offer];
+
+  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, city} = offer;
   const isAuth: boolean = authorizationStatus === AuthorizationStatus.Auth;
   const starActiveWidth: string = getStarActiveWidth(rating);
 
@@ -126,10 +163,10 @@ export default function OfferPage({offers, authorizationStatus, randomCity, comm
             </section>
           </div>
         </div>
-        <CitiesMap className='offer__map' currentOffers={nearOffersWithCurrent} currentCity={city.name} activeOfferId={currentListOffer.id} />
+        <CitiesMap className='offer__map' currentOffers={nearOffersWithCurrent} currentCity={city.name} activeOfferId={id} />
       </section>
       <div className="container">
-        <OfferNearPlaces nearOffers={nearOffers} />
+        <OfferNearPlaces nearOffers={nearbyOffers} />
       </div>
     </main>
   );

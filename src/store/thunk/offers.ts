@@ -44,7 +44,7 @@ export const fetchComments = createAsyncThunk<UserComments, FullOffer['id'], {ex
 (
   'fetchOffers/comments',
   async (offerId, {extra: api}) => {
-    const {data} = await api.get<UserComments>(`${APIRoute.Offers}/${offerId}`);
+    const {data} = await api.get<UserComments>(`${APIRoute.Comments}/${offerId}`);
     return data;
   },
 );

@@ -67,4 +67,4 @@ export const commentsActions = {...commentsSlice.actions, ...fetchComments, ...p
 // console.dir(offersSlice.actions);
 // console.dir(offersActions);???
 export const selectComments = (state: RootState) => state.comments.comments;
-export const selectStatus = (state: RootState) => state.comments.status;
+export const selectCommentsStatus = (state: RootState) => state.comments.status;

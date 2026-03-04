@@ -19,7 +19,6 @@ export default function MainPage({currentCity}: MainPageProps): JSX.Element {
   }
 
   const currentOffers = listOffers.filter((listOffer) => listOffer.city.name === currentCity);
-  //пустой массив???
   // const currentOffers = listOffers.filter((listOffer) => listOffer.city.name === currentCity) || [];
 
 

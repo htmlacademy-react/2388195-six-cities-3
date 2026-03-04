@@ -3,6 +3,7 @@ import {TypedUseSelectorHook, useDispatch, useSelector, useStore} from 'react-re
 // import { useMemo } from 'react';
 import {RootState, AppDispatch} from '../types/store';
 import {store} from '../store';
+import { useEffect } from 'react';
 // import { createAsyncThunk } from '@reduxjs/toolkit';
 // import { AxiosInstance } from 'axios';
 
@@ -10,6 +11,30 @@ import {store} from '../store';
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const useAppStore: ()=> typeof store = useStore;
+
+//Зачем???
+export const useDocumentTitle = (title: string) => {
+  useEffect(() => {
+    document.title = title;
+
+    // // Очистка при размонтировании (опционально)
+    // return () => {
+    //   document.title = originalTitle;
+    // };
+  }, [title]);
+};
+// useEffect - это хук в React, который позволяет выполнять побочные эффекты в функциональных компонентах
+// useEffect(() => {
+//   // Побочный эффект
+//   return () => {
+//     // Очистка эффекта (опционально)
+//   };
+// }, [dependencies]); // Массив зависимостей
+// 2. Типы эффектов:
+// A. Без зависимостей (выполняется при каждом рендере):
+// B. С пустым массивом (выполняется один раз при монтировании):
+// C. С зависимостями (выполняется при изменении зависимостей):
+
 
 // export const createAppAsyncThunk = createAsyncThunk.withTypes<{
 //   state: RootState;
