@@ -1,4 +1,4 @@
-import { ListOffers } from '../types';
+import { ListOffers } from '../types/offer';
 import PlaceCard from './place-card';
 
 interface OfferNearPlacesProps {

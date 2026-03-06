@@ -1,4 +1,4 @@
-import { UserComments } from '../types';
+import { UserComments } from '../types/user-comment';
 import OfferReviewsItem from './offer-reviews-item';
 
 interface OfferReviewsProps {

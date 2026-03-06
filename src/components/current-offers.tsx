@@ -2,12 +2,12 @@ import { useState } from 'react';
 import classNames from 'classnames';
 import { useAppSelector } from '../hooks/store-hooks';
 import { selectActiveId } from '../store/slices/offers-slice';
-import { ListOffers} from '../types';
 import PlaceCard from './place-card';
 import CitiesMap from './cities-map/cities-map';
 import { SortType, CityName } from '../const';
 import SortingOffers from './sorting-offers';
 import { getSortedOffers } from '../util';
+import { ListOffers } from '../types/offer';
 
 //Переименовать в CardsListProps и файл тоже? привести к одному имени
 interface ListCardsProps {

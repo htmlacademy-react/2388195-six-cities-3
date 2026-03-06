@@ -1,9 +1,9 @@
 import {Link} from 'react-router-dom';
 import { AppRoute } from '../const';
-import { ListOffer } from '../types';
 import { getStarActiveWidth } from '../util';
 import { useAppDispatch } from '../hooks/store-hooks';
 import { offersActions } from '../store/slices/offers-slice';
+import { ListOffer } from '../types/offer';
 // import { useEffect } from 'react';
 
 // type CardProps = ServerOffer &

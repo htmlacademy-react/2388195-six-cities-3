@@ -10,6 +10,7 @@ export const enum RequestStatus {
 }
 //Idle- нач. состояние, ничего не произошло
 
+//Маршруты сервера -"ручки"
 export enum APIRoute {
   Offers = '/offers',
   Login = '/login',

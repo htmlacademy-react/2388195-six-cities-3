@@ -1,4 +1,5 @@
-import { Cities, City } from '../types';
+import { Cities, City } from '../types/city';
+
 
 interface LocationContainerProps {
   currentCity:City;
