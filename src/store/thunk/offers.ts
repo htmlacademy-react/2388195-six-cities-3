@@ -1,82 +1,57 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import { FullOffer, ServerOffer } from '../../types/offer';
-import { APIRoute } from '../../const';
-import { UserComments, UserComment } from '../../types';
+import {ListOffers } from '../../types/offer';
+import {APIRoute} from '../../const';
 // import { createAppAsyncThunk } from '../../hooks/store-hooks';
 
-export const fetchAllOffers = createAsyncThunk<ServerOffer[], void, { extra: AxiosInstance}>(
-  'fetchOffers/all',
+
+export const fetchAllOffers = createAsyncThunk<ListOffers, void, {extra: AxiosInstance}>(
+  'fetchAllOffers',
   async (_arg, {extra: api}) => {
-    const {data} = await api.get<ServerOffer[]>(APIRoute.Offers);
+    const {data} = await api.get<ListOffers>(APIRoute.Offers);
+    // dispatch(fetchAllOffers());
     return data;
   }
 );
 
-// export const fetchAllOffers = createAppAsyncThunk<ServerOffer[], void>(
+// export const fetchAllOffers = createAppAsyncThunk<ListOffer[], void>(
 //   'fetchOffers/all',
 //   async (_arg, {extra: api}) => {
-//     const {data} = await api.get<ServerOffer[]>(APIRoute.Offers);
+//     const {data} = await api.get<ListOffer[]>(APIRoute.Offers);
 //     return data;
 //   }
 // );
 // //проблема: Unsafe assignment of an `any` value.  видео 56:53
 
-export const fetchOffer = createAsyncThunk<FullOffer, string, {extra: AxiosInstance}>
-(
-  'fetchOffers/offer',
-  async (offerId, {extra: api}) => {
-    const {data} = await api.get<FullOffer>(`${APIRoute.Offers}/${offerId}`);
-    return data;
-  },
-);
 
-export const fetchNearby = createAsyncThunk<ServerOffer[], string, {extra: AxiosInstance}>
-(
-  'fetchOffers/nearby',
-  async (offerId, {extra: api}) => {
-    const {data} = await api.get<ServerOffer[]>(`${APIRoute.Offers}/${offerId}/nearby`);
-    return data;
-  },
-);
+/////////////////////////////////////
+// createAsyncThunk — это функция из библиотеки Redux Toolkit для создания асинхронных thunk'ов (действий).
 
-export const fetchComments = createAsyncThunk<UserComments, FullOffer['id'], {extra: AxiosInstance}>
-(
-  'fetchOffers/comments',
-  async (offerId, {extra: api}) => {
-    const {data} = await api.get<UserComments>(`${APIRoute.Comments}/${offerId}`);
-    return data;
-  },
-);
+// Основное назначение:
+// Упрощает работу с асинхронными операциями (API-запросы, async/await)
+// Автоматически создаёт 3 действия: pending, fulfilled, rejected
+// Возвращает готовый thunk для Redux store
 
-interface PostCommentProps {
-  body: {
-    comment: string;
-    rating: number;
-  };
-  offerId: FullOffer['id'];
-}
-
-export const postComment = createAsyncThunk<UserComment, PostCommentProps, {extra: AxiosInstance}>
-(
-  'comments/post',
-  async ({body, offerId}, {extra: api}) => {
-    const {data} = await api.post<UserComment>(`${APIRoute.Offers}/${offerId}`, body);
-    return data;
-  },
-);
-
-// export const postComment = createAsyncThunk<UserComment, void, {extra: AxiosInstance}>
-// (
-//   'fetchOffers/comments',
-//   async (_arg, {extra: api}) => {
-//     const {data} = await api.get<UserComment>(APIRoute.Offers);
-//     return data;
-//   },
+// Синтаксис:
+// const myThunk = createAsyncThunk<ReturnType, ArgType, ThunkOptions>(
+//   'slice/actionName',           // тип действия (строка)
+//   async (arg, thunkAPI) => {    // payload creator
+//     const response = await api.fetch(arg);
+//     return response.data;
+//   }
 // );
 
+// Что происходит автоматически:
+
+// pending   → состояние загрузки
+// fulfilled → успех + данные
+// rejected  → ошибка
+
+// API - Application Programming Interface) обычно представляет собой отдельный слой приложения, отвечающий за взаимодействие с сервером.
+////////////////////////////////////
+
 //createAsyncThunk<ReturnType, ArgType, ConfigType>
-// ServerOffer[] — тип возвращаемого значения (payload) при успешном выполнении thunk'а
+// ListOffer[] — тип возвращаемого значения (payload) при успешном выполнении thunk'а
 
 // void — тип аргумента, который передаётся при вызове thunk'а  void означает "ничего не передаётся"
 // Можно вызывать как dispatch(fetchAllOffers()) без параметров
@@ -85,8 +60,8 @@ export const postComment = createAsyncThunk<UserComment, PostCommentProps, {extr
 // Это нужно для типизации {extra: api} в колбэке
 /////////////////////////////////////////////////////////////////////////////////////
 
-//ServerOffer[] - возвращаемое значение из функции payload creator(async (_arg, {extra: api}) => {
-//   const {data} = await api.get<ServerOffer[]>(APIRoute.Offers);
+//ListOffer[] - возвращаемое значение из функции payload creator(async (_arg, {extra: api}) => {
+//   const {data} = await api.get<ListOffer[]>(APIRoute.Offers);
 //   return data;
 // },),
 
@@ -121,7 +96,7 @@ export const postComment = createAsyncThunk<UserComment, PostCommentProps, {extr
 //fetchAllOffers - возвращает то, что попадает в срезе в переменную state.offers = action.payload;
 
 //поэтому функция async (_arg, {extra: api}) => {
-//   const {data} = await api.get<ServerOffer[]>(APIRoute.Offers);
+//   const {data} = await api.get<ListOffer[]>(APIRoute.Offers);
 //   return data;
 // }, --- называется payload creator - эта функция в качестве первого аргумента получает то,
 // что мы передаем во время диспатча функции fetchAllOffers() - в нашем случае она пустая поэтому _arg
@@ -130,62 +105,6 @@ export const postComment = createAsyncThunk<UserComment, PostCommentProps, {extr
 //   extraArgument: api,
 // },
 
-// const {data} = await api.get<ServerOffer[]>(APIRoute.Offers);
-//запрос отправляется и ответ вернется с типом, указанным в джененрике <ServerOffer[]> и указываются данные куда отправляем
-
-
+// const {data} = await api.get<ListOffer[]>(APIRoute.Offers);
+//запрос отправляется и ответ вернется с типом, указанным в джененрике <ListOffer[]> и указываются данные куда отправляем
 ////////////////////////
-// export const fetchAllOffers = createAsyncThunk<void, undefined, {
-//   dispatch: AppDispatch;
-//   state: State;
-//   extra: AxiosInstance;
-// }>
-// (
-//   'data/fetchQuestions',
-//   async (_arg, {dispatch, extra: api}) => {
-//     const {data} = await api.get<Questions>(APIRoute.Questions);
-//     dispatch(loadQuestions(data));
-//   },
-// );
-// export const checkAuthAction = createAsyncThunk<void, undefined, {
-//   dispatch: AppDispatch;
-//   state: State;
-//   extra: AxiosInstance;
-// }>(
-//   'user/checkAuth',
-//   async (_arg, {dispatch, extra: api}) => {
-//     try {
-//       await api.get(APIRoute.Login);
-//       dispatch(requireAuthorization(AuthorizationStatus.Auth));
-//     } catch {
-//       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-//     }
-//   },
-// );
-
-// export const loginAction = createAsyncThunk<void, AuthData, {
-//   dispatch: AppDispatch;
-//   state: State;
-//   extra: AxiosInstance;
-// }>(
-//   'user/login',
-//   async ({login: email, password}, {dispatch, extra: api}) => {
-//     const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
-//     saveToken(token);
-//     dispatch(requireAuthorization(AuthorizationStatus.Auth));
-//   },
-// );
-
-// export const logoutAction = createAsyncThunk<void, undefined, {
-//   dispatch: AppDispatch;
-//   state: State;
-//   extra: AxiosInstance;
-// }>(
-//   'user/logout',
-//   async (_arg, {dispatch, extra: api}) => {
-//     await api.delete(APIRoute.Logout);
-//     dropToken();
-//     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-//   },
-// );
-

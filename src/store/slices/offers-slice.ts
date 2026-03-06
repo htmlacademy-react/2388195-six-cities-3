@@ -1,16 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ListOffer } from '../../types';
-// import { LIST_OFFERS } from '../../mocks/list-offers';
+import { ListOffer, ListOffers } from '../../types/offer';
 import { RootState } from '../../types/store';
 import { RequestStatus } from '../../const';
 import { fetchAllOffers } from '../thunk/offers';
 
 
-// ListOffer['id'] - это индексный тип (index signature) в TypeScript. Он извлекает точный тип поля id из интерфейса ListOffer.
-//activeId?
 interface OffersState {
   activeId: ListOffer['id'] | null;
-  offers: ListOffer[];
+  offers: ListOffers;
   status: RequestStatus;
 }
 
@@ -19,16 +16,6 @@ const initialState: OffersState = {
   offers: [],
   status: RequestStatus.Idle,
 };
-
-//builder - это объект у которого есть методы addCase....
-//метод addCase  -нужен для того чтобы обработать конкретный кейс
-//в качестве аргумента передается синхронный экшен,
-//как только синхронный экшен будет задиспатчен (автоматически RTK), то вызовется вот эта функция:
-// (state, action) => {
-//state.status = RequestStatus.Loading;
-//state - состояние, action - экшен, который был задиспатчен
-//Прямо в функции мы можем менять наше состояние на Loading, ...
-//fetchAllOffers - возвращает то, что попадает в срезе в переменную state.offers = action.payload;
 
 export const offersSlice = createSlice({
   extraReducers: (builder) =>
@@ -59,8 +46,23 @@ export const offersSlice = createSlice({
 
 
 export const offersActions = {...offersSlice.actions, fetchAllOffers};
-// console.dir(offersSlice.actions);
-// console.dir(offersActions);???
+// console.dir(offersActions);
 export const selectActiveId = (state: RootState) => state.offers.activeId;
 export const selectOffers = (state: RootState) => state.offers.offers;
 export const selectStatus = (state: RootState) => state.offers.status;
+
+
+// ListOffer['id'] - это индексный тип (index signature) в TypeScript. Он извлекает точный тип поля id из интерфейса ListOffer.
+//activeId?
+
+//offers: [], - пустой массив, чтобы избежать лишнюю проверку везде, где нам нужно итерироваться по массиву
+
+//builder - это объект у которого есть методы addCase....
+//метод addCase  -нужен для того чтобы обработать конкретный кейс
+//в качестве аргумента передается синхронный экшен,
+//как только синхронный экшен будет задиспатчен (автоматически RTK), то вызовется вот эта функция:
+// (state, action) => {
+//state.status = RequestStatus.Loading;
+//state - состояние, action - экшен, который был задиспатчен
+//Прямо в функции мы можем менять наше состояние на Loading, ...
+//fetchAllOffers - возвращает то, что попадает в срезе в переменную state.offers = action.payload;

@@ -1,6 +1,6 @@
 import { CityName } from '../const';
 
-export interface ServerOffer {
+export type ListOffer = {
   id: string;
   title: string;
   type: string;
@@ -24,7 +24,9 @@ export interface ServerOffer {
   previewImage: string;
 }
 
-export type FullOffer = ServerOffer & {
+export type ListOffers = ListOffer[];
+
+export type FullOffer = ListOffer & {
   description: string;
   bedrooms: number;
   goods: string[];

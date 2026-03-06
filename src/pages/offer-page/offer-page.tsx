@@ -2,7 +2,7 @@ import OfferForm from '../../components/offer-form';
 import OfferImage from '../../components/offer-image';
 import OfferNearPlaces from '../../components/offer-near-places';
 import OfferReviews from '../../components/offer-reviews';
-import { AuthorizationStatus, CityName, RequestStatus } from '../../const';
+import { CityName, RequestStatus } from '../../const';
 // import { Offers, Offer, UserComments, ListOffer } from '../../types';
 import { getStarActiveWidth } from '../../util';
 import NotFoundPage from '../not-found-page/not-found-page';
