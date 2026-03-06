@@ -7,21 +7,17 @@ import MainPage from './../pages/main-page/main-page';
 import FavouritePage from './../pages/favourites-page/favourites-page';
 import LoginPage from './../pages/login-page/login-page';
 import NotFoundPage from './../pages/not-found-page/not-found-page';
-import PrivateRoute from './private-route';
 import Layout from './layout/layout';
-import { getAuthorizationStatus } from '../authorizationStatus';
 import getRandomCity from '../util';
 import OfferPage from '../pages/offer-page/offer-page';
-// import { COMMENTS } from '../mocks/comments';
-// import { OFFERS } from '../mocks/offers';
-// import { offersActions } from '../store/slices/offers-slice';
-// import { useActionCreators } from '../hooks/store-hooks';
+import { checkAuth } from '../store/thunk/user-auth';
+import { getToken } from '../services/token';
+import ProtectedRoute from './private-route';
 
 
 export default function App(): JSX.Element {
-  const authorizationStatus = getAuthorizationStatus();
   const randomCity = getRandomCity(CITIES);
-  const {USER_NAME, FAVOURITE_COUNT} = Setting;
+  const {FAVOURITE_COUNT} = Setting;
 
   const dispatch = useAppDispatch();
 
@@ -30,6 +26,15 @@ export default function App(): JSX.Element {
   // но нужно использовать метод unwrap() чтобы обработать ошибку
   // именно внутри fetchAllOffers()
   //метод unwrap() - достает оригинальное состояние промиса then и catch - будут отрабатывать как надо
+
+
+  const token = getToken();
+
+  useEffect(() => {
+    if (token) {
+      dispatch(checkAuth());
+    }
+  }, [dispatch, token]);
 
   useEffect(() => {
     dispatch(fetchAllOffers())
@@ -40,7 +45,7 @@ export default function App(): JSX.Element {
       .catch(()=> {
         console.log('error');
       });
-  });
+  }, [dispatch]);
 
   //   const { fetchAllOffers } = useActionCreators(offersActions);
   //   useEffect(() => {
@@ -61,7 +66,7 @@ export default function App(): JSX.Element {
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<Layout userName={USER_NAME} favouriteCount={FAVOURITE_COUNT} authorizationStatus={authorizationStatus} />}
+          element={<Layout favouriteCount={FAVOURITE_COUNT} />}
         >
           <Route
             index
@@ -75,31 +80,29 @@ export default function App(): JSX.Element {
             />
           ))}
 
-
           <Route
             path={AppRoute.Login}
             element={
-              <PrivateRoute
-                authorizationStatus={authorizationStatus} isReverse
-              >
+              <ProtectedRoute onlyUnauth>
                 <LoginPage randomCity={randomCity} />
-              </PrivateRoute>
+              </ProtectedRoute>
             }
           />
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute
-                authorizationStatus={authorizationStatus}
-              >
+              <ProtectedRoute>
                 <FavouritePage />
-              </PrivateRoute>
+              </ProtectedRoute>
             }
           />
           <Route
             path={`${AppRoute.Offer}/:id`}
-            element={<OfferPage randomCity={randomCity} authorizationStatus={authorizationStatus} />}
-            // element={<OfferPage offers={OFFERS} comments={COMMENTS} randomCity={randomCity} authorizationStatus={authorizationStatus} />}
+            element={
+              <ProtectedRoute>
+                <OfferPage randomCity={randomCity} />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="*"
@@ -110,3 +113,6 @@ export default function App(): JSX.Element {
     </BrowserRouter>
   );
 }
+
+// все компоненты которые должны быть защищены - обернуты в protect route
+// а компоненты, которые должны быть защищены, но быть публичными - теперь с пропом onlyForUnAuth - только для неавторизованнных

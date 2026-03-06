@@ -13,16 +13,16 @@ import { useParams } from 'react-router-dom';
 // import { useDocumentTitle } from '../../hooks/store-hooks';
 import { selectOffer, selectOfferStatus, selectNearbyOffers } from '../../store/slices/offer-slice';
 import { selectComments } from '../../store/slices/comments-slice';
-import { fetchComments, fetchNearby, fetchOffer } from '../../store/thunk/offers';
+import { fetchComments, fetchNearby, fetchOffer } from '../../store/thunk/offer';
 import { useEffect } from 'react';
-import { selectActiveId } from '../../store/slices/offers-slice';
+import { useAuth } from '../../hooks/user-auth-hook';
+// import { selectActiveId } from '../../store/slices/offers-slice';
 
 interface OfferPageProps {
-  authorizationStatus: AuthorizationStatus;
   randomCity: CityName;
 }
 
-export default function OfferPage({authorizationStatus, randomCity}: OfferPageProps): JSX.Element {
+export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
 
   //Зачем:
   // useDocumentTitle('Offer');
@@ -46,6 +46,7 @@ export default function OfferPage({authorizationStatus, randomCity}: OfferPagePr
       );
     }
   }, [dispatch, id]);
+  const isAuth = useAuth();
   //[dispatch, id] - Массив зависимостей (выполняется при изменении зависимостей):
   // Перенос в useEffect: Вызовы dispatch должны быть внутри useEffect,
   // иначе они будут выполняться при каждом рендере компонента, что может привести к бесконечным запросам.
@@ -59,6 +60,8 @@ export default function OfferPage({authorizationStatus, randomCity}: OfferPagePr
   if (offerStatus === RequestStatus.Failed || !offer) {
     return <NotFoundPage type='offer' randomCity={randomCity} />;
   }
+
+
   // const currentOffer = offers.find((offer: Offer) => offer.id === id);
   // const listOffers = useAppSelector(selectOffers);
 
@@ -78,7 +81,6 @@ export default function OfferPage({authorizationStatus, randomCity}: OfferPagePr
   const nearOffersWithCurrent = [...nearbyOffers, offer];
 
   const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, city} = offer;
-  const isAuth: boolean = authorizationStatus === AuthorizationStatus.Auth;
   const starActiveWidth: string = getStarActiveWidth(rating);
 
 
