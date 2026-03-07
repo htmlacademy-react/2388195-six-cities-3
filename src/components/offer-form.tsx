@@ -8,6 +8,7 @@ interface OfferFormProps {
 }
 type ChangeHandler = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>
 
+
 export default function OfferForm({offerId}: OfferFormProps): JSX.Element {
 
   const dispatch = useAppDispatch();
@@ -22,6 +23,7 @@ export default function OfferForm({offerId}: OfferFormProps): JSX.Element {
     });
   };
 
+
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(postComment({
@@ -30,8 +32,7 @@ export default function OfferForm({offerId}: OfferFormProps): JSX.Element {
         rating: Number(review.rating)
       },
       offerId}));
-    // setReview({ rating: 0, review: '' });
-    // const isChecked =
+    setReview({ rating: 0, review: '' });
   };
 
   const isSubmitDisabled = review.review.length < 50 || review.rating === 0;
@@ -48,7 +49,7 @@ export default function OfferForm({offerId}: OfferFormProps): JSX.Element {
               value={value}
               id={`${value}-stars`}
               type="radio"
-              // checked={}
+              checked={Number(review.rating) === value}
               onChange={handleChange}
             />
             <label
@@ -68,6 +69,7 @@ export default function OfferForm({offerId}: OfferFormProps): JSX.Element {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
+        value={review.review}
         onChange={handleChange}
       >
       </textarea>
