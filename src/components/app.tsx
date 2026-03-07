@@ -99,9 +99,7 @@ export default function App(): JSX.Element {
           <Route
             path={`${AppRoute.Offer}/:id`}
             element={
-              <ProtectedRoute>
-                <OfferPage randomCity={randomCity} />
-              </ProtectedRoute>
+              <OfferPage randomCity={randomCity} />
             }
           />
           <Route

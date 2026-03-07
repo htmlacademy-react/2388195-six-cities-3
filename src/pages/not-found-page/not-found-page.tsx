@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
 import { AppRoute, CityName } from '../../const';
+import LoginLocation from '../../components/login-locaton';
 
 const variants = {
   page: 'Page Not Found',
@@ -28,13 +29,7 @@ export default function NotFoundPage({randomCity, type}: NotFoundPageProps): JSX
               Вернуться на главную
             </Link>
           </section>
-          <section className="locations locations--login locations--current">
-            <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>{randomCity}</span>
-              </a>
-            </div>
-          </section>
+          <LoginLocation randomCity={randomCity} />
         </div>
       </main>
     </div>
