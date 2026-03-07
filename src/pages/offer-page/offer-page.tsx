@@ -80,7 +80,7 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
   // const nearOffers = getNearOffers(listOffers, currentCity, id);
   const nearOffersWithCurrent = [...nearbyOffers, offer];
 
-  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, city} = offer;
+  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, city, id: offerId } = offer;
   const starActiveWidth: string = getStarActiveWidth(rating);
 
 
@@ -164,7 +164,7 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
             </div>
             <section className="offer__reviews reviews">
               <OfferReviews comments={comments}/>
-              {isAuth && <OfferForm />}
+              {isAuth && <OfferForm offerId={offerId} />}
             </section>
           </div>
         </div>

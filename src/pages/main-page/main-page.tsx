@@ -19,14 +19,12 @@ export default function MainPage({currentCity}: MainPageProps): JSX.Element {
   }
 
   const currentOffers = listOffers.filter((listOffer) => listOffer.city.name === currentCity);
-  // const currentOffers = listOffers.filter((listOffer) => listOffer.city.name === currentCity) || [];
-
 
   // const groupedOffers = Object.groupBy(listOffers, (listOffer) => listOffer.city.name) as Partial<Record<CityName, ListOffers>>;
   // const currentOffers: ListOffers = groupedOffers[currentCity] || [];
   //TS ругается версия TypeScript ниже 5.4+
 
-  const isEmpty: boolean = currentOffers.length === 0;
+  const isEmpty = currentOffers.length === 0;
 
   return (
     <main className={classNames('page__main', 'page__main--index', {'page__main--index-empty' : isEmpty})}>

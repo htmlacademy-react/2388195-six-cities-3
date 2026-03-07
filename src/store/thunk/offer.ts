@@ -40,7 +40,7 @@ interface PostCommentProps {
 export const postComment = createAsyncThunk<UserComment, PostCommentProps, {extra: AxiosInstance}>(
   'comments/post',
   async ({body, offerId}, {extra: api}) => {
-    const {data} = await api.post<UserComment>(`${APIRoute.Offers}/${offerId}`, body);
+    const {data} = await api.post<UserComment>(`${APIRoute.Comments}/${offerId}`, body);
     return data;
   },
 );
