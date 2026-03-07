@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../types/store';
 import { RequestStatus } from '../../const';
 import { fetchNearby, fetchOffer } from '../thunk/offer';
 import { FullOffer, ListOffers } from '../../types/offer';
@@ -16,8 +15,15 @@ const initialState: OfferState = {
   offerStatus: RequestStatus.Idle,
 };
 
-
 export const offerSlice = createSlice({
+  name: 'offer',
+  initialState,
+  reducers: {
+    clear(state) {
+      state.offer = null;
+      state.nearbyOffers = [];
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(fetchOffer.pending, (state) => {
@@ -33,22 +39,12 @@ export const offerSlice = createSlice({
       .addCase(fetchNearby.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;
       }),
-  name: 'offer',
-  initialState,
-  reducers: {
-    clear(state) {
-      state.offer = null;
-      state.nearbyOffers = [];
-    },
-  },
   selectors: {
-    nearbyOffers: (state: OfferState) => state.nearbyOffers,
-    offer: (state: OfferState) => state.offer,
-    offerStatus: (state: OfferState) => state.offerStatus,
+    selectNearbyOffers: (state: OfferState) => state.nearbyOffers,
+    selectOffer: (state: OfferState) => state.offer,
+    selectOfferStatus: (state: OfferState) => state.offerStatus,
   }
 });
 
 export const offerActions = {...offerSlice.actions, fetchOffer, fetchNearby};
-export const selectNearbyOffers = (state: RootState) => state.offer.nearbyOffers;
-export const selectOffer = (state: RootState) => state.offer.offer;
-export const selectOfferStatus = (state: RootState) => state.offer.offerStatus;
+export const {selectNearbyOffers, selectOffer, selectOfferStatus} = offerSlice.selectors;

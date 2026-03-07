@@ -1,9 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../types/store';
 import { RequestStatus } from '../../const';
 import { fetchComments, postComment } from '../thunk/offer';
 import { UserComments } from '../../types/user-comment';
-
 
 interface CommentsState {
   comments: UserComments;
@@ -15,8 +13,10 @@ const initialState: CommentsState = {
   status: RequestStatus.Idle,
 };
 
-
 export const commentsSlice = createSlice({
+  name: 'comments',
+  initialState,
+  reducers: {},
   extraReducers: (builder) =>
     builder
       .addCase(fetchComments.pending, (state) => {
@@ -38,16 +38,11 @@ export const commentsSlice = createSlice({
       .addCase(postComment.rejected, (state) => {
         state.status = RequestStatus.Failed;
       }),
-  name: 'comments',
-  initialState,
-  reducers: {},
   selectors: {
-    comments: (state: CommentsState) => state.comments,
-    status: (state: CommentsState) => state.status,
+    selectComments: (state: CommentsState) => state.comments,
+    selectCommentsStatus: (state: CommentsState) => state.status,
   }
 });
 
-
 export const commentsActions = {...commentsSlice.actions, ...fetchComments, ...postComment};
-export const selectComments = (state: RootState) => state.comments.comments;
-export const selectCommentsStatus = (state: RootState) => state.comments.status;
+export const {selectComments, selectCommentsStatus} = commentsSlice.selectors;

@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ListOffer, ListOffers } from '../../types/offer';
-import { RootState } from '../../types/store';
+
 import { RequestStatus } from '../../const';
 import { fetchAllOffers } from '../thunk/offers';
-
 
 interface OffersState {
   activeId: ListOffer['id'] | null;
@@ -18,6 +17,13 @@ const initialState: OffersState = {
 };
 
 export const offersSlice = createSlice({
+  name: 'offers',
+  initialState,
+  reducers: {
+    setActiveId(state, action: PayloadAction<ListOffer['id'] | null>) {
+      state.activeId = action.payload;
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(fetchAllOffers.pending, (state) => {
@@ -30,26 +36,16 @@ export const offersSlice = createSlice({
       .addCase(fetchAllOffers.rejected, (state) => {
         state.status = RequestStatus.Failed;
       }),
-  name: 'offers',
-  initialState,
-  reducers: {
-    setActiveId(state, action: PayloadAction<ListOffer['id'] | null>) {
-      state.activeId = action.payload;
-    },
-  },
   selectors: {
-    activeId: (state: OffersState) => state.activeId,
-    offers: (state: OffersState) => state.offers,
-    status: (state: OffersState) => state.status,
+    selectActiveId: (state: OffersState) => state.activeId,
+    selectOffers: (state: OffersState) => state.offers,
+    selectStatus: (state: OffersState) => state.status,
   }
 });
 
-
 export const offersActions = {...offersSlice.actions, fetchAllOffers};
 // console.dir(offersActions);
-export const selectActiveId = (state: RootState) => state.offers.activeId;
-export const selectOffers = (state: RootState) => state.offers.offers;
-export const selectStatus = (state: RootState) => state.offers.status;
+export const {selectActiveId, selectOffers, selectStatus} = offersSlice.selectors;
 
 
 // ListOffer['id'] - это индексный тип (index signature) в TypeScript. Он извлекает точный тип поля id из интерфейса ListOffer.

@@ -4,12 +4,14 @@ import {createAPI} from '../services/api';
 import { offerSlice } from './slices/offer-slice';
 import { commentsSlice } from './slices/comments-slice';
 import { userSlice } from './slices/user-slice';
+import { favoriteSlice } from './slices/favorite-slice';
 
 const reducer = combineReducers({
   [offersSlice.name]: offersSlice.reducer,
   [offerSlice.name]: offerSlice.reducer,
   [commentsSlice.name]: commentsSlice.reducer,
   [userSlice.name]: userSlice.reducer,
+  [favoriteSlice.name]: favoriteSlice.reducer,
 });
 
 export const api = createAPI();
