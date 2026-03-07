@@ -6,8 +6,9 @@ import { getLayotState } from './utils';
 import Logo from '../logo';
 import LogoMainPage from '../logo-main-page';
 import { useAuth } from '../../hooks/user-auth-hook';
-import { useAppSelector } from '../../hooks/store-hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { selectUserInfo } from '../../store/slices/user-slice';
+import { logout } from '../../store/thunk/user-auth';
 
 interface LayoutProps {
   favouriteCount: number;
@@ -21,6 +22,12 @@ export default function Layout({favouriteCount} : LayoutProps): JSX.Element {
   const data = useAppSelector(selectUserInfo);
   const email = data?.email;
 
+  const dispatch = useAppDispatch();
+
+  const handleLogOut = (evt: React.MouseEvent) => {
+    evt.preventDefault();
+    dispatch(logout());
+  };
 
   return (
     <div className={`page${pageClassName}`}>
@@ -32,30 +39,49 @@ export default function Layout({favouriteCount} : LayoutProps): JSX.Element {
               {!shouldRenderLogoMainPage && <Logo/>}
             </div>
             {
-              shouldRenderUser && (
+              shouldRenderUser && isAuth && (
                 <nav className="header__nav">
                   <ul className="header__nav-list">
                     <li className="header__nav-item user">
                       <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                         <div className="header__avatar-wrapper user__avatar-wrapper">
                         </div>
-                        {isAuth &&
-                          <>
-                            <span className="header__user-name user__name">{email}</span>
-                            <span className="header__favorite-count">{favouriteCount}</span>
-                          </>}
+                        <span className="header__user-name user__name">{email}</span>
+                        <span className="header__favorite-count">{favouriteCount}</span>
                       </Link>
-                      {!isAuth &&
-                        <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Login}>
-                          <span className="header__login">Sign in</span>
-                        </Link>}
                     </li>
-                    {isAuth &&
-                      <li className="header__nav-item">
-                        <Link className="header__nav-link" to={AppRoute.Root}>
-                          <span className="header__signout">Sign out</span>
-                        </Link>
-                      </li>}
+                    <li className="header__nav-item">
+                      <button
+                        className="header__nav-link header__nav-link--profile"
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          padding: 0,
+                          margin: 0,
+                          font: 'inherit',
+                          color: 'inherit',
+                          cursor: 'pointer',
+                          textDecoration: 'none',
+                          display: 'inline-block'
+                        }}
+                        onClick={handleLogOut}
+                      >
+                        <span className="header__signout">Sign out</span>
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
+              )
+            }
+            {
+              shouldRenderUser && !isAuth && (
+                <nav className="header__nav">
+                  <ul className="header__nav-list">
+                    <li className="header__nav-item user">
+                      <Link className="header__nav-link" to={AppRoute.Login}>
+                        <span className="header__login">Sign in</span>
+                      </Link>
+                    </li>
                   </ul>
                 </nav>
               )
@@ -68,7 +94,6 @@ export default function Layout({favouriteCount} : LayoutProps): JSX.Element {
     </div>
   );
 }
-
 
 
 //   return (
