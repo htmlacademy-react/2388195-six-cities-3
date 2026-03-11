@@ -2,7 +2,7 @@ import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../hooks/store-hooks';
 import { fetchAllOffers } from '../store/thunk/offers';
-import { AppRoute, CITIES, Setting } from '../const';
+import { AppRoute, CITIES, DEFAULT_CITY } from '../const';
 import MainPage from './../pages/main-page/main-page';
 import FavouritePage from './../pages/favourites-page/favourites-page';
 import LoginPage from './../pages/login-page/login-page';
@@ -13,12 +13,15 @@ import OfferPage from '../pages/offer-page/offer-page';
 import { checkAuth } from '../store/thunk/user-auth';
 import { getToken } from '../services/token';
 import ProtectedRoute from './private-route';
+import { useAuth } from '../hooks/user-auth-hook';
+import { fetchFavorites } from '../store/thunk/favorite';
+// import { selectFavoriteOffers } from '../store/slices/favorite-slice';
+// import { useSelector } from 'react-redux';
+import { OFFERS } from '../mocks/offers';
 
 
 export default function App(): JSX.Element {
   const randomCity = getRandomCity(CITIES);
-  const {FAVOURITE_COUNT} = Setting;
-
   const dispatch = useAppDispatch();
 
   //dispatch(fetchAllOffers()) - асинхронный диспатч возвращает промис,
@@ -33,8 +36,20 @@ export default function App(): JSX.Element {
   useEffect(() => {
     if (token) {
       dispatch(checkAuth());
+
     }
   }, [dispatch, token]);
+
+  const isAuth = useAuth();
+
+  useEffect(() => {
+    if (isAuth) {
+      dispatch(fetchFavorites());
+    }
+  }, [dispatch, isAuth, token]);
+
+  // const favouriteCount = useSelector(selectFavoriteOffers).length;
+  const favouriteCount = OFFERS.length;
 
   useEffect(() => {
     dispatch(fetchAllOffers())
@@ -46,6 +61,7 @@ export default function App(): JSX.Element {
         console.log('error');
       });
   }, [dispatch]);
+
 
   //   const { fetchAllOffers } = useActionCreators(offersActions);
   //   useEffect(() => {
@@ -66,11 +82,11 @@ export default function App(): JSX.Element {
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<Layout favouriteCount={FAVOURITE_COUNT} />}
+          element={<Layout favouriteCount={favouriteCount} />}
         >
           <Route
             index
-            element={<Navigate to={`/${Setting.DEFAULT_CITY}`} replace />}
+            element={<Navigate to={`/${DEFAULT_CITY}`} replace />}
           />
           {CITIES.map((city)=> (
             <Route

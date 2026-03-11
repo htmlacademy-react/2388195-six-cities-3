@@ -89,11 +89,8 @@ export type CityName = (typeof CITIES)[number]['name'];
 // export type CityName = 'Paris' | 'Cologne' | 'Brussels' | 'Amsterdam' | 'Hamburg' | 'Dusseldorf';
 
 
-export const Setting = {
-  FAVOURITE_COUNT: 3,
-  USER_NAME: 'Oliver.conner@gmail.com',
-  DEFAULT_CITY: 'Paris',
-} as const;
+export const DEFAULT_CITY = 'Paris';
+
 
 export enum SortType {
   Popular = 'Popular',
@@ -115,3 +112,9 @@ export const MIN_STAR_WIDTH: number = 20;
 export const URL_MARKER_DEFAULT = './img/pin.svg';
 
 export const URL_MARKER_CURRENT = './img/pin-active.svg';
+
+
+export enum FavoriteStatus {
+  Added = '1',
+  Removed = '0'
+}

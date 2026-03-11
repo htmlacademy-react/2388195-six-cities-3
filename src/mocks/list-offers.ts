@@ -1,4 +1,5 @@
-// import { ListOffers } from '../types';
+// import { ListOffers } from '../types/offer';
+
 
 // export const LIST_OFFERS : ListOffers = [
 //   {

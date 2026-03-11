@@ -49,8 +49,8 @@ export default function CurrentOffers({currentOffers, currentCity, isEmpty}: Lis
             {
               sortedOffers.map((currentOffer) => (
                 <PlaceCard
-                  currentOffer={currentOffer}
                   key={currentOffer.id}
+                  currentOffer={currentOffer}
                   // handleHover={handleHover} -замена обработчика события на флаг - есть опция наведения или нет
                   block="cities"
                   hovered

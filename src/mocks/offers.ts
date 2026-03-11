@@ -1,6 +1,7 @@
-import { Offers } from '../types';
+import { FullOffers } from '../types/offer';
 
-export const OFFERS: Offers = [{
+
+export const OFFERS: FullOffers = [{
   'id': 'fbb92630-ceb0-4ddf-a594-a4ae39ecaa91',
   'title': 'Beautiful & luxurious studio at great location',
   'type': 'apartment',
@@ -24,7 +25,7 @@ export const OFFERS: Offers = [{
   'description': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Paris.',
   'bedrooms': 3,
   'goods': [
-    'Heating', 'Conditioning', 'Towels'
+    'Heating, Towels'
   ],
   'host': {
     'name': 'Oliver Conner',
@@ -32,9 +33,10 @@ export const OFFERS: Offers = [{
     'isPro': true
   },
   'images': [
-    'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg'
+    'img/apartment-01.jpg, img/apartment-03.jpg'
   ],
-  'maxAdults': 4
+  'maxAdults': 4,
+  previewImage: ''
 },
 {
   'id': '2',
@@ -70,7 +72,8 @@ export const OFFERS: Offers = [{
   'images': [
     'img/apartment-01.jpg'
   ],
-  'maxAdults': 4
+  'maxAdults': 4,
+  previewImage: ''
 },
 {
   'id': '8c870cc6-a80f-495c-b095-86e4f0c99510',
@@ -106,7 +109,8 @@ export const OFFERS: Offers = [{
   'images': [
     'img/apartment-01.jpg'
   ],
-  'maxAdults': 4
+  'maxAdults': 4,
+  previewImage: ''
 },
 {
   'id': '13',
@@ -132,7 +136,7 @@ export const OFFERS: Offers = [{
   'description': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Paris.',
   'bedrooms': 3,
   'goods': [
-    'Heating', 'Conditioning', 'Towels'
+    'Heating, Towels'
   ],
   'host': {
     'name': 'Oliver Conner',
@@ -140,8 +144,9 @@ export const OFFERS: Offers = [{
     'isPro': true
   },
   'images': [
-    'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg'
+    'img/apartment-01.jpg, img/apartment-03.jpg'
   ],
-  'maxAdults': 4
+  'maxAdults': 4,
+  previewImage: ''
 },
 ];

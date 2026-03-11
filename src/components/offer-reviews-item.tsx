@@ -1,4 +1,4 @@
-import { UserComment } from '../types';
+import { UserComment } from '../types/user-comment';
 import { getStarActiveWidth } from '../util';
 
 interface OfferReviewsItemProps {

@@ -1,73 +1,52 @@
-function FavouritePagePlaceCard(): JSX.Element {
-  return (
-    <article className="favorites__card place-card">
+import FavouriteLocations from '../../components/favorite-locations';
+import { OFFERS } from '../../mocks/offers';
+// import { selectFavoriteOffers } from '../../store/slices/favorite-slice';
+// import { FavoriteOffers, FavoriteOffer } from '../../types/favorite';
+import { CityName } from '../../const';
+import { FullOffer, FullOffers } from '../../types/offer';
 
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
-
-      <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src="img/apartment-small-03.jpg" width="150" height="110" alt="Place image"/>
-        </a>
-      </div>
-      <div className="favorites__card-info place-card__info">
-        <div className="place-card__price-wrapper">
-          <div className="place-card__price">
-            <b className="place-card__price-value">&euro;180</b>
-            <span className="place-card__price-text">&#47;&nbsp;night</span>
-          </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">In bookmarks</span>
-          </button>
-        </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{width: '100%'}}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
-        <h2 className="place-card__name">
-          <a href="#">Nice, cozy, warm big bed apartment</a>
-        </h2>
-        <p className="place-card__type">Apartment</p>
-      </div>
-    </article>
-  );
-}
-
-function FavouritePageCityCard(): JSX.Element {
-  const favouritePagePlaceCard = <FavouritePagePlaceCard/>;
-  return (
-    <li className="favorites__locations-items">
-      <div className="favorites__locations locations locations--current">
-        <div className="locations__item">
-          <a className="locations__item-link" href="#">
-            <span>Amsterdam</span>
-          </a>
-        </div>
-      </div>
-      <div className="favorites__places">
-        {favouritePagePlaceCard}
-        {favouritePagePlaceCard}
-      </div>
-    </li>
-  );
-}
 
 export default function FavouritePage(): JSX.Element {
-  const favouritePageCityCard = FavouritePageCityCard();
+  // const favoriteOffers = useAppSelector(selectFavoriteOffers);
+  const favoriteOffers = OFFERS;
+  if (favoriteOffers.length === 0) {
+    return <p>Ничего нет</p>;
+  }
+
+  // const groupedOffers = Object.groupBy(listOffers, (listOffer) => listOffer.city.name) as Partial<Record<CityName, ListOffers>>;
+  // const currentOffers: ListOffers = groupedOffers[currentCity] || [];
+  //TS ругается версия TypeScript ниже 5.4+
+
+  const groupByCity = (offers: FullOffers): Record<CityName, FullOffer[]> =>
+    offers.reduce((acc: Record<string, FullOffer[]>, favoriteOffer: FullOffer) => {
+      const cityName = favoriteOffer.city.name;
+
+      if (!acc[cityName]) {
+        acc[cityName] = [];
+      }
+
+      acc[cityName].push(favoriteOffer);
+      return acc;
+    }, {});
+
+
+  const groupedOffers = groupByCity(favoriteOffers);
+  console.log(groupedOffers);
+
+
   return (
     <main className="page__main page__main--favorites">
       <div className="page__favorites-container container">
         <section className="favorites">
           <h1 className="favorites__title">Saved listing</h1>
           <ul className="favorites__list">
-            {favouritePageCityCard}
-            {favouritePageCityCard}
+            {Object.entries(groupedOffers).map(([cityName, offers]) => (
+              <FavouriteLocations
+                city={cityName as CityName}
+                key={cityName}
+                offers={offers}
+              />
+            ))}
           </ul>
         </section>
       </div>

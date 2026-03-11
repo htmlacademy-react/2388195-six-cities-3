@@ -38,3 +38,5 @@ export type FullOffer = ListOffer & {
   images: string[];
   maxAdults: number;
 };
+
+export type FullOffers = FullOffer[];
