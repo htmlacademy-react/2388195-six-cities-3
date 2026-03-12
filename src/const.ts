@@ -121,3 +121,4 @@ export enum FavoriteStatus {
 
 export const MAX_IMAGES_COUNT = 6;
 export const MAX_COMMENTS_COUNT = 10;
+export const MAX_NEARBY_COUNT = 3;

@@ -36,7 +36,7 @@ import FavoriteButton from './favorite-button';
 interface PlaceCardProps {
   currentOffer: ListOffer;
   // handleHover?: (currentOffer?: ListOffer) => void;
-  block: string;
+  block: 'favorites' | 'place-card';
   hovered?: boolean;
 }
 
@@ -70,9 +70,8 @@ export default function PlaceCard({currentOffer, block, hovered}: PlaceCardProps
   const {id, isPremium, previewImage, price, title, type, rating, isFavorite} = currentOffer;
   const starActiveWidth: string = getStarActiveWidth(rating);
 
-  //ЧТО ЭТО?
-  // const imgWidth = block === 'favorites' ? '150' : '260';
-  // const imgHeight = block === 'favorites' ? '110' : '200';
+  const imgWidth = block === 'favorites' ? '150' : '260';
+  const imgHeight = block === 'favorites' ? '110' : '200';
 
   return (
     <Link to={`${AppRoute.Offer}/${id}`}>
@@ -111,7 +110,7 @@ export default function PlaceCard({currentOffer, block, hovered}: PlaceCardProps
           </div>
         )}
         <div className={`${block}__image-wrapper place-card__image-wrapper`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={previewImage} width={imgWidth} height={imgHeight} alt="Place image"/>
         </div>
         <div className="place-card__info">
           <div className="place-card__price-wrapper">

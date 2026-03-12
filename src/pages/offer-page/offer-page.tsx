@@ -5,7 +5,7 @@ import OfferForm from '../../components/offer-form';
 import OfferImage from '../../components/offer-image';
 import OfferNearPlaces from '../../components/offer-near-places';
 import OfferReviews from '../../components/offer-reviews';
-import { CityName, MAX_IMAGES_COUNT, RequestStatus } from '../../const';
+import { CityName, MAX_IMAGES_COUNT, MAX_NEARBY_COUNT, RequestStatus } from '../../const';
 import { getStarActiveWidth } from '../../util';
 import NotFoundPage from '../not-found-page/not-found-page';
 import CitiesMap from '../../components/cities-map/cities-map';
@@ -67,7 +67,8 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
     return <NotFoundPage type='offer' randomCity={randomCity} />;
   }
 
-  const nearOffersWithCurrent = [...nearbyOffers, offer];
+  const nearOffer = [...nearbyOffers.slice(0, MAX_NEARBY_COUNT)];
+  const nearOffersWithCurrent = [...nearOffer, offer];
 
   const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, city, id: offerId, isFavorite } = offer;
 
@@ -166,7 +167,7 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
         <CitiesMap className='offer__map' currentOffers={nearOffersWithCurrent} currentCity={city.name} activeOfferId={id} />
       </section>
       <div className="container">
-        <OfferNearPlaces nearOffers={nearbyOffers} />
+        <OfferNearPlaces nearOffers={nearOffer} />
       </div>
     </main>
   );
