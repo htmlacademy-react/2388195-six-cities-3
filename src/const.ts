@@ -118,3 +118,6 @@ export enum FavoriteStatus {
   Added = 1,
   Removed = 0
 }
+
+export const MAX_IMAGES_COUNT = 6;
+export const MAX_COMMENTS_COUNT = 10;

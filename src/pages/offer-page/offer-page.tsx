@@ -5,13 +5,13 @@ import OfferForm from '../../components/offer-form';
 import OfferImage from '../../components/offer-image';
 import OfferNearPlaces from '../../components/offer-near-places';
 import OfferReviews from '../../components/offer-reviews';
-import { CityName, RequestStatus } from '../../const';
+import { CityName, MAX_IMAGES_COUNT, RequestStatus } from '../../const';
 import { getStarActiveWidth } from '../../util';
 import NotFoundPage from '../not-found-page/not-found-page';
 import CitiesMap from '../../components/cities-map/cities-map';
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
-import { selectOffer, selectOfferStatus, selectNearbyOffers } from '../../store/slices/offer-slice';
-import { selectComments } from '../../store/slices/comments-slice';
+import { selectOffer, selectOfferStatus, selectNearbyOffers, offerActions } from '../../store/slices/offer-slice';
+import { commentsActions, selectComments } from '../../store/slices/comments-slice';
 import { fetchComments, fetchNearby, fetchOffer } from '../../store/thunk/offer';
 import { useAuth } from '../../hooks/user-auth-hook';
 import FavoriteButton from '../../components/favorite-button';
@@ -32,18 +32,28 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (id) {
-      Promise.all(
-        [dispatch(fetchOffer(id)),
-          dispatch(fetchNearby(id)),
-          dispatch(fetchComments(id))]
-      );
+    if (!id) {
+      return;
     }
+    dispatch(offerActions.clear()); //очистка перед загрузкой
+    dispatch(commentsActions.clear());
+
+    Promise.all(
+      [dispatch(fetchOffer(id)),
+        dispatch(fetchNearby(id)),
+        dispatch(fetchComments(id))]
+    );
+
+    return () => {
+      dispatch(offerActions.clear()); //очистка перед уходом
+    };
+
   }, [dispatch, id]);
   const isAuth = useAuth();
 
 
   if (offerStatus === RequestStatus.Loading) {
+    // return <LoadingPage />;
     return (
       <section className="offer">
         <div className="offer__gallery-container container">
@@ -61,6 +71,8 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
 
   const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, city, id: offerId, isFavorite } = offer;
 
+  const imagesToShow = images.slice(0, MAX_IMAGES_COUNT);
+
   const starActiveWidth = getStarActiveWidth(rating);
 
   const formatedType = (formatType: string): string =>
@@ -77,7 +89,7 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
-            {images.map((image) => (
+            {imagesToShow.map((image) => (
               <OfferImage key={image} image={image}/>)
             )}
           </div>

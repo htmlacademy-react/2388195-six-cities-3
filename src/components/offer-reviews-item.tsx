@@ -2,14 +2,22 @@ import { UserComment } from '../types/user-comment';
 import { getStarActiveWidth } from '../util';
 
 interface OfferReviewsItemProps {
-  commentItem: UserComment;
+  commentItem?: UserComment;
 }
 
-export default function OfferReviewsItem({commentItem}: OfferReviewsItemProps): JSX.Element {
+export default function OfferReviewsItem({commentItem}: OfferReviewsItemProps) {
+  if (!commentItem) {
+    return null;
+  }
+
   const {user, comment, date, rating} = commentItem;
+  const {avatarUrl, name} = user;
+
   const starActiveWidth: string = getStarActiveWidth(rating);
-  const formattedDateNumeric = new Date(date).toLocaleDateString('sv-SE');
-  const formattedDateMonth = new Date(date).toLocaleDateString('en-US', {
+
+  const commentDate = new Date(date);
+  const formattedDateNumeric = commentDate.toLocaleDateString('sv-SE');
+  const formattedDateMonth = commentDate.toLocaleDateString('en-US', {
     month: 'long',
     year: 'numeric'
   });
@@ -18,10 +26,10 @@ export default function OfferReviewsItem({commentItem}: OfferReviewsItemProps): 
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src={user.avatarUrl} width="54" height="54" alt="Reviews avatar"/>
+          <img className="reviews__avatar user__avatar" src={avatarUrl} width="54" height="54" alt="Reviews avatar"/>
         </div>
         <span className="reviews__user-name">
-          {user.name}
+          {name}
         </span>
       </div>
       <div className="reviews__info">

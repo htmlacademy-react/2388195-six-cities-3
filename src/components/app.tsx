@@ -13,47 +13,20 @@ import OfferPage from '../pages/offer-page/offer-page';
 import { checkAuth } from '../store/thunk/user-auth';
 import { getToken } from '../services/token';
 import ProtectedRoute from './private-route';
-// import { OFFERS } from '../mocks/offers';
-// import { useFavoriteCount } from '../hooks/favorite-hook';
 import { fetchFavorites } from '../store/thunk/favorite';
 import { useAuth } from '../hooks/user-auth-hook';
 import { useSelector } from 'react-redux';
 import { selectFavoriteOffers } from '../store/slices/favorite-slice';
 
-
 export default function App(): JSX.Element {
-  const randomCity = getRandomCity(CITIES);
+
   const dispatch = useAppDispatch();
-
-  //dispatch(fetchAllOffers()) - асинхронный диспатч возвращает промис,
-  // поэтому мы можем использовать then и catch,
-  // но нужно использовать метод unwrap() чтобы обработать ошибку
-  // именно внутри fetchAllOffers()
-  //метод unwrap() - достает оригинальное состояние промиса then и catch - будут отрабатывать как надо
-
-
-  const token = getToken();
-
-  useEffect(() => {
-    if (token) {
-      dispatch(checkAuth());
-
-    }
-  }, [dispatch, token]);
-
   const isAuth = useAuth();
-
-  useEffect(() => {
-    if (isAuth) {
-      dispatch(fetchFavorites());
-    }
-  }, [dispatch, isAuth, token]);
-
-  // const favouriteCount = useFavoriteCount();
+  const token = getToken();
+  const randomCity = getRandomCity(CITIES);
 
 
   const favouriteCount = useSelector(selectFavoriteOffers).length;
-  // const favouriteCount = OFFERS.length;
 
   useEffect(() => {
     dispatch(fetchAllOffers())
@@ -64,21 +37,18 @@ export default function App(): JSX.Element {
       .catch(()=> {
         console.log('error');
       });
-  }, [dispatch]);
 
+    if (token) {
+      dispatch(checkAuth());
+    }
 
-  //   const { fetchAllOffers } = useActionCreators(offersActions);
-  //   useEffect(() => {
-  //     fetchAllOffers()
-  //       .unwrap()
-  //       .then(() => {
-  //         console.log('success');
-  //       })
-  //       .catch(()=> {
-  //         console.log('error');
-  //       });
-  //   }, [fetchAllOffers]);
-  // //зависимость [fetchAllOffers] в useEffect исправляет бесконечный цикл запросов
+  }, [dispatch, token]);
+
+  useEffect(() => {
+    if (isAuth) {
+      dispatch(fetchFavorites());
+    }
+  }, [dispatch, isAuth, token]);
 
 
   return (
@@ -134,3 +104,23 @@ export default function App(): JSX.Element {
 
 // все компоненты которые должны быть защищены - обернуты в protect route
 // а компоненты, которые должны быть защищены, но быть публичными - теперь с пропом onlyForUnAuth - только для неавторизованнных
+
+
+//dispatch(fetchAllOffers()) - асинхронный диспатч возвращает промис,
+// поэтому мы можем использовать then и catch,
+// но нужно использовать метод unwrap() чтобы обработать ошибку
+// именно внутри fetchAllOffers()
+//метод unwrap() - достает оригинальное состояние промиса then и catch - будут отрабатывать как надо
+
+//   const { fetchAllOffers } = useActionCreators(offersActions);
+//   useEffect(() => {
+//     fetchAllOffers()
+//       .unwrap()
+//       .then(() => {
+//         console.log('success');
+//       })
+//       .catch(()=> {
+//         console.log('error');
+//       });
+//   }, [fetchAllOffers]);
+// //зависимость [fetchAllOffers] в useEffect исправляет бесконечный цикл запросов

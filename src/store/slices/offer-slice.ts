@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RequestStatus } from '../../const';
 import { fetchNearby, fetchOffer } from '../thunk/offer';
 import { FullOffer, ListOffers } from '../../types/offer';
+import { postFavorite } from '../thunk/favorite';
 
 interface OfferState {
   offer: FullOffer | null;
@@ -22,6 +23,7 @@ export const offerSlice = createSlice({
     clear(state) {
       state.offer = null;
       state.nearbyOffers = [];
+      state.offerStatus = RequestStatus.Idle;
     },
   },
   extraReducers: (builder) =>
@@ -38,7 +40,13 @@ export const offerSlice = createSlice({
       })
       .addCase(fetchNearby.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;
-      }),
+      })
+      .addCase(postFavorite.fulfilled, (state, action) => {
+        if (state.offer && state.offer.id === action.payload.offer.id) {
+          state.offer.isFavorite = action.payload.offer.isFavorite;
+        }
+      })
+  ,
   selectors: {
     selectNearbyOffers: (state: OfferState) => state.nearbyOffers,
     selectOffer: (state: OfferState) => state.offer,

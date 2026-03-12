@@ -8,7 +8,6 @@ export const fetchFavorites = createAsyncThunk<FullOffers, void, {extra: AxiosIn
   'fetchFavorites',
   async (_arg, {extra: api}) => {
     const {data} = await api.get<FullOffers>(APIRoute.Favorite);
-    console.log(data);
     return data;
   }
 );
@@ -24,7 +23,7 @@ interface PostFavoriteResponse {
 }
 
 export const postFavorite = createAsyncThunk<PostFavoriteResponse, PostFavoriteProps, {extra: AxiosInstance}>(
-  'comments/post',
+  'postFavorite',
   async ({offerId, favoriteStatus}, {extra: api}) => {
     const {data} = await api.post<FullOffer>(`${APIRoute.Favorite}/${offerId}/${favoriteStatus}`);
     return { offer: data, favoriteStatus };

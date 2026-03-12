@@ -16,7 +16,12 @@ const initialState: CommentsState = {
 export const commentsSlice = createSlice({
   name: 'comments',
   initialState,
-  reducers: {},
+  reducers: {
+    clear: (state) => {
+      state.comments = [];
+      state.status = RequestStatus.Idle;
+    }
+  },
   extraReducers: (builder) =>
     builder
       .addCase(fetchComments.pending, (state) => {
@@ -33,6 +38,7 @@ export const commentsSlice = createSlice({
         state.status = RequestStatus.Loading;
       })
       .addCase(postComment.fulfilled, (state, action) => {
+        state.status = RequestStatus.Success;
         state.comments.push(action.payload);
       })
       .addCase(postComment.rejected, (state) => {
@@ -44,5 +50,6 @@ export const commentsSlice = createSlice({
   }
 });
 
-export const commentsActions = {...commentsSlice.actions, ...fetchComments, ...postComment};
+// export const commentsActions = {...commentsSlice.actions, ...fetchComments, ...postComment};
+export const commentsActions = {...commentsSlice.actions};
 export const {selectComments, selectCommentsStatus} = commentsSlice.selectors;
