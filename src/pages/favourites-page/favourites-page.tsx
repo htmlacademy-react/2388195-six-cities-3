@@ -1,17 +1,15 @@
 import FavouriteLocations from '../../components/favorite-locations';
-// import { OFFERS } from '../../mocks/offers';
 import { selectFavoriteOffers } from '../../store/slices/favorite-slice';
-// import { FavoriteOffers, FavoriteOffer } from '../../types/favorite';
 import { CityName } from '../../const';
 import { FullOffer, FullOffers } from '../../types/offer';
 import { useAppSelector } from '../../hooks/store-hooks';
+import FavouriteEmptyPage from '../favourite-empty-page/favourite-empty-page';
 
 
 export default function FavouritePage(): JSX.Element {
   const favoriteOffers = useAppSelector(selectFavoriteOffers);
-  // const favoriteOffers = OFFERS;
   if (favoriteOffers.length === 0) {
-    return <p>Ничего нет</p>;
+    return <FavouriteEmptyPage />;
   }
 
 
