@@ -14,10 +14,6 @@ export default function MainPage({currentCity}: MainPageProps): JSX.Element {
   const status = useAppSelector(selectStatus);
   const listOffers = useAppSelector(selectOffers);
 
-  if (status === RequestStatus.Loading) {
-    return <div>Loading...</div>;
-  }
-
   const currentOffers = listOffers.filter((listOffer) => listOffer.city.name === currentCity);
 
   // const groupedOffers = Object.groupBy(listOffers, (listOffer) => listOffer.city.name) as Partial<Record<CityName, ListOffers>>;
@@ -25,6 +21,10 @@ export default function MainPage({currentCity}: MainPageProps): JSX.Element {
   //TS ругается версия TypeScript ниже 5.4+
 
   const isEmpty = currentOffers.length === 0;
+
+  if (status === RequestStatus.Loading || isEmpty) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <main className={classNames('page__main', 'page__main--index', {'page__main--index-empty' : isEmpty})}>

@@ -25,9 +25,6 @@ export default function App(): JSX.Element {
   const token = getToken();
   const randomCity = getRandomCity(CITIES);
 
-
-  const favouriteCount = useSelector(selectFavoriteOffers).length;
-
   useEffect(() => {
     dispatch(fetchAllOffers())
       .unwrap()
@@ -50,6 +47,7 @@ export default function App(): JSX.Element {
     }
   }, [dispatch, isAuth, token]);
 
+  const favouriteCount = useSelector(selectFavoriteOffers).length;
 
   return (
     <BrowserRouter>

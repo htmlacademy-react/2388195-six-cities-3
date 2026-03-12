@@ -36,7 +36,7 @@ import FavoriteButton from './favorite-button';
 interface PlaceCardProps {
   currentOffer: ListOffer;
   // handleHover?: (currentOffer?: ListOffer) => void;
-  block: 'favorites' | 'place-card';
+  block: 'favorites' | 'place-card' | 'cities';
   hovered?: boolean;
 }
 

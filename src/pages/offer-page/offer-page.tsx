@@ -52,7 +52,7 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
   const isAuth = useAuth();
 
 
-  if (offerStatus === RequestStatus.Loading) {
+  if (offerStatus === RequestStatus.Loading || !offer) {
     // return <LoadingPage />;
     return (
       <section className="offer">

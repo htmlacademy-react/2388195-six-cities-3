@@ -54,7 +54,8 @@ export const offersSlice = createSlice({
   }
 });
 
-export const offersActions = {...offersSlice.actions, fetchAllOffers};
+// export const offersActions = {...offersSlice.actions, fetchAllOffers};
+export const offersActions = {...offersSlice.actions};
 // console.dir(offersActions);
 export const {selectActiveId, selectOffers, selectStatus} = offersSlice.selectors;
 
