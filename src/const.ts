@@ -115,6 +115,6 @@ export const URL_MARKER_CURRENT = './img/pin-active.svg';
 
 
 export enum FavoriteStatus {
-  Added = '1',
-  Removed = '0'
+  Added = 1,
+  Removed = 0
 }

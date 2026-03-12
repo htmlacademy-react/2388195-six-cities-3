@@ -1,88 +1,76 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
 import OfferForm from '../../components/offer-form';
 import OfferImage from '../../components/offer-image';
 import OfferNearPlaces from '../../components/offer-near-places';
 import OfferReviews from '../../components/offer-reviews';
 import { CityName, RequestStatus } from '../../const';
-// import { Offers, Offer, UserComments, ListOffer } from '../../types';
 import { getStarActiveWidth } from '../../util';
 import NotFoundPage from '../not-found-page/not-found-page';
 import CitiesMap from '../../components/cities-map/cities-map';
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
-// import { selectActiveId, selectOffers } from '../../store/slices/offers-slice';
-import { useParams } from 'react-router-dom';
-// import { useDocumentTitle } from '../../hooks/store-hooks';
 import { selectOffer, selectOfferStatus, selectNearbyOffers } from '../../store/slices/offer-slice';
 import { selectComments } from '../../store/slices/comments-slice';
 import { fetchComments, fetchNearby, fetchOffer } from '../../store/thunk/offer';
-import { useEffect } from 'react';
 import { useAuth } from '../../hooks/user-auth-hook';
-// import { selectActiveId } from '../../store/slices/offers-slice';
-
+import FavoriteButton from '../../components/favorite-button';
 interface OfferPageProps {
   randomCity: CityName;
 }
 
 export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
 
-  //Зачем:
-  // useDocumentTitle('Offer');
-  // const id = useAppSelector(selectActiveId);
   const {id} = useParams();
-  //useParams() возвращает объект с параметрами, а не строку
-  //Деструктуризация параметра: const { id } = useParams(); - извлекает конкретный параметр id из объекта параметров.
 
   const offer = useAppSelector(selectOffer);
   const offerStatus = useAppSelector(selectOfferStatus);
   const nearbyOffers = useAppSelector(selectNearbyOffers);
   const comments = useAppSelector(selectComments);
-  // const activeOfferId = useAppSelector(selectActiveId);
+
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (id) {
       Promise.all(
-        [dispatch(fetchOffer(id)), dispatch(fetchNearby(id)), dispatch(fetchComments(id))]
+        [dispatch(fetchOffer(id)),
+          dispatch(fetchNearby(id)),
+          dispatch(fetchComments(id))]
       );
     }
   }, [dispatch, id]);
   const isAuth = useAuth();
-  //[dispatch, id] - Массив зависимостей (выполняется при изменении зависимостей):
-  // Перенос в useEffect: Вызовы dispatch должны быть внутри useEffect,
-  // иначе они будут выполняться при каждом рендере компонента, что может привести к бесконечным запросам.
 
-  //Promise.all - чтобы эти промисы отработали одновременно. (избежать лишний ререндер)
 
   if (offerStatus === RequestStatus.Loading) {
-    return <div>Loading...</div>;
+    return (
+      <section className="offer">
+        <div className="offer__gallery-container container">
+        Loading...
+        </div>
+      </section>
+    );
   }
 
   if (offerStatus === RequestStatus.Failed || !offer) {
     return <NotFoundPage type='offer' randomCity={randomCity} />;
   }
 
-
-  // const currentOffer = offers.find((offer: Offer) => offer.id === id);
-  // const listOffers = useAppSelector(selectOffers);
-
-  // if (!currentOffer) {
-  //   return <NotFoundPage type='offer' randomCity={randomCity} />;
-  // }
-
-  // const currentListOffer = listOffers.find((listOffer: ListOffer) => listOffer.id === id);
-
-  // if (!currentListOffer) {
-  //   return <NotFoundPage type='offer' randomCity={randomCity} />;
-  // }
-
-  // const currentCity = offer.city.name;
-
-  // const nearOffers = getNearOffers(listOffers, currentCity, id);
   const nearOffersWithCurrent = [...nearbyOffers, offer];
 
-  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, city, id: offerId } = offer;
-  const starActiveWidth: string = getStarActiveWidth(rating);
+  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, city, id: offerId, isFavorite } = offer;
 
+  const starActiveWidth = getStarActiveWidth(rating);
+
+  const formatedType = (formatType: string): string =>
+    formatType ? formatType[0].toUpperCase() + formatType.slice(1) : '';
+
+  const formatedBedrooms = (count: number): string =>
+    `${count} ${count > 1 ? 'Bedrooms' : 'Bedroom'}`;
+
+  const formatedAdults = (count: number): string =>
+    `${count} ${count > 1 ? 'adults' : 'adult'}`;
 
   return (
     <main className="page__main page__main--offer">
@@ -90,7 +78,7 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
             {images.map((image) => (
-              <OfferImage image={image} key={image}/>)
+              <OfferImage key={image} image={image}/>)
             )}
           </div>
         </div>
@@ -104,12 +92,7 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
               <h1 className="offer__name">
                 {title}
               </h1>
-              <button className="offer__bookmark-button button" type="button">
-                <svg className="offer__bookmark-icon" width="31" height="33">
-                  <use xlinkHref="#icon-bookmark"></use>
-                </svg>
-                <span className="visually-hidden">To bookmarks</span>
-              </button>
+              <FavoriteButton block={'offer'} offerId={offerId} isFavorite = {isFavorite} />
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">
@@ -120,13 +103,13 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
             </div>
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
-                {type ? type[0].toUpperCase() + type.slice(1) : ''}
+                {formatedType(type)}
               </li>
               <li className="offer__feature offer__feature--bedrooms">
-                {bedrooms > 1 ? `${bedrooms} Bedrooms` : `${bedrooms} Bedroom`}
+                {formatedBedrooms(bedrooms)}
               </li>
               <li className="offer__feature offer__feature--adults">
-                Max {maxAdults > 1 ? `${maxAdults} adults` : `${maxAdults} adult`}
+                Max {formatedAdults(maxAdults)}
               </li>
             </ul>
             <div className="offer__price">
@@ -176,3 +159,17 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
     </main>
   );
 }
+
+
+//useParams() возвращает объект с параметрами, а не строку
+//Деструктуризация параметра: const { id } = useParams(); - извлекает конкретный параметр id из объекта параметров.
+
+//[dispatch, id] - Массив зависимостей (выполняется при изменении зависимостей):
+// Перенос в useEffect: Вызовы dispatch должны быть внутри useEffect,
+// иначе они будут выполняться при каждом рендере компонента, что может привести к бесконечным запросам.
+
+//Promise.all - чтобы эти промисы отработали одновременно. (избежать лишний ререндер)
+
+//Зачем:
+// useDocumentTitle('Offer');
+// const id = useAppSelector(selectActiveId);

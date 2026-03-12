@@ -5,7 +5,6 @@ interface LoginLocationProps {
   randomCity: CityName;
 }
 
-
 export default function LoginLocation({randomCity}: LoginLocationProps): JSX.Element {
 
   const randomCityRoute = randomCity.toLowerCase();

@@ -36,7 +36,7 @@ export const favoriteSlice = createSlice({
       })
       .addCase(postFavorite.fulfilled, (state, action) => {
         state.favoriteOfferStatus = RequestStatus.Success;
-        switch (action.payload.status) {
+        switch (action.payload.favoriteStatus) {
           case FavoriteStatus.Added:
             state.favoriteOffers.push(action.payload.offer);
             break;

@@ -4,6 +4,7 @@ import { getStarActiveWidth } from '../util';
 import { useAppDispatch } from '../hooks/store-hooks';
 import { offersActions } from '../store/slices/offers-slice';
 import { ListOffer } from '../types/offer';
+import FavoriteButton from './favorite-button';
 // import { useEffect } from 'react';
 
 // type CardProps = ServerOffer &
@@ -66,7 +67,7 @@ export default function PlaceCard({currentOffer, block, hovered}: PlaceCardProps
   //   dispatch(offersActions.setActiveId(currentOffer ? currentOffer.id : null));
   // });
 
-  const {id, isPremium, previewImage, price, title, type, rating} = currentOffer;
+  const {id, isPremium, previewImage, price, title, type, rating, isFavorite} = currentOffer;
   const starActiveWidth: string = getStarActiveWidth(rating);
 
   //ЧТО ЭТО?
@@ -118,12 +119,7 @@ export default function PlaceCard({currentOffer, block, hovered}: PlaceCardProps
               <b className="place-card__price-value">&euro;{price}</b>
               <span className="place-card__price-text">&#47;&nbsp;night</span>
             </div>
-            <button className="place-card__bookmark-button button" type="button">
-              <svg className="place-card__bookmark-icon" width="18" height="19">
-                <use xlinkHref="#icon-bookmark"></use>
-              </svg>
-              <span className="visually-hidden">To bookmarks</span>
-            </button>
+            <FavoriteButton block={'place-card'} offerId={id} isFavorite={isFavorite} />
           </div>
           <div className="place-card__rating rating">
             <div className="place-card__stars rating__stars">

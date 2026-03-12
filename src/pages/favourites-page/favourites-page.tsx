@@ -1,21 +1,19 @@
 import FavouriteLocations from '../../components/favorite-locations';
-import { OFFERS } from '../../mocks/offers';
-// import { selectFavoriteOffers } from '../../store/slices/favorite-slice';
+// import { OFFERS } from '../../mocks/offers';
+import { selectFavoriteOffers } from '../../store/slices/favorite-slice';
 // import { FavoriteOffers, FavoriteOffer } from '../../types/favorite';
 import { CityName } from '../../const';
 import { FullOffer, FullOffers } from '../../types/offer';
+import { useAppSelector } from '../../hooks/store-hooks';
 
 
 export default function FavouritePage(): JSX.Element {
-  // const favoriteOffers = useAppSelector(selectFavoriteOffers);
-  const favoriteOffers = OFFERS;
+  const favoriteOffers = useAppSelector(selectFavoriteOffers);
+  // const favoriteOffers = OFFERS;
   if (favoriteOffers.length === 0) {
     return <p>Ничего нет</p>;
   }
 
-  // const groupedOffers = Object.groupBy(listOffers, (listOffer) => listOffer.city.name) as Partial<Record<CityName, ListOffers>>;
-  // const currentOffers: ListOffers = groupedOffers[currentCity] || [];
-  //TS ругается версия TypeScript ниже 5.4+
 
   const groupByCity = (offers: FullOffers): Record<CityName, FullOffer[]> =>
     offers.reduce((acc: Record<string, FullOffer[]>, favoriteOffer: FullOffer) => {
@@ -53,3 +51,10 @@ export default function FavouritePage(): JSX.Element {
     </main>
   );
 }
+
+
+/////////////////////////////////////////////////////////////////////////////////
+
+// const groupedOffers = Object.groupBy(listOffers, (listOffer) => listOffer.city.name) as Partial<Record<CityName, ListOffers>>;
+// const currentOffers: ListOffers = groupedOffers[currentCity] || [];
+//TS ругается версия TypeScript ниже 5.4+

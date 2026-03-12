@@ -1,14 +1,14 @@
-import { Outlet, useLocation } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import { Link } from 'react-router-dom';
-import Footer from '../footer';
+import { Outlet, useLocation, Link } from 'react-router-dom';
+
 import { getLayotState } from './utils';
-import Logo from '../logo';
-import LogoMainPage from '../logo-main-page';
 import { useAuth } from '../../hooks/user-auth-hook';
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { selectUserInfo } from '../../store/slices/user-slice';
 import { logout } from '../../store/thunk/user-auth';
+import { AppRoute } from '../../const';
+import LogoMainPage from './logo-main-page';
+import Logo from './logo';
+import Footer from './footer';
 
 interface LayoutProps {
   favouriteCount: number;

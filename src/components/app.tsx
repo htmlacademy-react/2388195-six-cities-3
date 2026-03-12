@@ -13,11 +13,12 @@ import OfferPage from '../pages/offer-page/offer-page';
 import { checkAuth } from '../store/thunk/user-auth';
 import { getToken } from '../services/token';
 import ProtectedRoute from './private-route';
-import { useAuth } from '../hooks/user-auth-hook';
+// import { OFFERS } from '../mocks/offers';
+// import { useFavoriteCount } from '../hooks/favorite-hook';
 import { fetchFavorites } from '../store/thunk/favorite';
-// import { selectFavoriteOffers } from '../store/slices/favorite-slice';
-// import { useSelector } from 'react-redux';
-import { OFFERS } from '../mocks/offers';
+import { useAuth } from '../hooks/user-auth-hook';
+import { useSelector } from 'react-redux';
+import { selectFavoriteOffers } from '../store/slices/favorite-slice';
 
 
 export default function App(): JSX.Element {
@@ -48,8 +49,11 @@ export default function App(): JSX.Element {
     }
   }, [dispatch, isAuth, token]);
 
-  // const favouriteCount = useSelector(selectFavoriteOffers).length;
-  const favouriteCount = OFFERS.length;
+  // const favouriteCount = useFavoriteCount();
+
+
+  const favouriteCount = useSelector(selectFavoriteOffers).length;
+  // const favouriteCount = OFFERS.length;
 
   useEffect(() => {
     dispatch(fetchAllOffers())
