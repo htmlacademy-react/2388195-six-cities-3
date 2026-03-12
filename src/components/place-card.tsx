@@ -68,7 +68,8 @@ export default function PlaceCard({currentOffer, block, hovered}: PlaceCardProps
   // });
 
   const {id, isPremium, previewImage, price, title, type, rating, isFavorite} = currentOffer;
-  const starActiveWidth: string = getStarActiveWidth(rating);
+  const roundedRating = Math.round(rating);
+  const starActiveWidth: string = getStarActiveWidth(roundedRating);
 
   const imgWidth = block === 'favorites' ? '150' : '260';
   const imgHeight = block === 'favorites' ? '110' : '200';

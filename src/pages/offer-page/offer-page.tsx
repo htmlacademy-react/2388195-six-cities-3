@@ -74,7 +74,8 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
 
   const imagesToShow = images.slice(0, MAX_IMAGES_COUNT);
 
-  const starActiveWidth = getStarActiveWidth(rating);
+  const roundedRating = Math.round(rating);
+  const starActiveWidth: string = getStarActiveWidth(roundedRating);
 
   const formatedType = (formatType: string): string =>
     formatType ? formatType[0].toUpperCase() + formatType.slice(1) : '';
@@ -112,7 +113,7 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
                 <span style={{width: starActiveWidth}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
-              <span className="offer__rating-value rating__value">{rating}</span>
+              <span className="offer__rating-value rating__value">{roundedRating}</span>
             </div>
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">

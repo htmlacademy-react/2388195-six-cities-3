@@ -13,7 +13,8 @@ export default function OfferReviewsItem({commentItem}: OfferReviewsItemProps) {
   const {user, comment, date, rating} = commentItem;
   const {avatarUrl, name} = user;
 
-  const starActiveWidth: string = getStarActiveWidth(rating);
+  const roundedRating = Math.round(rating);
+  const starActiveWidth: string = getStarActiveWidth(roundedRating);
 
   const commentDate = new Date(date);
   const formattedDateNumeric = commentDate.toLocaleDateString('sv-SE');
