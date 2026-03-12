@@ -3,6 +3,7 @@ import { ListOffer, ListOffers } from '../../types/offer';
 
 import { RequestStatus } from '../../const';
 import { fetchAllOffers } from '../thunk/offers';
+import { postFavorite } from '../thunk/favorite';
 
 interface OffersState {
   activeId: ListOffer['id'] | null;
@@ -35,6 +36,16 @@ export const offersSlice = createSlice({
       })
       .addCase(fetchAllOffers.rejected, (state) => {
         state.status = RequestStatus.Failed;
+      })
+      .addCase(postFavorite.fulfilled, (state, action) => {
+
+        const updatedOffer = action.payload.offer;
+        const offerIndex = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
+
+        if (offerIndex !== -1) {
+          state.offers[offerIndex].isFavorite = updatedOffer.isFavorite;
+        }
+
       }),
   selectors: {
     selectActiveId: (state: OffersState) => state.activeId,
