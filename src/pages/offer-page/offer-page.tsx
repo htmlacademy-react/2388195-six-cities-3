@@ -15,6 +15,7 @@ import { commentsActions, selectComments } from '../../store/slices/comments-sli
 import { fetchComments, fetchNearby, fetchOffer } from '../../store/thunk/offer';
 import { useAuth } from '../../hooks/user-auth-hook';
 import FavoriteButton from '../../components/favorite-button';
+import Spinner from '../../components/spinner/spinner';
 interface OfferPageProps {
   randomCity: CityName;
 }
@@ -32,42 +33,37 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!id) {
-      return;
+    if (id) {
+      dispatch(fetchOffer(id));
+      dispatch(fetchNearby(id));
+      dispatch(fetchComments(id));
     }
-    dispatch(offerActions.clear()); //очистка перед загрузкой
-    dispatch(commentsActions.clear());
 
-    Promise.all(
-      [dispatch(fetchOffer(id)),
-        dispatch(fetchNearby(id)),
-        dispatch(fetchComments(id))]
-    );
+    //   Promise.all(
+    //     [dispatch(fetchOffer(id)),
+    //       dispatch(fetchNearby(id)),
+    //       dispatch(fetchComments(id))]
+    //   );
 
     return () => {
       dispatch(offerActions.clear()); //очистка перед уходом
+      dispatch(commentsActions.clear());
     };
+  }, [id, dispatch]);
 
-  }, [dispatch, id]);
+
   const isAuth = useAuth();
 
 
   if (offerStatus === RequestStatus.Loading || !offer) {
-    // return <LoadingPage />;
-    return (
-      <section className="offer">
-        <div className="offer__gallery-container container">
-        Loading...
-        </div>
-      </section>
-    );
+    return <Spinner />;
   }
 
   if (offerStatus === RequestStatus.Failed || !offer) {
     return <NotFoundPage type='offer' randomCity={randomCity} />;
   }
 
-  const nearOffer = [...nearbyOffers.slice(0, MAX_NEARBY_COUNT)];
+  const nearOffer = nearbyOffers.slice(0, MAX_NEARBY_COUNT);
   const nearOffersWithCurrent = [...nearOffer, offer];
 
   const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, city, id: offerId, isFavorite } = offer;
@@ -165,7 +161,7 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
             </section>
           </div>
         </div>
-        <CitiesMap className='offer__map' currentOffers={nearOffersWithCurrent} currentCity={city.name} activeOfferId={id} />
+        <CitiesMap className='offer__map' currentOffers={nearOffersWithCurrent} currentCity={city.name} activeOfferId={offerId} />
       </section>
       <div className="container">
         <OfferNearPlaces nearOffers={nearOffer} />

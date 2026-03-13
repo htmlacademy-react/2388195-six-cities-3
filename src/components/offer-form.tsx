@@ -15,12 +15,14 @@ export default function OfferForm({offerId}: OfferFormProps): JSX.Element {
 
   const [review, setReview] = useState({rating: 0, review: ''});
 
+  let isSubmitDisabled = review.review.length < 50 || review.rating === 0 || review.review.length > 300;
   const handleChange: ChangeHandler = (event) => {
     const {name, value} = event.currentTarget;
     setReview({
       ...review,
       [name]: value
     });
+    isSubmitDisabled = false;
   };
 
 
@@ -35,7 +37,6 @@ export default function OfferForm({offerId}: OfferFormProps): JSX.Element {
     setReview({ rating: 0, review: '' });
   };
 
-  const isSubmitDisabled = review.review.length < 50 || review.rating === 0;
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>

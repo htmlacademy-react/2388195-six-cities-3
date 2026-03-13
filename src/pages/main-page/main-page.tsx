@@ -4,6 +4,7 @@ import CurrentOffers from '../../components/current-offers';
 import { CITIES, CityName, RequestStatus } from '../../const';
 import { useAppSelector } from '../../hooks/store-hooks';
 import { selectOffers, selectStatus } from '../../store/slices/offers-slice';
+import Spinner from '../../components/spinner/spinner';
 
 interface MainPageProps {
   currentCity: CityName;
@@ -23,7 +24,7 @@ export default function MainPage({currentCity}: MainPageProps): JSX.Element {
   const isEmpty = currentOffers.length === 0;
 
   if (status === RequestStatus.Loading || isEmpty) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   return (
