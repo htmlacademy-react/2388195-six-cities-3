@@ -1,11 +1,9 @@
 import {TypedUseSelectorHook, useDispatch, useSelector, useStore} from 'react-redux';
-// import { ActionCreatorsMapObject, AsyncThunk, bindActionCreators } from '@reduxjs/toolkit';
-// import { useMemo } from 'react';
+import { useEffect } from 'react';
+
 import {RootState, AppDispatch} from '../types/store';
 import {store} from '../store';
-import { useEffect } from 'react';
-// import { createAsyncThunk } from '@reduxjs/toolkit';
-// import { AxiosInstance } from 'axios';
+
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -22,6 +20,9 @@ export const useDocumentTitle = (title: string) => {
     // };
   }, [title]);
 };
+
+
+/////////////////////////////////////////////////////////////
 // useEffect - это хук в React, который позволяет выполнять побочные эффекты в функциональных компонентах
 // useEffect(() => {
 //   // Побочный эффект
@@ -41,6 +42,7 @@ export const useDocumentTitle = (title: string) => {
 //   rejectValue: string;
 //   extra: AxiosInstance;
 // }>();
+
 
 // ////////////////////////////////////////////////////////
 // // //useActionCreators
