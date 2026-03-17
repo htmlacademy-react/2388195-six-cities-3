@@ -2,26 +2,15 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ListOffers } from '../../types/offer';
 import {APIRoute} from '../../const';
-// import { createAppAsyncThunk } from '../../hooks/store-hooks';
 
 
 export const fetchAllOffers = createAsyncThunk<ListOffers, void, {extra: AxiosInstance}>(
   'fetchAllOffers',
   async (_arg, {extra: api}) => {
     const {data} = await api.get<ListOffers>(APIRoute.Offers);
-    // dispatch(fetchAllOffers());
     return data;
   }
 );
-
-// export const fetchAllOffers = createAppAsyncThunk<ListOffer[], void>(
-//   'fetchOffers/all',
-//   async (_arg, {extra: api}) => {
-//     const {data} = await api.get<ListOffer[]>(APIRoute.Offers);
-//     return data;
-//   }
-// );
-// //проблема: Unsafe assignment of an `any` value.  видео 56:53
 
 
 /////////////////////////////////////

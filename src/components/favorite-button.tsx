@@ -43,21 +43,3 @@ export default function FavoriteButton({block, offerId, isFavorite}: FavoriteBut
     </button>
   );
 }
-
-
-// dispatch(fetchFavorites());
-
-// Promise.all(
-//   [dispatch(fetchOffer(offerId)), dispatch(fetchNearby(offerId)), dispatch(fetchComments(offerId))]);
-
-
-// const dispatch = useAppDispatch();
-
-// useEffect(() => {
-//   if (id) {
-//     Promise.all(
-//       [dispatch(fetchOffer(id)), dispatch(fetchNearby(id)), dispatch(fetchComments(id))]
-//     );
-//   }
-// }, [dispatch, id]);
-// const isAuth = useAuth();

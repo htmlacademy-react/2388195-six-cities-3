@@ -19,7 +19,6 @@ export const login = createAsyncThunk<User, Login, {extra: AxiosInstance}>(
   async (body, {extra: api}) => {
     const {data} = await api.post<User>(APIRoute.Login, body);
     saveToken(data.token);
-    //при успешной авторизации - сохр токен
     return data;
   });
 
@@ -28,5 +27,4 @@ export const logout = createAsyncThunk<unknown, void, {extra: AxiosInstance}>(
   async (_arg, {extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-  //при выходе - удаляем токен
   });

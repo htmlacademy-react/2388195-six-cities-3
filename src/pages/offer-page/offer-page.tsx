@@ -29,7 +29,6 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
   const nearbyOffers = useAppSelector(selectNearbyOffers);
   const comments = useAppSelector(selectComments);
 
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -38,12 +37,6 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
       dispatch(fetchNearby(id));
       dispatch(fetchComments(id));
     }
-
-    //   Promise.all(
-    //     [dispatch(fetchOffer(id)),
-    //       dispatch(fetchNearby(id)),
-    //       dispatch(fetchComments(id))]
-    //   );
 
     return () => {
       dispatch(offerActions.clear()); //очистка перед уходом
@@ -178,8 +171,13 @@ export default function OfferPage({randomCity}: OfferPageProps): JSX.Element {
 // Перенос в useEffect: Вызовы dispatch должны быть внутри useEffect,
 // иначе они будут выполняться при каждом рендере компонента, что может привести к бесконечным запросам.
 
+//   Promise.all(
+//     [dispatch(fetchOffer(id)),
+//       dispatch(fetchNearby(id)),
+//       dispatch(fetchComments(id))]
+//   );
 //Promise.all - чтобы эти промисы отработали одновременно. (избежать лишний ререндер)
 
-//Зачем:
+
 // useDocumentTitle('Offer');
 // const id = useAppSelector(selectActiveId);

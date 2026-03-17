@@ -17,10 +17,6 @@ export default function MainPage({currentCity}: MainPageProps): JSX.Element {
 
   const currentOffers = listOffers.filter((listOffer) => listOffer.city.name === currentCity);
 
-  // const groupedOffers = Object.groupBy(listOffers, (listOffer) => listOffer.city.name) as Partial<Record<CityName, ListOffers>>;
-  // const currentOffers: ListOffers = groupedOffers[currentCity] || [];
-  //TS ругается версия TypeScript ниже 5.4+
-
   const isEmpty = currentOffers.length === 0;
 
   if (status === RequestStatus.Loading || isEmpty) {
@@ -52,3 +48,9 @@ export default function MainPage({currentCity}: MainPageProps): JSX.Element {
     </main>
   );
 }
+
+
+///////////////////////////////////////////////////////////////////
+// const groupedOffers = Object.groupBy(listOffers, (listOffer) => listOffer.city.name) as Partial<Record<CityName, ListOffers>>;
+// const currentOffers: ListOffers = groupedOffers[currentCity] || [];
+//TS ругается версия TypeScript ниже 5.4+

@@ -30,8 +30,6 @@ export default function CitiesMap({className, currentCity, currentOffers, active
   const containerMapRef = useRef<HTMLElement>(null);
   let city = CITIES.find((item)=> item.name === currentCity);
 
-  // Можно как-то заменить: !
-  // const city = CITIES.find((item)=> item.name === currentCity)!;
   if (!city) {
     city = CITIES[0];
   }

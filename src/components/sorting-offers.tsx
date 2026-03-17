@@ -20,28 +20,14 @@ export default function SortingOffers({onChangeSort, currentSortType}: SortingOf
     setIsOpened(false);
   };
 
-  const handleKeyDown = (evt: React.KeyboardEvent<HTMLFormElement>) => {
-    if (evt.key === 'Escape') {
-      setIsOpened(false);
-    }
-  };
-
   return (
-    <form className="places__sorting" action="#" method="get" onKeyDown={handleKeyDown}>
+    <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span
         className="places__sorting-type"
         tabIndex={0}
         onClick={handleTypeClick}
         role="button"
-        aria-haspopup="listbox"
-        aria-expanded={isOpened}
-        onKeyDown={(evt) => {
-          if (evt.key === 'Enter' || evt.key === ' ') {
-            evt.preventDefault();
-            handleTypeClick();
-          }
-        }}
       >
         {currentSortType}
         <svg className="places__sorting-arrow" width="7" height="4">
@@ -58,14 +44,6 @@ export default function SortingOffers({onChangeSort, currentSortType}: SortingOf
             className={`places__option ${type === currentSortType ? 'places__option--active' : ''}`}
             tabIndex={0}
             onClick={() => handleOptionClick(type)}
-            role="option"
-            aria-selected={type === currentSortType}
-            onKeyDown={(evt) => {
-              if (evt.key === 'Enter' || evt.key === ' ') {
-                evt.preventDefault();
-                handleOptionClick(type);
-              }
-            }}
           >
             {type}
           </li>

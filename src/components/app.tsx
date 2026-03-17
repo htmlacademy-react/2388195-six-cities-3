@@ -1,5 +1,7 @@
 import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+
 import { useAppDispatch } from '../hooks/store-hooks';
 import { fetchAllOffers } from '../store/thunk/offers';
 import { AppRoute, CITIES, DEFAULT_CITY } from '../const';
@@ -15,7 +17,7 @@ import { getToken } from '../services/token';
 import ProtectedRoute from './private-route';
 import { fetchFavorites } from '../store/thunk/favorite';
 import { useAuth } from '../hooks/user-auth-hook';
-import { useSelector } from 'react-redux';
+
 import { selectFavoriteOffers } from '../store/slices/favorite-slice';
 
 export default function App(): JSX.Element {
@@ -100,6 +102,7 @@ export default function App(): JSX.Element {
   );
 }
 
+//////////////////////////////////////////////////////////////////////////
 // все компоненты которые должны быть защищены - обернуты в protect route
 // а компоненты, которые должны быть защищены, но быть публичными - теперь с пропом onlyForUnAuth - только для неавторизованнных
 

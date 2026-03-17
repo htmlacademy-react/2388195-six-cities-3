@@ -9,20 +9,26 @@ export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const useAppStore: ()=> typeof store = useStore;
 
-//Зачем???
+
 export const useDocumentTitle = (title: string) => {
   useEffect(() => {
     document.title = title;
-
-    // // Очистка при размонтировании (опционально)
-    // return () => {
-    //   document.title = originalTitle;
-    // };
   }, [title]);
 };
 
 
 /////////////////////////////////////////////////////////////
+// export const useDocumentTitle = (title: string) => {
+//   useEffect(() => {
+//     document.title = title;
+
+//     // Очистка при размонтировании
+//     return () => {
+//       document.title = originalTitle;
+//     };
+//   }, [title]);
+// };
+
 // useEffect - это хук в React, который позволяет выполнять побочные эффекты в функциональных компонентах
 // useEffect(() => {
 //   // Побочный эффект

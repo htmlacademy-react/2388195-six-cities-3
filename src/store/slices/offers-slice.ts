@@ -56,10 +56,10 @@ export const offersSlice = createSlice({
 
 // export const offersActions = {...offersSlice.actions, fetchAllOffers};
 export const offersActions = {...offersSlice.actions};
-// console.dir(offersActions);
 export const {selectActiveId, selectOffers, selectStatus} = offersSlice.selectors;
 
 
+///////////////////////////////////////////////////////////////////////////
 // ListOffer['id'] - это индексный тип (index signature) в TypeScript. Он извлекает точный тип поля id из интерфейса ListOffer.
 //activeId?
 

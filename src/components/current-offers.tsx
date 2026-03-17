@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import classNames from 'classnames';
 import { useAppSelector } from '../hooks/store-hooks';
 import { selectActiveId } from '../store/slices/offers-slice';
@@ -9,7 +10,6 @@ import SortingOffers from './sorting-offers';
 import { getSortedOffers } from '../util';
 import { ListOffers } from '../types/offer';
 
-//Переименовать в CardsListProps и файл тоже? привести к одному имени
 interface ListCardsProps {
   currentOffers: ListOffers;
   currentCity: CityName;
@@ -19,13 +19,7 @@ interface ListCardsProps {
 export default function CurrentOffers({currentOffers, currentCity, isEmpty}: ListCardsProps): JSX.Element {
   const currentOffersNumber = currentOffers.length;
 
-  // const dispatch = useAppDispatch();
-
   const activeOfferId = useAppSelector(selectActiveId);
-
-  // const handleHover = (currentOffer?: ListOffer) => {
-  //   dispatch(offersActions.setActiveId(currentOffer ? currentOffer.id : null));
-  // };
 
   const [activeSort, setActiveSort] = useState(SortType.Popular);
 
@@ -51,7 +45,6 @@ export default function CurrentOffers({currentOffers, currentCity, isEmpty}: Lis
                 <PlaceCard
                   key={currentOffer.id}
                   currentOffer={currentOffer}
-                  // handleHover={handleHover} -замена обработчика события на флаг - есть опция наведения или нет
                   block="cities"
                   hovered
                 />))
@@ -65,3 +58,13 @@ export default function CurrentOffers({currentOffers, currentCity, isEmpty}: Lis
     </div>
   );
 }
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+// const handleHover = (currentOffer?: ListOffer) => {
+//   dispatch(offersActions.setActiveId(currentOffer ? currentOffer.id : null));
+// };
+
+// handleHover={handleHover} -замена обработчика события на флаг - есть опция наведения или нет
+// hovered;

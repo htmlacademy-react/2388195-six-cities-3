@@ -27,7 +27,6 @@ export default function FavouritePage(): JSX.Element {
 
 
   const groupedOffers = groupByCity(favoriteOffers);
-  console.log(groupedOffers);
 
 
   return (
