@@ -1,39 +1,42 @@
-import { useParams } from 'react-router-dom';
 import OfferForm from '../../components/offer-form';
 import OfferImage from '../../components/offer-image';
 import OfferNearPlaces from '../../components/offer-near-places';
 import OfferReviews from '../../components/offer-reviews';
-import { AuthorizationStatus } from '../../const';
-import { TOffers, TOffer, TListOffers, TComments, TListOffer } from '../../types';
+import { AuthorizationStatus, CityName } from '../../const';
+import { Offers, Offer, Comments, ListOffer } from '../../types';
 import { getNearOffers, getStarActiveWidth } from '../../util';
 import NotFoundPage from '../not-found-page/not-found-page';
 import CitiesMap from '../../components/cities-map/cities-map';
+import { useAppSelector } from '../../hooks/store-hooks';
+import { selectActiveId, selectOffers } from '../../store/slices/offers-slice';
 
-type OfferPageProps = {
-  offers: TOffers;
+interface OfferPageProps {
+  offers: Offers;
   authorizationStatus: AuthorizationStatus;
-  randomCity: string;
-  listOffers: TListOffers;
-  comments: TComments;
+  randomCity: CityName;
+  comments: Comments;
 }
 
-export default function OfferPage({offers, listOffers, authorizationStatus, randomCity, comments}: OfferPageProps): JSX.Element {
-  //параметры из текущего URL
-  const {id} = useParams();
-  const currentOffer: TOffer | undefined = offers.find((offer: TOffer) => offer.id === id);
-  const currentListOffer: TListOffer | undefined = listOffers.find((listOffer: TListOffer) => listOffer.id === id);
+export default function OfferPage({offers, authorizationStatus, randomCity, comments}: OfferPageProps): JSX.Element {
+
+  const id = useAppSelector(selectActiveId);
+  const currentOffer = offers.find((offer: Offer) => offer.id === id);
+  const listOffers = useAppSelector(selectOffers);
 
   if (!currentOffer) {
     return <NotFoundPage type='offer' randomCity={randomCity} />;
   }
 
+  const currentListOffer = listOffers.find((listOffer: ListOffer) => listOffer.id === id);
+
   if (!currentListOffer) {
     return <NotFoundPage type='offer' randomCity={randomCity} />;
   }
 
-  const currentCity: string = currentOffer.city.name;
-  const nearOffers: TListOffers = getNearOffers(listOffers, currentCity, id);
-  const nearOffersWithCurrent: TListOffers = [...nearOffers, currentListOffer];
+  const currentCity = currentListOffer.city.name;
+
+  const nearOffers = getNearOffers(listOffers, currentCity, id);
+  const nearOffersWithCurrent = [...nearOffers, currentListOffer];
 
   const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, city} = currentOffer;
   const isAuth: boolean = authorizationStatus === AuthorizationStatus.Auth;
@@ -123,7 +126,7 @@ export default function OfferPage({offers, listOffers, authorizationStatus, rand
             </section>
           </div>
         </div>
-        <CitiesMap className='offer__map' currentOffers={nearOffersWithCurrent} currentCity={city} activeOfferId={currentListOffer.id} />
+        <CitiesMap className='offer__map' currentOffers={nearOffersWithCurrent} currentCity={city.name} activeOfferId={currentListOffer.id} />
       </section>
       <div className="container">
         <OfferNearPlaces nearOffers={nearOffers} />

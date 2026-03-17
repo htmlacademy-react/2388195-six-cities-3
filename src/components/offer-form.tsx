@@ -1,13 +1,13 @@
 import { Fragment, ReactEventHandler, useState } from 'react';
 import { RATING } from '../const';
 
-type TChangeHandler = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>
+type ChangeHandler = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>
 
 export default function OfferForm(): JSX.Element {
 
   const [review, setReview] = useState({rating: 0, review: ''});
 
-  const handleChange: TChangeHandler = (event) => {
+  const handleChange: ChangeHandler = (event) => {
     const {name, value} = event.currentTarget;
     setReview({...review, [name]: value});
   };

@@ -1,17 +1,17 @@
 import {Link} from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, CityName } from '../../const';
 
 const variants = {
   page: 'Page Not Found',
   offer: 'We have no offers with that ID'
 };
 
-type TNotFoundPageProp ={
-  randomCity: string;
+interface NotFoundPageProps {
+  randomCity: CityName;
   type: keyof typeof variants;
 }
 
-export default function NotFoundPage({randomCity, type}: TNotFoundPageProp): JSX.Element {
+export default function NotFoundPage({randomCity, type}: NotFoundPageProps): JSX.Element {
   return (
     <div className="page page--gray page--login">
       <main className="page__main page__main--login">

@@ -1,13 +1,13 @@
-import { TCity } from '../types';
+import { Cities, City } from '../types';
 
-type LocationContainerProps = {
-  currentCity:TCity;
-  cities: TCity[];
+interface LocationContainerProps {
+  currentCity:City;
+  cities: Cities;
 }
 
-type LocationContainerItemProps = {
-  currentCity:TCity;
-  city: TCity;
+interface LocationContainerItemProps {
+  currentCity:City;
+  city: City;
 }
 
 function LocationContainerItem({city, currentCity}: LocationContainerItemProps): JSX.Element {

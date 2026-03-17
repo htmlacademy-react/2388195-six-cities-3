@@ -1,8 +1,8 @@
-import { TComment } from '../types';
+import { Comment } from '../types';
 import { getStarActiveWidth } from '../util';
 
-type OfferReviewsItemProps = {
-  commentItem: TComment;
+interface OfferReviewsItemProps {
+  commentItem: Comment;
 }
 
 export default function OfferReviewsItem({commentItem}: OfferReviewsItemProps): JSX.Element {

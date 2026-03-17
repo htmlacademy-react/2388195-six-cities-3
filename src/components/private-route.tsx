@@ -2,7 +2,7 @@ import {Navigate} from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../const';
 
 
-type PrivateRouteProps = {
+interface PrivateRouteProps {
   authorizationStatus: AuthorizationStatus;
   isReverse?: boolean;
   children: JSX.Element;

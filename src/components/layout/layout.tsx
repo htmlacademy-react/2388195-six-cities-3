@@ -6,13 +6,13 @@ import { getLayotState } from './utils';
 import Logo from '../logo';
 import LogoMainPage from '../logo-main-page';
 
-type TLayoutProps = {
+interface LayoutProps {
   userName: string;
   favouriteCount: number;
   authorizationStatus: AuthorizationStatus;
 }
 
-export default function Layout({userName, favouriteCount, authorizationStatus} : TLayoutProps): JSX.Element {
+export default function Layout({userName, favouriteCount, authorizationStatus} : LayoutProps): JSX.Element {
   const {pathname} = useLocation();
   const {rootClassName, shouldRenderLogoMainPage, shouldRenderUser, shouldRenderFooter} = getLayotState(pathname as AppRoute);
   const isAuth: boolean = authorizationStatus === AuthorizationStatus.Auth;

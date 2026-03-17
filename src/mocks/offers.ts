@@ -1,7 +1,7 @@
-import { TOffers } from '../types';
+import { Offers } from '../types';
 
-export const OFFERS: TOffers = [{
-  'id': '1',
+export const OFFERS: Offers = [{
+  'id': 'fbb92630-ceb0-4ddf-a594-a4ae39ecaa91',
   'title': 'Beautiful & luxurious studio at great location',
   'type': 'apartment',
   'price': 120,
@@ -73,7 +73,7 @@ export const OFFERS: TOffers = [{
   'maxAdults': 4
 },
 {
-  'id': '14',
+  'id': '8c870cc6-a80f-495c-b095-86e4f0c99510',
   'title': 'Beautiful & luxurious studio at great location',
   'type': 'apartment',
   'price': 120,

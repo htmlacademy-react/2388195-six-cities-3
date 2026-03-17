@@ -1,11 +1,11 @@
-import { TListOffers } from '../types';
+import { ListOffers } from '../types';
 import PlaceCard from './place-card';
 
-type OfferNearPlaces = {
-  nearOffers: TListOffers;
+interface OfferNearPlacesProps {
+  nearOffers: ListOffers;
 }
 
-export default function OfferNearPlaces({nearOffers}: OfferNearPlaces): JSX.Element {
+export default function OfferNearPlaces({nearOffers}: OfferNearPlacesProps): JSX.Element {
 
   if (!nearOffers) {
     <p>No offers found</p>;
