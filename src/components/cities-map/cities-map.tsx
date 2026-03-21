@@ -44,13 +44,13 @@ export default function CitiesMap({
   useEffect(() => {
     if (map) {
       map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
-      markerLayer.current.addTo(map);
-      markerLayer.current.clearLayers();
     }
   }, [city, map]);
 
-  useEffect((): void => {
+  useEffect(() => {
     if (map) {
+      markerLayer.current.clearLayers();
+      markerLayer.current.addTo(map);
       currentOffers.forEach((currentOffer) => {
         leaflet
           .marker(
