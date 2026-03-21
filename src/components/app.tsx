@@ -21,7 +21,6 @@ import { useAuth } from '../hooks/user-auth-hook';
 import { selectFavoriteOffers } from '../store/slices/favorite-slice';
 
 export default function App(): JSX.Element {
-
   const dispatch = useAppDispatch();
   const isAuth = useAuth();
   const token = getToken();
@@ -33,14 +32,13 @@ export default function App(): JSX.Element {
       .then(() => {
         console.log('success');
       })
-      .catch(()=> {
+      .catch(() => {
         console.log('error');
       });
 
     if (token) {
       dispatch(checkAuth());
     }
-
   }, [dispatch, token]);
 
   useEffect(() => {
@@ -54,20 +52,10 @@ export default function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path={AppRoute.Root}
-          element={<Layout favouriteCount={favouriteCount} />}
-        >
-          <Route
-            index
-            element={<Navigate to={`/${DEFAULT_CITY}`} replace />}
-          />
-          {CITIES.map((city)=> (
-            <Route
-              key={city.id}
-              path={city.id}
-              element={<MainPage currentCity={city.name} />}
-            />
+        <Route path={AppRoute.Root} element={<Layout favouriteCount={favouriteCount} />}>
+          <Route index element={<Navigate to={`/${DEFAULT_CITY}`} replace />} />
+          {CITIES.map((city) => (
+            <Route key={city.id} path={city.id} element={<MainPage currentCity={city.name} />} />
           ))}
 
           <Route
@@ -86,16 +74,8 @@ export default function App(): JSX.Element {
               </ProtectedRoute>
             }
           />
-          <Route
-            path={`${AppRoute.Offer}/:id`}
-            element={
-              <OfferPage randomCity={randomCity} />
-            }
-          />
-          <Route
-            path="*"
-            element={<NotFoundPage randomCity={randomCity} type='page' />}
-          />
+          <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage randomCity={randomCity} />} />
+          <Route path="*" element={<NotFoundPage randomCity={randomCity} type="page" />} />
         </Route>
       </Routes>
     </BrowserRouter>
@@ -105,7 +85,6 @@ export default function App(): JSX.Element {
 //////////////////////////////////////////////////////////////////////////
 // все компоненты которые должны быть защищены - обернуты в protect route
 // а компоненты, которые должны быть защищены, но быть публичными - теперь с пропом onlyForUnAuth - только для неавторизованнных
-
 
 //dispatch(fetchAllOffers()) - асинхронный диспатч возвращает промис,
 // поэтому мы можем использовать then и catch,

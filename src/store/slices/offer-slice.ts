@@ -45,14 +45,13 @@ export const offerSlice = createSlice({
         if (state.offer && state.offer.id === action.payload.offer.id) {
           state.offer.isFavorite = action.payload.offer.isFavorite;
         }
-      })
-  ,
+      }),
   selectors: {
     selectNearbyOffers: (state: OfferState) => state.nearbyOffers,
     selectOffer: (state: OfferState) => state.offer,
     selectOfferStatus: (state: OfferState) => state.offerStatus,
-  }
+  },
 });
 
-export const offerActions = {...offerSlice.actions, fetchOffer, fetchNearby};
-export const {selectNearbyOffers, selectOffer, selectOfferStatus} = offerSlice.selectors;
+export const offerActions = { ...offerSlice.actions, fetchOffer, fetchNearby };
+export const { selectNearbyOffers, selectOffer, selectOfferStatus } = offerSlice.selectors;

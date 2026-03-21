@@ -1,7 +1,7 @@
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { AppRoute } from '../const';
-import { getStarActiveWidth } from '../util';
+import { formatedType, getStarActiveWidth } from '../util';
 import { useAppDispatch } from '../hooks/store-hooks';
 import { offersActions } from '../store/slices/offers-slice';
 import { ListOffer } from '../types/offer';
@@ -13,13 +13,12 @@ interface PlaceCardProps {
   hovered?: boolean;
 }
 
-export default function PlaceCard({currentOffer, block, hovered}: PlaceCardProps): JSX.Element {
-
+export default function PlaceCard({ currentOffer, block, hovered }: PlaceCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const {id, isPremium, previewImage, price, title, type, rating, isFavorite} = currentOffer;
+  const { id, isPremium, previewImage, price, title, type, rating, isFavorite } = currentOffer;
   const roundedRating = Math.round(rating);
-  const starActiveWidth: string = getStarActiveWidth(roundedRating);
+  const starActiveWidth = getStarActiveWidth(roundedRating);
 
   const imgWidth = block === 'favorites' ? '150' : '260';
   const imgHeight = block === 'favorites' ? '110' : '200';
@@ -29,7 +28,7 @@ export default function PlaceCard({currentOffer, block, hovered}: PlaceCardProps
       <article
         className={`${block}__card place-card`}
         onMouseEnter={() => hovered && dispatch(offersActions.setActiveId(id))}
-        onMouseLeave={() =>hovered && dispatch(offersActions.setActiveId(null))}
+        onMouseLeave={() => hovered && dispatch(offersActions.setActiveId(null))}
       >
         {isPremium && (
           <div className="place-card__mark">
@@ -37,7 +36,13 @@ export default function PlaceCard({currentOffer, block, hovered}: PlaceCardProps
           </div>
         )}
         <div className={`${block}__image-wrapper place-card__image-wrapper`}>
-          <img className="place-card__image" src={previewImage} width={imgWidth} height={imgHeight} alt="Place image"/>
+          <img
+            className="place-card__image"
+            src={previewImage}
+            width={imgWidth}
+            height={imgHeight}
+            alt="Place image"
+          />
         </div>
         <div className="place-card__info">
           <div className="place-card__price-wrapper">
@@ -49,20 +54,17 @@ export default function PlaceCard({currentOffer, block, hovered}: PlaceCardProps
           </div>
           <div className="place-card__rating rating">
             <div className="place-card__stars rating__stars">
-              <span style={{width: starActiveWidth}}></span>
+              <span style={{ width: starActiveWidth }}></span>
               <span className="visually-hidden">Rating</span>
             </div>
           </div>
-          <h2 className="place-card__name">
-            {title}
-          </h2>
-          <p className="place-card__type">{type}</p>
+          <h2 className="place-card__name">{title}</h2>
+          <p className="place-card__type">{formatedType(type)}</p>
         </div>
       </article>
     </Link>
   );
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 // onMouseEnter={() => hovered && dispatch(offersActions.setActiveId(id))}

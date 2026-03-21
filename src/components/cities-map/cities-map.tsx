@@ -3,8 +3,8 @@ import leaflet, { LayerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import useMap from './use-map';
-import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CITIES, CityName} from '../../const';
-import { ListOffers } from '../../types/offer';
+import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CITIES } from '../../const';
+import { CityName, ListOffers } from '../../types/offer';
 
 interface CitiesMapProps {
   className?: string;
@@ -15,26 +15,30 @@ interface CitiesMapProps {
 
 const defaultCustomIcon = leaflet.icon({
   iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [27, 39],
+  iconAnchor: [13.5, 39],
 });
 
 const currentCustomIcon = leaflet.icon({
   iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [27, 39],
+  iconAnchor: [13.5, 39],
 });
 
-export default function CitiesMap({className, currentCity, currentOffers, activeOfferId}: CitiesMapProps): JSX.Element {
-
+export default function CitiesMap({
+  className,
+  currentCity,
+  currentOffers,
+  activeOfferId,
+}: CitiesMapProps): JSX.Element {
   const containerMapRef = useRef<HTMLElement>(null);
-  let city = CITIES.find((item)=> item.name === currentCity);
+  let city = CITIES.find((item) => item.name === currentCity);
 
   if (!city) {
     city = CITIES[0];
   }
 
-  const map = useMap({containerMapRef, location: city.location});
+  const map = useMap({ containerMapRef, location: city.location });
   const markerLayer = useRef<LayerGroup>(leaflet.layerGroup());
 
   useEffect(() => {
@@ -45,24 +49,23 @@ export default function CitiesMap({className, currentCity, currentOffers, active
     }
   }, [city, map]);
 
-
   useEffect((): void => {
     if (map) {
       currentOffers.forEach((currentOffer) => {
         leaflet
-          .marker({
-            lat: currentOffer.location.latitude,
-            lng: currentOffer.location.longitude,
-          }, {
-            icon: currentOffer.id === activeOfferId ? currentCustomIcon : defaultCustomIcon,
-          })
+          .marker(
+            {
+              lat: currentOffer.location.latitude,
+              lng: currentOffer.location.longitude,
+            },
+            {
+              icon: currentOffer.id === activeOfferId ? currentCustomIcon : defaultCustomIcon,
+            },
+          )
           .addTo(markerLayer.current);
       });
     }
   }, [activeOfferId, map, currentOffers]);
 
-  return (
-    <section className={`map ${className}`} ref={containerMapRef}>
-    </section>
-  );
+  return <section className={`map ${className}`} ref={containerMapRef}></section>;
 }

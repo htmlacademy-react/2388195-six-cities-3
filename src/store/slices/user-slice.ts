@@ -12,7 +12,7 @@ interface UserState {
 const initialState: UserState = {
   info: null,
   userRequestStatus: RequestStatus.Idle,
-  authStatus: AuthorizationStatus.Unknown
+  authStatus: AuthorizationStatus.Unknown,
 };
 
 function processSuccess(state: UserState, action: PayloadAction<User>) {
@@ -50,12 +50,11 @@ export const userSlice = createSlice({
     selectUserInfo: (state: UserState) => state.info,
     selectUserRequestStatus: (state: UserState) => state.userRequestStatus,
     selectAuthStatus: (state: UserState) => state.authStatus,
-  }
+  },
 });
 
-
-export const userActions = {...userSlice.actions};
-export const {selectUserInfo, selectUserRequestStatus, selectAuthStatus} = userSlice.selectors;
+export const userActions = { ...userSlice.actions };
+export const { selectUserInfo, selectUserRequestStatus, selectAuthStatus } = userSlice.selectors;
 
 ////////////////////////////////////////////
 // "builder.addMatcher" - позволяет объединить все pending в один

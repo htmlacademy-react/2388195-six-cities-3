@@ -1,21 +1,18 @@
-import {TypedUseSelectorHook, useDispatch, useSelector, useStore} from 'react-redux';
+import { TypedUseSelectorHook, useDispatch, useSelector, useStore } from 'react-redux';
 import { useEffect } from 'react';
 
-import {RootState, AppDispatch} from '../types/store';
-import {store} from '../store';
-
+import { RootState, AppDispatch } from '../types/store';
+import { store } from '../store';
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-export const useAppStore: ()=> typeof store = useStore;
-
+export const useAppStore: () => typeof store = useStore;
 
 export const useDocumentTitle = (title: string) => {
   useEffect(() => {
     document.title = title;
   }, [title]);
 };
-
 
 /////////////////////////////////////////////////////////////
 // export const useDocumentTitle = (title: string) => {
@@ -41,14 +38,12 @@ export const useDocumentTitle = (title: string) => {
 // B. С пустым массивом (выполняется один раз при монтировании):
 // C. С зависимостями (выполняется при изменении зависимостей):
 
-
 // export const createAppAsyncThunk = createAsyncThunk.withTypes<{
 //   state: RootState;
 //   dispatch: AppDispatch;
 //   rejectValue: string;
 //   extra: AxiosInstance;
 // }>();
-
 
 // ////////////////////////////////////////////////////////
 // // //useActionCreators

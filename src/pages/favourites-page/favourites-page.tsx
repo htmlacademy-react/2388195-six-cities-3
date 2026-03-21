@@ -1,17 +1,15 @@
 import FavouriteLocations from '../../components/favorite-locations';
 import { selectFavoriteOffers } from '../../store/slices/favorite-slice';
-import { CityName } from '../../const';
-import { FullOffer, FullOffers } from '../../types/offer';
+import {} from '../../const';
+import { CityName, FullOffer, FullOffers } from '../../types/offer';
 import { useAppSelector } from '../../hooks/store-hooks';
 import FavouriteEmptyPage from '../favourite-empty-page/favourite-empty-page';
-
 
 export default function FavouritePage(): JSX.Element {
   const favoriteOffers = useAppSelector(selectFavoriteOffers);
   if (favoriteOffers.length === 0) {
     return <FavouriteEmptyPage />;
   }
-
 
   const groupByCity = (offers: FullOffers): Record<CityName, FullOffer[]> =>
     offers.reduce((acc: Record<string, FullOffer[]>, favoriteOffer: FullOffer) => {
@@ -25,9 +23,7 @@ export default function FavouritePage(): JSX.Element {
       return acc;
     }, {});
 
-
   const groupedOffers = groupByCity(favoriteOffers);
-
 
   return (
     <main className="page__main page__main--favorites">
@@ -36,11 +32,7 @@ export default function FavouritePage(): JSX.Element {
           <h1 className="favorites__title">Saved listing</h1>
           <ul className="favorites__list">
             {Object.entries(groupedOffers).map(([cityName, offers]) => (
-              <FavouriteLocations
-                city={cityName as CityName}
-                key={cityName}
-                offers={offers}
-              />
+              <FavouriteLocations city={cityName as CityName} key={cityName} offers={offers} />
             ))}
           </ul>
         </section>
@@ -48,7 +40,6 @@ export default function FavouritePage(): JSX.Element {
     </main>
   );
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////
 

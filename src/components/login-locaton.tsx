@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { AppRoute, CityName } from '../const';
+import { AppRoute } from '../const';
+import { CityName } from '../types/offer';
 
 interface LoginLocationProps {
   randomCity: CityName;
 }
 
-export default function LoginLocation({randomCity}: LoginLocationProps): JSX.Element {
-
+export default function LoginLocation({ randomCity }: LoginLocationProps): JSX.Element {
   const randomCityRoute = randomCity.toLowerCase();
 
   return (

@@ -38,26 +38,23 @@ export const offersSlice = createSlice({
         state.status = RequestStatus.Failed;
       })
       .addCase(postFavorite.fulfilled, (state, action) => {
-
         const updatedOffer = action.payload.offer;
         const offerIndex = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
 
         if (offerIndex !== -1) {
           state.offers[offerIndex].isFavorite = updatedOffer.isFavorite;
         }
-
       }),
   selectors: {
     selectActiveId: (state: OffersState) => state.activeId,
     selectOffers: (state: OffersState) => state.offers,
     selectStatus: (state: OffersState) => state.status,
-  }
+  },
 });
 
 // export const offersActions = {...offersSlice.actions, fetchAllOffers};
-export const offersActions = {...offersSlice.actions};
-export const {selectActiveId, selectOffers, selectStatus} = offersSlice.selectors;
-
+export const offersActions = { ...offersSlice.actions };
+export const { selectActiveId, selectOffers, selectStatus } = offersSlice.selectors;
 
 ///////////////////////////////////////////////////////////////////////////
 // ListOffer['id'] - это индексный тип (index signature) в TypeScript. Он извлекает точный тип поля id из интерфейса ListOffer.

@@ -1,17 +1,15 @@
-import {AxiosInstance} from 'axios';
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import {ListOffers } from '../../types/offer';
-import {APIRoute} from '../../const';
+import { AxiosInstance } from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { ListOffers } from '../../types/offer';
+import { APIRoute } from '../../const';
 
-
-export const fetchAllOffers = createAsyncThunk<ListOffers, void, {extra: AxiosInstance}>(
+export const fetchAllOffers = createAsyncThunk<ListOffers, void, { extra: AxiosInstance }>(
   'fetchAllOffers',
-  async (_arg, {extra: api}) => {
-    const {data} = await api.get<ListOffers>(APIRoute.Offers);
+  async (_arg, { extra: api }) => {
+    const { data } = await api.get<ListOffers>(APIRoute.Offers);
     return data;
-  }
+  },
 );
-
 
 /////////////////////////////////////
 // createAsyncThunk — это функция из библиотеки Redux Toolkit для создания асинхронных thunk'ов (действий).
@@ -58,7 +56,6 @@ export const fetchAllOffers = createAsyncThunk<ListOffers, void, {extra: AxiosIn
 // можно писать void вместо undefined, т.е. фактически _arg - вот оно это значение
 
 // {extra: AxiosInstance} - типизация extra reducer
-
 
 //console.dir(fetchAllOffers)
 

@@ -1,4 +1,4 @@
-import {Navigate, useLocation} from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { ReactNode } from 'react';
 
 import { AppRoute } from '../const';
@@ -23,13 +23,12 @@ export default function ProtectedRoute({ children, onlyUnauth }: ProtectedRouteP
   if (onlyUnauth && user) {
     // есть авториз и стр логина
     const from = (location.state as LocationState)?.from?.pathname || AppRoute.Root;
-    return <Navigate to = {from} replace />;
+    return <Navigate to={from} replace />;
   }
 
-
   if (!onlyUnauth && !user) {
-  // Нет авторизации и не стр логина
-    return <Navigate state = {{from:location}} to = {AppRoute.Login} replace />;
+    // Нет авторизации и не стр логина
+    return <Navigate state={{ from: location }} to={AppRoute.Login} replace />;
   }
 
   return children;

@@ -6,43 +6,45 @@ import { postComment } from '../store/thunk/offer';
 interface OfferFormProps {
   offerId: string;
 }
-type ChangeHandler = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>
+type ChangeHandler = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 
-
-export default function OfferForm({offerId}: OfferFormProps): JSX.Element {
-
+export default function OfferForm({ offerId }: OfferFormProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const [review, setReview] = useState({rating: 0, review: ''});
+  const [review, setReview] = useState({ rating: 0, review: '' });
 
-  let isSubmitDisabled = review.review.length < 50 || review.rating === 0 || review.review.length > 300;
+  let isSubmitDisabled =
+    review.review.length < 50 || review.rating === 0 || review.review.length > 300;
   const handleChange: ChangeHandler = (event) => {
-    const {name, value} = event.currentTarget;
+    const { name, value } = event.currentTarget;
     setReview({
       ...review,
-      [name]: value
+      [name]: value,
     });
     isSubmitDisabled = false;
   };
 
-
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(postComment({
-      body: {
-        comment: review.review,
-        rating: Number(review.rating)
-      },
-      offerId}));
+    dispatch(
+      postComment({
+        body: {
+          comment: review.review,
+          rating: Number(review.rating),
+        },
+        offerId,
+      }),
+    );
     setReview({ rating: 0, review: '' });
   };
 
-
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>
-      <label className="reviews__label form__label" htmlFor="review">Your review</label>
+      <label className="reviews__label form__label" htmlFor="review">
+        Your review
+      </label>
       <div className="reviews__rating-form form__rating">
-        {RATING.map(({value, label}) => (
+        {RATING.map(({ value, label }) => (
           <Fragment key={label}>
             <input
               className="form__rating-input visually-hidden"
@@ -72,8 +74,7 @@ export default function OfferForm({offerId}: OfferFormProps): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={review.review}
         onChange={handleChange}
-      >
-      </textarea>
+      ></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set

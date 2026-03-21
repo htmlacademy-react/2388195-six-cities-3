@@ -20,7 +20,7 @@ export const commentsSlice = createSlice({
     clear: (state) => {
       state.comments = [];
       state.status = RequestStatus.Idle;
-    }
+    },
   },
   extraReducers: (builder) =>
     builder
@@ -47,9 +47,9 @@ export const commentsSlice = createSlice({
   selectors: {
     selectComments: (state: CommentsState) => state.comments,
     selectCommentsStatus: (state: CommentsState) => state.status,
-  }
+  },
 });
 
 // export const commentsActions = {...commentsSlice.actions, ...fetchComments, ...postComment};
-export const commentsActions = {...commentsSlice.actions};
-export const {selectComments, selectCommentsStatus} = commentsSlice.selectors;
+export const commentsActions = { ...commentsSlice.actions };
+export const { selectComments, selectCommentsStatus } = commentsSlice.selectors;

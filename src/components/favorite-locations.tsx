@@ -1,16 +1,15 @@
 import { Link } from 'react-router-dom';
 
-import { AppRoute, CityName } from '../const';
+import { AppRoute } from '../const';
 import PlaceCard from './place-card';
-import { FullOffers } from '../types/offer';
+import { FullOffers, CityName } from '../types/offer';
 
 interface FavouriteLocationsProps {
-  city:CityName;
+  city: CityName;
   offers: FullOffers;
 }
 
-export default function FavouriteLocations({city, offers}: FavouriteLocationsProps): JSX.Element {
-
+export default function FavouriteLocations({ city, offers }: FavouriteLocationsProps): JSX.Element {
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
@@ -21,13 +20,8 @@ export default function FavouriteLocations({city, offers}: FavouriteLocationsPro
         </div>
       </div>
       <div className="favorites__places">
-        {offers.map((offer)=>(
-          <PlaceCard
-            currentOffer={offer}
-            key={offer.id}
-            block="favorites"
-            hovered
-          />
+        {offers.map((offer) => (
+          <PlaceCard currentOffer={offer} key={offer.id} block="favorites" hovered />
         ))}
       </div>
     </li>

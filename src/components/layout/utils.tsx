@@ -1,6 +1,5 @@
 import { AppRoute } from '../../const';
 
-
 export const getLayotState = (pathname: AppRoute) => {
   let pageClassName = '';
   let shouldRenderLogoMainPage = false;
@@ -16,5 +15,5 @@ export const getLayotState = (pathname: AppRoute) => {
   } else if (pathname === AppRoute.Favorites) {
     shouldRenderFooter = true;
   }
-  return {pageClassName, shouldRenderLogoMainPage, shouldRenderUser, shouldRenderFooter};
+  return { pageClassName, shouldRenderLogoMainPage, shouldRenderUser, shouldRenderFooter };
 };

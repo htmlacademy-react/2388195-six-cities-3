@@ -5,7 +5,6 @@
 // import { selectFavoriteOffers, selectFavoriteOffersStatus } from '../store/slices/favorite-slice';
 // import { fetchFavorites } from '../store/thunk/favorite';
 
-
 // export function useFavoriteCount() {
 //   const status = useAppSelector(selectFavoriteOffersStatus);
 //   const count = useAppSelector(selectFavoriteOffers).length;
@@ -20,4 +19,3 @@
 
 //   return count;
 // }
-

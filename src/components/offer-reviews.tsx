@@ -6,8 +6,7 @@ interface OfferReviewsProps {
   comments?: UserComments;
 }
 
-export default function OfferReviews({comments = []}: OfferReviewsProps): JSX.Element {
-
+export default function OfferReviews({ comments = [] }: OfferReviewsProps): JSX.Element {
   const sortedComments = [...comments]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, MAX_COMMENTS_COUNT);
@@ -16,23 +15,23 @@ export default function OfferReviews({comments = []}: OfferReviewsProps): JSX.El
 
   if (sortedCommentsCount === 0) {
     return (
-      <h2 className="reviews__title">Reviews &middot;
-        <span className="reviews__amount">
-        0
-        </span>
+      <h2 className="reviews__title">
+        Reviews &middot;
+        <span className="reviews__amount">0</span>
       </h2>
     );
   }
 
   return (
     <>
-      <h2 className="reviews__title">Reviews &middot;
+      <h2 className="reviews__title">
+        Reviews &middot;
         <span className="reviews__amount">{sortedCommentsCount}</span>
       </h2>
       <ul className="reviews__list">
-        {sortedComments.map((comment, index) =>
-          <OfferReviewsItem key={comment.id || `comment-${index}`} commentItem={comment}/>
-        )}
+        {sortedComments.map((comment, index) => (
+          <OfferReviewsItem key={comment.id || `comment-${index}`} commentItem={comment} />
+        ))}
       </ul>
     </>
   );

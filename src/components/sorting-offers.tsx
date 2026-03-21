@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { SortType } from '../const';
 
-
 interface SortingOffersProps {
   onChangeSort: (type: SortType) => void;
   currentSortType: SortType;
 }
 
-export default function SortingOffers({onChangeSort, currentSortType}: SortingOffersProps): JSX.Element {
-
+export default function SortingOffers({
+  onChangeSort,
+  currentSortType,
+}: SortingOffersProps): JSX.Element {
   const [isOpened, setIsOpened] = useState(false);
 
   const handleTypeClick = () => {
@@ -23,12 +24,7 @@ export default function SortingOffers({onChangeSort, currentSortType}: SortingOf
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
-      <span
-        className="places__sorting-type"
-        tabIndex={0}
-        onClick={handleTypeClick}
-        role="button"
-      >
+      <span className="places__sorting-type" tabIndex={0} onClick={handleTypeClick} role="button">
         {currentSortType}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>

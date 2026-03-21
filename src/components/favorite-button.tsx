@@ -11,8 +11,11 @@ interface FavoriteButtonProps {
   block: 'place-card' | 'offer';
 }
 
-export default function FavoriteButton({block, offerId, isFavorite}: FavoriteButtonProps): JSX.Element {
-
+export default function FavoriteButton({
+  block,
+  offerId,
+  isFavorite,
+}: FavoriteButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
   const isAuth = useAuth();
   const navigate = useNavigate();
@@ -22,7 +25,7 @@ export default function FavoriteButton({block, offerId, isFavorite}: FavoriteBut
       navigate(AppRoute.Login);
     }
     const favoriteStatus = Number(!isFavorite);
-    dispatch(postFavorite({offerId, favoriteStatus}));
+    dispatch(postFavorite({ offerId, favoriteStatus }));
   };
 
   const bookmarkIconWidth = block === 'place-card' ? '18' : '31';
@@ -34,12 +37,14 @@ export default function FavoriteButton({block, offerId, isFavorite}: FavoriteBut
       type="button"
       onClick={favoriteButtonHandler}
     >
-      <svg className={`${block}__bookmark-icon`} width={bookmarkIconWidth} height={bookmarkIconHeight}>
+      <svg
+        className={`${block}__bookmark-icon`}
+        width={bookmarkIconWidth}
+        height={bookmarkIconHeight}
+      >
         <use xlinkHref="#icon-bookmark"></use>
       </svg>
-      <span className="visually-hidden">
-        {isFavorite ? 'In bookmarks' : 'To bookmarks'}
-      </span>
+      <span className="visually-hidden">{isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
     </button>
   );
 }

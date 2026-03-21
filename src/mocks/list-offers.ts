@@ -1,6 +1,5 @@
 // import { ListOffers } from '../types/offer';
 
-
 // export const LIST_OFFERS : ListOffers = [
 //   {
 //     'id': 'fbb92630-ceb0-4ddf-a594-a4ae39ecaa91',
@@ -2763,4 +2762,3 @@
 //     'rating': 4
 //   }
 // ];
-

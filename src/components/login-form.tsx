@@ -2,12 +2,10 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAppDispatch } from '../hooks/store-hooks';
 import { login } from '../store/thunk/user-auth';
 
-
 export default function LoginForm(): JSX.Element {
-
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
   });
 
   const dispatch = useAppDispatch();
@@ -16,7 +14,7 @@ export default function LoginForm(): JSX.Element {
     const { name, value } = evt.currentTarget;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -51,7 +49,9 @@ export default function LoginForm(): JSX.Element {
           required
         />
       </div>
-      <button className="login__submit form__submit button" type="submit">Sign in</button>
+      <button className="login__submit form__submit button" type="submit">
+        Sign in
+      </button>
     </form>
   );
 }

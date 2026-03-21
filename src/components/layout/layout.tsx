@@ -15,9 +15,10 @@ interface LayoutProps {
   favouriteCount: number;
 }
 
-export default function Layout({favouriteCount} : LayoutProps): JSX.Element | null {
-  const {pathname} = useLocation();
-  const {pageClassName, shouldRenderLogoMainPage, shouldRenderUser, shouldRenderFooter} = getLayotState(pathname as AppRoute);
+export default function Layout({ favouriteCount }: LayoutProps): JSX.Element | null {
+  const { pathname } = useLocation();
+  const { pageClassName, shouldRenderLogoMainPage, shouldRenderUser, shouldRenderFooter } =
+    getLayotState(pathname as AppRoute);
 
   const isAuth = useAuth();
   const data = useAppSelector(selectUserInfo);
@@ -42,56 +43,54 @@ export default function Layout({favouriteCount} : LayoutProps): JSX.Element | nu
           <div className="header__wrapper">
             <div className="header__left">
               {shouldRenderLogoMainPage && <LogoMainPage />}
-              {!shouldRenderLogoMainPage && <Logo/>}
+              {!shouldRenderLogoMainPage && <Logo />}
             </div>
-            {
-              shouldRenderUser && isAuth && (
-                <nav className="header__nav">
-                  <ul className="header__nav-list">
-                    <li className="header__nav-item user">
-                      <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
-                        <div className="header__avatar-wrapper user__avatar-wrapper">
-                        </div>
-                        <span className="header__user-name user__name">{email}</span>
-                        <span className="header__favorite-count">{favouriteCount}</span>
-                      </Link>
-                    </li>
-                    <li className="header__nav-item">
-                      <button
-                        className="header__nav-link header__nav-link--profile"
-                        style={{
-                          background: 'none',
-                          border: 'none',
-                          padding: 0,
-                          margin: 0,
-                          font: 'inherit',
-                          color: 'inherit',
-                          cursor: 'pointer',
-                          textDecoration: 'none',
-                          display: 'inline-block'
-                        }}
-                        onClick={handleLogOut}
-                      >
-                        <span className="header__signout">Sign out</span>
-                      </button>
-                    </li>
-                  </ul>
-                </nav>
-              )
-            }
-            {
-              shouldRenderUser && !isAuth && (
-                <nav className="header__nav">
-                  <ul className="header__nav-list">
-                    <li className="header__nav-item user">
-                      <Link className="header__nav-link" to={AppRoute.Login}>
-                        <span className="header__login">Sign in</span>
-                      </Link>
-                    </li>
-                  </ul>
-                </nav>
-              )
-            }
+            {shouldRenderUser && isAuth && (
+              <nav className="header__nav">
+                <ul className="header__nav-list">
+                  <li className="header__nav-item user">
+                    <Link
+                      className="header__nav-link header__nav-link--profile"
+                      to={AppRoute.Favorites}
+                    >
+                      <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                      <span className="header__user-name user__name">{email}</span>
+                      <span className="header__favorite-count">{favouriteCount}</span>
+                    </Link>
+                  </li>
+                  <li className="header__nav-item">
+                    <button
+                      className="header__nav-link header__nav-link--profile"
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        padding: 0,
+                        margin: 0,
+                        font: 'inherit',
+                        color: 'inherit',
+                        cursor: 'pointer',
+                        textDecoration: 'none',
+                        display: 'inline-block',
+                      }}
+                      onClick={handleLogOut}
+                    >
+                      <span className="header__signout">Sign out</span>
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            )}
+            {shouldRenderUser && !isAuth && (
+              <nav className="header__nav">
+                <ul className="header__nav-list">
+                  <li className="header__nav-item user">
+                    <Link className="header__nav-link" to={AppRoute.Login}>
+                      <span className="header__login">Sign in</span>
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
+            )}
           </div>
         </div>
       </header>

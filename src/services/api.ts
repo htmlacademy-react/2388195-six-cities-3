@@ -1,6 +1,6 @@
-import axios, {AxiosInstance, InternalAxiosRequestConfig} from 'axios';
-import {getToken} from './token';
-import {REQUEST_TIMEOUT} from '../const';
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import { getToken } from './token';
+import { REQUEST_TIMEOUT } from '../const';
 // import { BACKEND_URL } from '../const';
 
 //через переменную окружения
@@ -12,21 +12,18 @@ export const createAPI = (): AxiosInstance => {
     timeout: REQUEST_TIMEOUT,
   });
 
-  api.interceptors.request.use(
-    (config: InternalAxiosRequestConfig) => {
-      const token = getToken();
+  api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+    const token = getToken();
 
-      if (token && config.headers) {
-        config.headers['x-token'] = token;
-      }
+    if (token && config.headers) {
+      config.headers['x-token'] = token;
+    }
 
-      return config;
-    },
-  );
+    return config;
+  });
 
   return api;
 };
-
 
 ///////////////////////////////////////////////////////
 
@@ -102,4 +99,3 @@ export const createAPI = (): AxiosInstance => {
 // );
 
 ////////////////////////////////////////////////////////////////////////
-

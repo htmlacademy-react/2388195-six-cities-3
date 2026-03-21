@@ -41,7 +41,9 @@ export const favoriteSlice = createSlice({
             state.favoriteOffers.push(action.payload.offer);
             break;
           case FavoriteStatus.Removed:
-            state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.id !== action.payload.offer.id);
+            state.favoriteOffers = state.favoriteOffers.filter(
+              (offer) => offer.id !== action.payload.offer.id,
+            );
         }
       })
       .addCase(postFavorite.rejected, (state) => {
@@ -50,8 +52,8 @@ export const favoriteSlice = createSlice({
   selectors: {
     selectFavoriteOffers: (state: FavoriteState) => state.favoriteOffers,
     selectFavoriteOffersStatus: (state: FavoriteState) => state.favoriteOfferStatus,
-  }
+  },
 });
 
-export const favoriteOffersActions = {...favoriteSlice.actions, fetchFavorites, postFavorite};
-export const {selectFavoriteOffers, selectFavoriteOffersStatus} = favoriteSlice.selectors;
+export const favoriteOffersActions = { ...favoriteSlice.actions, fetchFavorites, postFavorite };
+export const { selectFavoriteOffers, selectFavoriteOffersStatus } = favoriteSlice.selectors;

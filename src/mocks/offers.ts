@@ -1,6 +1,5 @@
 // import { FullOffers } from '../types/offer';
 
-
 // export const OFFERS: FullOffers = [{
 //   'id': 'fbb92630-ceb0-4ddf-a594-a4ae39ecaa91',
 //   'title': 'Beautiful & luxurious studio at great location',
