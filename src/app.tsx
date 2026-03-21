@@ -1,24 +1,22 @@
 import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-
-import { useAppDispatch } from '../hooks/store-hooks';
-import { fetchAllOffers } from '../store/thunk/offers';
-import { AppRoute, CITIES, DEFAULT_CITY } from '../const';
-import MainPage from './../pages/main-page/main-page';
-import FavouritePage from './../pages/favourites-page/favourites-page';
-import LoginPage from './../pages/login-page/login-page';
-import NotFoundPage from './../pages/not-found-page/not-found-page';
-import Layout from './layout/layout';
-import getRandomCity from '../util';
-import OfferPage from '../pages/offer-page/offer-page';
-import { checkAuth } from '../store/thunk/user-auth';
-import { getToken } from '../services/token';
-import ProtectedRoute from './private-route';
-import { fetchFavorites } from '../store/thunk/favorite';
-import { useAuth } from '../hooks/user-auth-hook';
-
-import { selectFavoriteOffers } from '../store/slices/favorite-slice';
+import { useAppDispatch } from './hooks/store-hooks';
+import Layout from './components/layout/layout';
+import ProtectedRoute from './components/private-route';
+import { CITIES, AppRoute, DEFAULT_CITY } from './const';
+import { useAuth } from './hooks/user-auth-hook';
+import FavouritePage from './pages/favourites-page/favourites-page';
+import LoginPage from './pages/login-page/login-page';
+import MainPage from './pages/main-page/main-page';
+import NotFoundPage from './pages/not-found-page/not-found-page';
+import OfferPage from './pages/offer-page/offer-page';
+import { getToken } from './services/token';
+import { selectFavoriteOffers } from './store/slices/favorite-slice';
+import { fetchFavorites } from './store/thunk/favorite';
+import { fetchAllOffers } from './store/thunk/offers';
+import { checkAuth } from './store/thunk/user-auth';
+import getRandomCity from './util';
 
 export default function App(): JSX.Element {
   const dispatch = useAppDispatch();
