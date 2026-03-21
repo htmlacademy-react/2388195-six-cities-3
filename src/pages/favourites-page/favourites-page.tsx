@@ -1,9 +1,10 @@
 import FavouriteLocations from '../../components/favorite-locations';
 import { selectFavoriteOffers } from '../../store/slices/favorite-slice';
-import {} from '../../const';
 import { CityName, FullOffer, FullOffers } from '../../types/offer';
 import { useAppSelector } from '../../hooks/store-hooks';
 import FavouriteEmptyPage from '../favourite-empty-page/favourite-empty-page';
+import Layout from '../../components/layout/layout';
+import Logo from '../../components/logo';
 
 export default function FavouritePage(): JSX.Element {
   const favoriteOffers = useAppSelector(selectFavoriteOffers);
@@ -26,18 +27,23 @@ export default function FavouritePage(): JSX.Element {
   const groupedOffers = groupByCity(favoriteOffers);
 
   return (
-    <main className="page__main page__main--favorites">
-      <div className="page__favorites-container container">
-        <section className="favorites">
-          <h1 className="favorites__title">Saved listing</h1>
-          <ul className="favorites__list">
-            {Object.entries(groupedOffers).map(([cityName, offers]) => (
-              <FavouriteLocations city={cityName as CityName} key={cityName} offers={offers} />
-            ))}
-          </ul>
-        </section>
-      </div>
-    </main>
+    <Layout>
+      <main className="page__main page__main--favorites">
+        <div className="page__favorites-container container">
+          <section className="favorites">
+            <h1 className="favorites__title">Saved listing</h1>
+            <ul className="favorites__list">
+              {Object.entries(groupedOffers).map(([cityName, offers]) => (
+                <FavouriteLocations city={cityName as CityName} key={cityName} offers={offers} />
+              ))}
+            </ul>
+          </section>
+        </div>
+      </main>
+      <footer className="footer">
+        <Logo type="footer" />
+      </footer>
+    </Layout>
   );
 }
 

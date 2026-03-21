@@ -1,8 +1,8 @@
 import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useAppDispatch } from './hooks/store-hooks';
-import Layout from './components/layout/layout';
+// import Layout from './components/layout/layout';
 import ProtectedRoute from './components/private-route';
 import { CITIES, AppRoute, DEFAULT_CITY } from './const';
 import { useAuth } from './hooks/user-auth-hook';
@@ -12,7 +12,6 @@ import MainPage from './pages/main-page/main-page';
 import NotFoundPage from './pages/not-found-page/not-found-page';
 import OfferPage from './pages/offer-page/offer-page';
 import { getToken } from './services/token';
-import { selectFavoriteOffers } from './store/slices/favorite-slice';
 import { fetchFavorites } from './store/thunk/favorite';
 import { fetchAllOffers } from './store/thunk/offers';
 import { checkAuth } from './store/thunk/user-auth';
@@ -45,15 +44,15 @@ export default function App(): JSX.Element {
     }
   }, [dispatch, isAuth, token]);
 
-  const favouriteCount = useSelector(selectFavoriteOffers).length;
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Root} element={<Layout favouriteCount={favouriteCount} />}>
+        <Route path={AppRoute.Root}>
           <Route index element={<Navigate to={`/${DEFAULT_CITY}`} replace />} />
           {CITIES.map((city) => (
-            <Route key={city.id} path={city.id} element={<MainPage currentCity={city.name} />} />
+            <Route key={city.id} path={city.id}
+            element={<MainPage currentCity={city.name} />} />
           ))}
 
           <Route

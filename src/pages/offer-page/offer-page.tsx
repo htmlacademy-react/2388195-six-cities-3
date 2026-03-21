@@ -22,6 +22,7 @@ import { useAuth } from '../../hooks/user-auth-hook';
 import FavoriteButton from '../../components/favorite-button';
 import Spinner from '../../components/spinner/spinner';
 import { CityName } from '../../types/offer';
+import Layout from '../../components/layout/layout';
 interface OfferPageProps {
   randomCity: CityName;
 }
@@ -93,92 +94,94 @@ export default function OfferPage({ randomCity }: OfferPageProps): JSX.Element {
   const formatedAdults = (count: number): string => `${count} ${count > 1 ? 'adults' : 'adult'}`;
 
   return (
-    <main className="page__main page__main--offer">
-      <section className="offer">
-        <div className="offer__gallery-container container">
-          <div className="offer__gallery">
-            {imagesToShow.map((image) => (
-              <OfferImage key={image} image={image} />
-            ))}
+    <Layout>
+      <main className="page__main page__main--offer">
+        <section className="offer">
+          <div className="offer__gallery-container container">
+            <div className="offer__gallery">
+              {imagesToShow.map((image) => (
+                <OfferImage key={image} image={image} />
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="offer__container container">
-          <div className="offer__wrapper">
-            {isPremium && (
-              <div className="offer__mark">
-                <span>Premium</span>
-              </div>
-            )}
-            <div className="offer__name-wrapper">
-              <h1 className="offer__name">{title}</h1>
-              <FavoriteButton block={'offer'} offerId={offerId} isFavorite={isFavorite} />
-            </div>
-            <div className="offer__rating rating">
-              <div className="offer__stars rating__stars">
-                <span style={{ width: starActiveWidth }}></span>
-                <span className="visually-hidden">Rating</span>
-              </div>
-              <span className="offer__rating-value rating__value">{roundedRating}</span>
-            </div>
-            <ul className="offer__features">
-              <li className="offer__feature offer__feature--entire">{formatedType(type)}</li>
-              <li className="offer__feature offer__feature--bedrooms">
-                {formatedBedrooms(bedrooms)}
-              </li>
-              <li className="offer__feature offer__feature--adults">
-                Max {formatedAdults(maxAdults)}
-              </li>
-            </ul>
-            <div className="offer__price">
-              <b className="offer__price-value">&euro;{price}</b>
-              <span className="offer__price-text">&nbsp;night</span>
-            </div>
-            <div className="offer__inside">
-              <h2 className="offer__inside-title">What&apos;s inside</h2>
-              <ul className="offer__inside-list">
-                {goods.map((good) => (
-                  <li key={good} className="offer__inside-item">
-                    {good}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="offer__host">
-              <h2 className="offer__host-title">Meet the host</h2>
-              <div className="offer__host-user user">
-                <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                  <img
-                    className="offer__avatar user__avatar"
-                    src={host.avatarUrl}
-                    width="74"
-                    height="74"
-                    alt="Host avatar"
-                  />
+          <div className="offer__container container">
+            <div className="offer__wrapper">
+              {isPremium && (
+                <div className="offer__mark">
+                  <span>Premium</span>
                 </div>
-                <span className="offer__user-name">{host.name}</span>
-                <span className="offer__user-status">{host.isPro && 'Pro'}</span>
+              )}
+              <div className="offer__name-wrapper">
+                <h1 className="offer__name">{title}</h1>
+                <FavoriteButton block={'offer'} offerId={offerId} isFavorite={isFavorite} />
               </div>
-              <div className="offer__description">
-                <p className="offer__text">{description}</p>
+              <div className="offer__rating rating">
+                <div className="offer__stars rating__stars">
+                  <span style={{ width: starActiveWidth }}></span>
+                  <span className="visually-hidden">Rating</span>
+                </div>
+                <span className="offer__rating-value rating__value">{roundedRating}</span>
               </div>
+              <ul className="offer__features">
+                <li className="offer__feature offer__feature--entire">{formatedType(type)}</li>
+                <li className="offer__feature offer__feature--bedrooms">
+                  {formatedBedrooms(bedrooms)}
+                </li>
+                <li className="offer__feature offer__feature--adults">
+                  Max {formatedAdults(maxAdults)}
+                </li>
+              </ul>
+              <div className="offer__price">
+                <b className="offer__price-value">&euro;{price}</b>
+                <span className="offer__price-text">&nbsp;night</span>
+              </div>
+              <div className="offer__inside">
+                <h2 className="offer__inside-title">What&apos;s inside</h2>
+                <ul className="offer__inside-list">
+                  {goods.map((good) => (
+                    <li key={good} className="offer__inside-item">
+                      {good}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="offer__host">
+                <h2 className="offer__host-title">Meet the host</h2>
+                <div className="offer__host-user user">
+                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                    <img
+                      className="offer__avatar user__avatar"
+                      src={host.avatarUrl}
+                      width="74"
+                      height="74"
+                      alt="Host avatar"
+                    />
+                  </div>
+                  <span className="offer__user-name">{host.name}</span>
+                  <span className="offer__user-status">{host.isPro && 'Pro'}</span>
+                </div>
+                <div className="offer__description">
+                  <p className="offer__text">{description}</p>
+                </div>
+              </div>
+              <section className="offer__reviews reviews">
+                <OfferReviews comments={comments} />
+                {isAuth && <OfferForm offerId={offerId} />}
+              </section>
             </div>
-            <section className="offer__reviews reviews">
-              <OfferReviews comments={comments} />
-              {isAuth && <OfferForm offerId={offerId} />}
-            </section>
           </div>
+          <CitiesMap
+            className="offer__map"
+            currentOffers={nearOffersWithCurrent}
+            currentCity={city.name}
+            activeOfferId={offerId}
+          />
+        </section>
+        <div className="container">
+          <OfferNearPlaces nearOffers={nearOffer} />
         </div>
-        <CitiesMap
-          className="offer__map"
-          currentOffers={nearOffersWithCurrent}
-          currentCity={city.name}
-          activeOfferId={offerId}
-        />
-      </section>
-      <div className="container">
-        <OfferNearPlaces nearOffers={nearOffer} />
-      </div>
-    </main>
+      </main>
+    </Layout>
   );
 }
 

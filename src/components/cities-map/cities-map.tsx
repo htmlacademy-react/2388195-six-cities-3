@@ -1,10 +1,9 @@
 import { useEffect, useRef } from 'react';
 import leaflet, { LayerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-
-import useMap from './use-map';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CITIES } from '../../const';
 import { CityName, ListOffers } from '../../types/offer';
+import useMap from '../../hooks/use-map';
 
 interface CitiesMapProps {
   className?: string;
