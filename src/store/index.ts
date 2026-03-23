@@ -1,10 +1,11 @@
+import { createAPI } from '@/services/api';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { offersSlice } from './slices/offers-slice';
-import { createAPI } from '../services/api';
-import { offerSlice } from './slices/offer-slice';
 import { commentsSlice } from './slices/comments-slice';
-import { userSlice } from './slices/user-slice';
 import { favoriteSlice } from './slices/favorite-slice';
+import { offerSlice } from './slices/offer-slice';
+import { offersSlice } from './slices/offers-slice';
+import { userSlice } from './slices/user-slice';
+
 
 const reducer = combineReducers({
   [offersSlice.name]: offersSlice.reducer,

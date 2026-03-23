@@ -1,10 +1,8 @@
 import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
-// import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useAppDispatch } from './hooks/store-hooks';
-// import Layout from './components/layout/layout';
 import ProtectedRoute from './components/private-route';
 import { CITIES, AppRoute, DEFAULT_CITY } from './const';
+import { useAppDispatch } from './hooks/store-hooks';
 import { useAuth } from './hooks/user-auth-hook';
 import FavouritePage from './pages/favourites-page/favourites-page';
 import LoginPage from './pages/login-page/login-page';
@@ -44,15 +42,13 @@ export default function App(): JSX.Element {
     }
   }, [dispatch, isAuth, token]);
 
-
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Root}>
           <Route index element={<Navigate to={`/${DEFAULT_CITY}`} replace />} />
           {CITIES.map((city) => (
-            <Route key={city.id} path={city.id}
-            element={<MainPage currentCity={city.name} />} />
+            <Route key={city.id} path={city.id} element={<MainPage currentCity={city.name} />} />
           ))}
 
           <Route

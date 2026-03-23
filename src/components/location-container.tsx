@@ -1,5 +1,6 @@
-import { Cities, City } from '../types/offer';
-import LocationContainerItem from './location-container-item';
+import { City, Cities } from "@/types/offer";
+import LocationContainerItem from "./location-container-item";
+
 
 interface LocationContainerProps {
   currentCity: City;

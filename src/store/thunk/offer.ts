@@ -1,8 +1,9 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { APIRoute } from '../../const';
-import { FullOffer, ListOffers } from '../../types/offer';
-import { UserComment, UserComments } from '../../types/user-comment';
+import { APIRoute } from '@/const';
+import { FullOffer, ListOffers } from '@/types/offer';
+import { UserComments, UserComment } from '@/types/user-comment';
+
 
 export const fetchOffer = createAsyncThunk<FullOffer, string, { extra: AxiosInstance }>(
   'fetchOffer/offer',

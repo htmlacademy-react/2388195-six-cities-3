@@ -1,9 +1,8 @@
+import { RequestStatus } from '@/const';
+import { ListOffer, ListOffers } from '@/types/offer';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ListOffer, ListOffers } from '../../types/offer';
-
-import { RequestStatus } from '../../const';
-import { fetchAllOffers } from '../thunk/offers';
 import { postFavorite } from '../thunk/favorite';
+import { fetchAllOffers } from '../thunk/offers';
 
 interface OffersState {
   activeId: ListOffer['id'] | null;

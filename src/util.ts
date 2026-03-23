@@ -1,6 +1,5 @@
-import { MIN_STAR_WIDTH, SortType } from './const';
-import type { CITIES } from './const';
-import { CityName, ListOffers } from './types/offer';
+import { CITIES, MIN_STAR_WIDTH, SortType } from "./const";
+import { CityName, ListOffers } from "./types/offer";
 
 export default function getRandomCity(array: typeof CITIES): CityName {
   return array[Math.floor(Math.random() * array.length)].name;

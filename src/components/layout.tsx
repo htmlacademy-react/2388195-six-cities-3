@@ -1,11 +1,11 @@
-import { RequestStatus } from '../../const';
-import { selectStatus } from '../../store/slices/offers-slice';
-import { useAppSelector } from '../../hooks/store-hooks';
-import { useSelector } from 'react-redux';
-import { selectFavoriteOffers } from '../../store/slices/favorite-slice';
-import { ReactNode } from 'react';
-import Header from '../header';
+import { RequestStatus } from '@/const';
+import { useAppSelector } from '@/hooks/store-hooks';
+import { selectFavoriteOffers } from '@/store/slices/favorite-slice';
+import { selectStatus } from '@/store/slices/offers-slice';
 import classNames from 'classnames';
+import { ReactNode } from 'react';
+import { useSelector } from 'react-redux';
+import Header from './header';
 
 interface LayoutProps {
   isPageMain?: boolean;

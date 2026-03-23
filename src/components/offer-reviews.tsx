@@ -1,6 +1,6 @@
-import { MAX_COMMENTS_COUNT } from '../const';
-import { UserComments } from '../types/user-comment';
-import OfferReviewsItem from './offer-reviews-item';
+import { MAX_COMMENTS_COUNT } from "@/const";
+import { UserComments } from "@/types/user-comment";
+import OfferReviewsItem from "./offer-reviews-item";
 
 interface OfferReviewsProps {
   comments?: UserComments;
@@ -11,9 +11,7 @@ export default function OfferReviews({ comments = [] }: OfferReviewsProps): JSX.
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, MAX_COMMENTS_COUNT);
 
-  const sortedCommentsCount = sortedComments.length;
-
-  if (sortedCommentsCount === 0) {
+  if (sortedComments.length === 0) {
     return (
       <h2 className="reviews__title">
         Reviews &middot;
@@ -26,7 +24,7 @@ export default function OfferReviews({ comments = [] }: OfferReviewsProps): JSX.
     <>
       <h2 className="reviews__title">
         Reviews &middot;
-        <span className="reviews__amount">{sortedCommentsCount}</span>
+        <span className="reviews__amount">{sortedComments.length}</span>
       </h2>
       <ul className="reviews__list">
         {sortedComments.map((comment, index) => (

@@ -1,16 +1,14 @@
-import FavouriteLocations from '../../components/favorite-locations';
-import { selectFavoriteOffers } from '../../store/slices/favorite-slice';
-import { CityName, FullOffer, FullOffers } from '../../types/offer';
-import { useAppSelector } from '../../hooks/store-hooks';
-import FavouriteEmptyPage from '../favourite-empty-page/favourite-empty-page';
-import Layout from '../../components/layout/layout';
-import Logo from '../../components/logo';
+import Layout from '@/components/layout';
+import Logo from '@/components/logo';
+import { useAppSelector } from '@/hooks/store-hooks';
+import { selectFavoriteOffers } from '@/store/slices/favorite-slice';
+import { FullOffers, CityName, FullOffer } from '@/types/offer';
+import classNames from 'classnames';
+import FavouriteList from '../../components/favourites-list';
+import FavouriteEmpty from '../../components/favourite-empty';
 
 export default function FavouritePage(): JSX.Element {
   const favoriteOffers = useAppSelector(selectFavoriteOffers);
-  if (favoriteOffers.length === 0) {
-    return <FavouriteEmptyPage />;
-  }
 
   const groupByCity = (offers: FullOffers): Record<CityName, FullOffer[]> =>
     offers.reduce((acc: Record<string, FullOffer[]>, favoriteOffer: FullOffer) => {
@@ -28,16 +26,19 @@ export default function FavouritePage(): JSX.Element {
 
   return (
     <Layout>
-      <main className="page__main page__main--favorites">
+      <main
+        className={classNames(
+          'page__main',
+          'page__main--favorites',
+          favoriteOffers.length === 0 && 'page__main--favorites-empty',
+        )}
+      >
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {Object.entries(groupedOffers).map(([cityName, offers]) => (
-                <FavouriteLocations city={cityName as CityName} key={cityName} offers={offers} />
-              ))}
-            </ul>
-          </section>
+          {favoriteOffers.length === 0 ? (
+            <FavouriteEmpty />
+          ) : (
+            <FavouriteList groupedOffers={groupedOffers} />
+          )}
         </div>
       </main>
       <footer className="footer">
@@ -46,9 +47,3 @@ export default function FavouritePage(): JSX.Element {
     </Layout>
   );
 }
-
-/////////////////////////////////////////////////////////////////////////////////
-
-// const groupedOffers = Object.groupBy(listOffers, (listOffer) => listOffer.city.name) as Partial<Record<CityName, ListOffers>>;
-// const currentOffers: ListOffers = groupedOffers[currentCity] || [];
-//TS ругается версия TypeScript ниже 5.4+

@@ -1,4 +1,4 @@
-import { CITIES } from '../const';
+import { CITIES } from "@/const";
 
 export type CityName = (typeof CITIES)[number]['name'];
 // export type CityName = 'Paris' | 'Cologne' | 'Brussels' | 'Amsterdam' | 'Hamburg' | 'Dusseldorf';

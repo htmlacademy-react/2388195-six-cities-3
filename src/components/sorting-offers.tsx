@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { SortType } from '../const';
+import { SortType } from "@/const";
+import classNames from "classnames";
+import { useState } from "react";
 
 interface SortingOffersProps {
   onChangeSort: (type: SortType) => void;
@@ -31,13 +32,15 @@ export default function SortingOffers({
         </svg>
       </span>
       <ul
-        className={`places__options places__options--custom ${isOpened ? 'places__options--opened' : ''}`}
+        className={classNames('places__options', 'places__options--custom', {
+          'places__options--opened': isOpened,
+        })}
         role="listbox"
       >
         {Object.values(SortType).map((type) => (
           <li
             key={type}
-            className={`places__option ${type === currentSortType ? 'places__option--active' : ''}`}
+            className={classNames('places__option', type === currentSortType && 'places__option--active')}
             tabIndex={0}
             onClick={() => handleOptionClick(type)}
           >

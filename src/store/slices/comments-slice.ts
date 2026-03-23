@@ -1,7 +1,7 @@
+import { RequestStatus } from '@/const';
+import { UserComments } from '@/types/user-comment';
 import { createSlice } from '@reduxjs/toolkit';
-import { RequestStatus } from '../../const';
 import { fetchComments, postComment } from '../thunk/offer';
-import { UserComments } from '../../types/user-comment';
 
 interface CommentsState {
   comments: UserComments;

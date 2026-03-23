@@ -1,9 +1,9 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { APIRoute } from '../../const';
-import { User } from '../../types/user';
-import { Login } from '../../types/login';
-import { dropToken, saveToken } from '../../services/token';
+import { APIRoute } from '@/const';
+import { saveToken, dropToken } from '@/services/token';
+import { Login } from '@/types/login';
+import { User } from '@/types/user';
 
 export const checkAuth = createAsyncThunk<User, void, { extra: AxiosInstance }>(
   'auth/checkAuth',

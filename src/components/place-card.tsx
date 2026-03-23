@@ -1,32 +1,48 @@
-import { Link } from 'react-router-dom';
-
-import { AppRoute } from '../const';
-import { formatedType, getStarActiveWidth } from '../util';
-import { useAppDispatch } from '../hooks/store-hooks';
-import { offersActions } from '../store/slices/offers-slice';
-import { ListOffer } from '../types/offer';
-import FavoriteButton from './favorite-button';
+import { AppRoute } from "@/const";
+import { useAppDispatch } from "@/hooks/store-hooks";
+import { offersActions } from "@/store/slices/offers-slice";
+import { ListOffer } from "@/types/offer";
+import { getStarActiveWidth, formatedType } from "@/util";
+import classNames from "classnames";
+import { Link } from "react-router-dom";
+import FavoriteButton from "./favorite-button";
 
 interface PlaceCardProps {
   currentOffer: ListOffer;
-  block: 'favorites' | 'place-card' | 'cities' | 'near-places';
+  cardType: 'favorites' | 'cities' | 'near-places';
   hovered?: boolean;
 }
 
-export default function PlaceCard({ currentOffer, block, hovered }: PlaceCardProps): JSX.Element {
-  const dispatch = useAppDispatch();
+const sizes = {
+  favorites: {
+    width: 150,
+    height: 110,
+  },
+  cities: {
+    width: 260,
+    height: 200,
+  },
+  'near-places': {
+    width: 260,
+    height: 200,
+  },
+};
 
+export default function PlaceCard({
+  currentOffer,
+  cardType,
+  hovered,
+}: PlaceCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const { id, isPremium, previewImage, price, title, type, rating, isFavorite } = currentOffer;
   const roundedRating = Math.round(rating);
   const starActiveWidth = getStarActiveWidth(roundedRating);
-
-  const imgWidth = block === 'favorites' ? '150' : '260';
-  const imgHeight = block === 'favorites' ? '110' : '200';
+  const { width, height } = sizes[cardType];
 
   return (
     <Link to={`${AppRoute.Offer}/${id}`}>
       <article
-        className={`${block}__card place-card`}
+        className={`${cardType}__card place-card`}
         onMouseEnter={() => hovered && dispatch(offersActions.setActiveId(id))}
         onMouseLeave={() => hovered && dispatch(offersActions.setActiveId(null))}
       >
@@ -35,22 +51,22 @@ export default function PlaceCard({ currentOffer, block, hovered }: PlaceCardPro
             <span>Premium</span>
           </div>
         )}
-        <div className={`${block}__image-wrapper place-card__image-wrapper`}>
+        <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
           <img
             className="place-card__image"
             src={previewImage}
-            width={imgWidth}
-            height={imgHeight}
+            width={width}
+            height={height}
             alt="Place image"
           />
         </div>
-        <div className="place-card__info">
+        <div className={classNames('place-card__info', cardType==='favorites' && 'favorites__card-info')}>
           <div className="place-card__price-wrapper">
             <div className="place-card__price">
               <b className="place-card__price-value">&euro;{price}</b>
               <span className="place-card__price-text">&#47;&nbsp;night</span>
             </div>
-            <FavoriteButton block={'place-card'} offerId={id} isFavorite={isFavorite} />
+            <FavoriteButton buttonType={'place-card'} offerId={id} isFavorite={isFavorite} />
           </div>
           <div className="place-card__rating rating">
             <div className="place-card__stars rating__stars">

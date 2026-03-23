@@ -1,7 +1,7 @@
+import { RequestStatus, FavoriteStatus } from '@/const';
+import { FullOffer, FullOffers } from '@/types/offer';
 import { createSlice } from '@reduxjs/toolkit';
-import { FavoriteStatus, RequestStatus } from '../../const';
 import { fetchFavorites, postFavorite } from '../thunk/favorite';
-import { FullOffer, FullOffers } from '../../types/offer';
 
 interface FavoriteState {
   favoriteOffer: FullOffer | null;

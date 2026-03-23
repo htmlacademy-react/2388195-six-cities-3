@@ -1,9 +1,9 @@
-import {} from '../../const';
-import { useDocumentTitle } from '../../hooks/store-hooks';
-import LoginForm from '../../components/login-form';
-import LoginLocation from '../../components/login-locaton';
-import { CityName } from '../../types/offer';
-import Layout from '../../components/layout/layout';
+import Layout from '@/components/layout';
+import LoginForm from '@/components/login-form';
+import LoginLocation from '@/components/login-locaton';
+import { useDocumentTitle } from '@/hooks/store-hooks';
+import { CityName } from '@/types/offer';
+
 
 interface LoginPageProps {
   randomCity: CityName;

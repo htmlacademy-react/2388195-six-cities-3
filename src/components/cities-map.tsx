@@ -1,24 +1,25 @@
-import { useEffect, useRef } from 'react';
-import leaflet, { LayerGroup } from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CITIES } from '../../const';
-import { CityName, ListOffers } from '../../types/offer';
-import useMap from '../../hooks/use-map';
+import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CITIES } from '@/const';
+import { useAppSelector } from '@/hooks/store-hooks';
+import useMap from '@/hooks/use-map';
+import { selectActiveId } from '@/store/slices/offers-slice';
+import { CityName, ListOffers } from '@/types/offer';
+import { LayerGroup } from 'leaflet';
+import { useRef, useEffect } from 'react';
+import L from 'leaflet';
 
 interface CitiesMapProps {
   className?: string;
   currentCity: CityName;
   currentOffers: ListOffers;
-  activeOfferId?: string | null;
 }
 
-const defaultCustomIcon = leaflet.icon({
+const defaultCustomIcon = L.icon({
   iconUrl: URL_MARKER_DEFAULT,
   iconSize: [27, 39],
   iconAnchor: [13.5, 39],
 });
 
-const currentCustomIcon = leaflet.icon({
+const currentCustomIcon = L.icon({
   iconUrl: URL_MARKER_CURRENT,
   iconSize: [27, 39],
   iconAnchor: [13.5, 39],
@@ -28,7 +29,6 @@ export default function CitiesMap({
   className,
   currentCity,
   currentOffers,
-  activeOfferId,
 }: CitiesMapProps): JSX.Element {
   const containerMapRef = useRef<HTMLElement>(null);
   let city = CITIES.find((item) => item.name === currentCity);
@@ -38,7 +38,8 @@ export default function CitiesMap({
   }
 
   const map = useMap({ containerMapRef, location: city.location });
-  const markerLayer = useRef<LayerGroup>(leaflet.layerGroup());
+  const markerLayer = useRef<LayerGroup>(L.layerGroup());
+  const activeOfferId = useAppSelector(selectActiveId);
 
   useEffect(() => {
     if (map) {
@@ -51,17 +52,15 @@ export default function CitiesMap({
       markerLayer.current.clearLayers();
       markerLayer.current.addTo(map);
       currentOffers.forEach((currentOffer) => {
-        leaflet
-          .marker(
-            {
-              lat: currentOffer.location.latitude,
-              lng: currentOffer.location.longitude,
-            },
-            {
-              icon: currentOffer.id === activeOfferId ? currentCustomIcon : defaultCustomIcon,
-            },
-          )
-          .addTo(markerLayer.current);
+        L.marker(
+          {
+            lat: currentOffer.location.latitude,
+            lng: currentOffer.location.longitude,
+          },
+          {
+            icon: currentOffer.id === activeOfferId ? currentCustomIcon : defaultCustomIcon,
+          },
+        ).addTo(markerLayer.current);
       });
     }
   }, [activeOfferId, map, currentOffers]);

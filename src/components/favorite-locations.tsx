@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom';
-
-import { AppRoute } from '../const';
-import PlaceCard from './place-card';
-import { FullOffers, CityName } from '../types/offer';
+import { AppRoute } from "@/const";
+import { CityName, FullOffers } from "@/types/offer";
+import { Link } from "react-router-dom";
+import PlaceCard from "./place-card";
 
 interface FavouriteLocationsProps {
   city: CityName;
@@ -21,7 +20,7 @@ export default function FavouriteLocations({ city, offers }: FavouriteLocationsP
       </div>
       <div className="favorites__places">
         {offers.map((offer) => (
-          <PlaceCard currentOffer={offer} key={offer.id} block="favorites" hovered />
+          <PlaceCard currentOffer={offer} key={offer.id} cardType="favorites" hovered />
         ))}
       </div>
     </li>

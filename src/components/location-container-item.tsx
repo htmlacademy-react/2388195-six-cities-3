@@ -1,4 +1,5 @@
-import { City } from '../types/offer';
+import { City } from "@/types/offer";
+import classNames from "classnames";
 
 interface LocationContainerItemProps {
   currentCity: City;
@@ -12,11 +13,9 @@ export default function LocationContainerItem({
   return (
     <li className="locations__item">
       <a
-        className={
-          city === currentCity
-            ? 'locations__item-link tabs__item tabs__item--active'
-            : 'locations__item-link tabs__item '
-        }
+        className={classNames('locations__item-link tabs__item',
+          city === currentCity && 'locations__item-link tabs__item tabs__item--active'
+        )}
         href="#"
       >
         <span>{city.name}</span>

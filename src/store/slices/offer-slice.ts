@@ -1,8 +1,8 @@
+import { RequestStatus } from '@/const';
+import { FullOffer, ListOffers } from '@/types/offer';
 import { createSlice } from '@reduxjs/toolkit';
-import { RequestStatus } from '../../const';
-import { fetchNearby, fetchOffer } from '../thunk/offer';
-import { FullOffer, ListOffers } from '../../types/offer';
 import { postFavorite } from '../thunk/favorite';
+import { fetchOffer, fetchNearby } from '../thunk/offer';
 
 interface OfferState {
   offer: FullOffer | null;

@@ -1,7 +1,7 @@
+import { RequestStatus, AuthorizationStatus } from '@/const';
+import { User } from '@/types/user';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthorizationStatus, RequestStatus } from '../../const';
 import { checkAuth, login, logout } from '../thunk/user-auth';
-import type { User } from '../../types/user';
 
 interface UserState {
   info: User | null;

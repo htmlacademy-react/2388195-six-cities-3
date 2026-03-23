@@ -1,5 +1,5 @@
-import Logo from './logo';
-import Nav from './nav';
+import Logo from "./logo";
+import Nav from "./nav";
 
 interface HeaderProps {
   favouriteCount: number;
