@@ -9,7 +9,7 @@ export default function OfferNearPlacesList({ nearOffers }: OfferNearPlacesListP
   return (
     <div className="near-places__list places__list">
       {nearOffers.map((nearOffer) => (
-        <PlaceCard currentOffer={nearOffer} key={nearOffer.id} cardType="near-places" hovered />
+        <PlaceCard currentOffer={nearOffer} key={nearOffer.id} cardType="near-places" />
       ))}
     </div>
   );
