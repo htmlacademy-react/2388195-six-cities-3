@@ -1,5 +1,5 @@
-import { UserComment } from "@/types/user-comment";
-import { getStarActiveWidth } from "@/util";
+import { UserComment } from '@/types/user-comment';
+import { getStarActiveWidth } from '@/util';
 
 interface OfferReviewsItemProps {
   commentItem?: UserComment;

@@ -1,7 +1,7 @@
-import { RATING } from "@/const";
-import { useAppDispatch } from "@/hooks/store-hooks";
-import { postComment } from "@/store/thunk/offer";
-import { ReactEventHandler, useState, FormEvent, Fragment } from "react";
+import { RATING } from '@/const';
+import { useAppDispatch } from '@/hooks/store-hooks';
+import { postComment } from '@/store/thunk/offer';
+import { ReactEventHandler, useState, FormEvent, Fragment } from 'react';
 
 interface OfferFormProps {
   offerId: string;

@@ -1,8 +1,8 @@
-import Layout from "@/components/layout";
-import LoginLocation from "@/components/login-locaton";
-import { AppRoute } from "@/const";
-import { CityName } from "@/types/offer";
-import { Link } from "react-router-dom";
+import Layout from '@/components/layout';
+import LoginLocation from '@/components/login-locaton';
+import { AppRoute } from '@/const';
+import { CityName } from '@/types/offer';
+import { Link } from 'react-router-dom';
 
 const variants = {
   page: 'Page Not Found',

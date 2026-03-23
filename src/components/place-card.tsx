@@ -1,11 +1,11 @@
-import { AppRoute } from "@/const";
-import { useAppDispatch } from "@/hooks/store-hooks";
-import { offersActions } from "@/store/slices/offers-slice";
-import { ListOffer } from "@/types/offer";
-import { getStarActiveWidth, formatedType } from "@/util";
-import classNames from "classnames";
-import { Link } from "react-router-dom";
-import FavoriteButton from "./favorite-button";
+import { AppRoute } from '@/const';
+import { useAppDispatch } from '@/hooks/store-hooks';
+import { offersActions } from '@/store/slices/offers-slice';
+import { ListOffer } from '@/types/offer';
+import { getStarActiveWidth, formatedType } from '@/util';
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
+import FavoriteButton from './favorite-button';
 
 interface PlaceCardProps {
   currentOffer: ListOffer;
@@ -60,7 +60,12 @@ export default function PlaceCard({
             alt="Place image"
           />
         </div>
-        <div className={classNames('place-card__info', cardType==='favorites' && 'favorites__card-info')}>
+        <div
+          className={classNames(
+            'place-card__info',
+            cardType === 'favorites' && 'favorites__card-info',
+          )}
+        >
           <div className="place-card__price-wrapper">
             <div className="place-card__price">
               <b className="place-card__price-value">&euro;{price}</b>

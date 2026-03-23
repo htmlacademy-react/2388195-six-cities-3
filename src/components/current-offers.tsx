@@ -1,11 +1,11 @@
-import { SortType } from "@/const";
-import { ListOffers, CityName } from "@/types/offer";
-import { getSortedOffers } from "@/util";
-import classNames from "classnames";
-import { useState } from "react";
-import CitiesMap from "./cities-map";
-import MainEmpty from "./main-empty";
-import MainPlaces from "./main-places";
+import { SortType } from '@/const';
+import { ListOffers, CityName } from '@/types/offer';
+import { getSortedOffers } from '@/util';
+import classNames from 'classnames';
+import { useState } from 'react';
+import CitiesMap from './cities-map';
+import MainEmpty from './main-empty';
+import MainPlaces from './main-places';
 
 interface ListCardsProps {
   currentOffers: ListOffers;

@@ -1,7 +1,6 @@
-import { useAppDispatch } from "@/hooks/store-hooks";
-import { login } from "@/store/thunk/user-auth";
-import { useState, ChangeEvent, FormEvent } from "react";
-
+import { useAppDispatch } from '@/hooks/store-hooks';
+import { login } from '@/store/thunk/user-auth';
+import { useState, ChangeEvent, FormEvent } from 'react';
 
 export default function LoginForm(): JSX.Element {
   const [formData, setFormData] = useState({

@@ -1,6 +1,6 @@
-import { MAX_COMMENTS_COUNT } from "@/const";
-import { UserComments } from "@/types/user-comment";
-import OfferReviewsItem from "./offer-reviews-item";
+import { MAX_COMMENTS_COUNT } from '@/const';
+import { UserComments } from '@/types/user-comment';
+import OfferReviewsItem from './offer-reviews-item';
 
 interface OfferReviewsProps {
   comments?: UserComments;

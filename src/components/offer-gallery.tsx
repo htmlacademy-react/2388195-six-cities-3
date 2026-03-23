@@ -1,4 +1,4 @@
-import OfferImage from "./offer-image";
+import OfferImage from './offer-image';
 
 interface OfferGalleryProps {
   imagesToShow: string[];

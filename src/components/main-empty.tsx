@@ -1,4 +1,4 @@
-import { CityName } from "@/types/offer";
+import { CityName } from '@/types/offer';
 
 interface MainEmptyProps {
   currentCity: CityName;

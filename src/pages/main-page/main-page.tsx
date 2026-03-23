@@ -1,12 +1,12 @@
-import CurrentOffers from "@/components/current-offers";
-import Layout from "@/components/layout";
-import MainTabs from "@/components/main-tabs";
-import Spinner from "@/components/spinner/spinner";
-import { RequestStatus } from "@/const";
-import { useAppSelector } from "@/hooks/store-hooks";
-import { selectStatus, selectOffers } from "@/store/slices/offers-slice";
-import { CityName } from "@/types/offer";
-import classNames from "classnames";
+import CurrentOffers from '@/components/current-offers';
+import Layout from '@/components/layout';
+import MainTabs from '@/components/main-tabs';
+import Spinner from '@/components/spinner/spinner';
+import { RequestStatus } from '@/const';
+import { useAppSelector } from '@/hooks/store-hooks';
+import { selectStatus, selectOffers } from '@/store/slices/offers-slice';
+import { CityName } from '@/types/offer';
+import classNames from 'classnames';
 
 interface MainPageProps {
   currentCity: CityName;

@@ -1,6 +1,6 @@
-import { SortType } from "@/const";
-import classNames from "classnames";
-import { useState } from "react";
+import { SortType } from '@/const';
+import classNames from 'classnames';
+import { useState } from 'react';
 
 interface SortingOffersProps {
   onChangeSort: (type: SortType) => void;
@@ -40,7 +40,10 @@ export default function SortingOffers({
         {Object.values(SortType).map((type) => (
           <li
             key={type}
-            className={classNames('places__option', type === currentSortType && 'places__option--active')}
+            className={classNames(
+              'places__option',
+              type === currentSortType && 'places__option--active',
+            )}
             tabIndex={0}
             onClick={() => handleOptionClick(type)}
           >

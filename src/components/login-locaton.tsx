@@ -1,6 +1,6 @@
-import { AppRoute } from "@/const";
-import { CityName } from "@/types/offer";
-import { Link } from "react-router-dom";
+import { AppRoute } from '@/const';
+import { CityName } from '@/types/offer';
+import { Link } from 'react-router-dom';
 
 interface LoginLocationProps {
   randomCity: CityName;

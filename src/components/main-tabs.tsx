@@ -1,7 +1,7 @@
-import { CITIES } from "@/const";
-import { CityName } from "@/types/offer";
-import classNames from "classnames";
-import { NavLink } from "react-router-dom";
+import { CITIES } from '@/const';
+import { CityName } from '@/types/offer';
+import classNames from 'classnames';
+import { NavLink } from 'react-router-dom';
 
 interface MainTabsProps {
   currentCity: CityName;

@@ -1,10 +1,10 @@
-import { AppRoute } from "@/const";
-import { useAppDispatch } from "@/hooks/store-hooks";
-import { useAuth } from "@/hooks/user-auth-hook";
-import { postFavorite } from "@/store/thunk/favorite";
-import { FullOffer } from "@/types/offer";
-import classNames from "classnames";
-import { useNavigate } from "react-router-dom";
+import { AppRoute } from '@/const';
+import { useAppDispatch } from '@/hooks/store-hooks';
+import { useAuth } from '@/hooks/user-auth-hook';
+import { postFavorite } from '@/store/thunk/favorite';
+import { FullOffer } from '@/types/offer';
+import classNames from 'classnames';
+import { useNavigate } from 'react-router-dom';
 
 interface FavoriteButtonProps {
   offerId: FullOffer['id'];

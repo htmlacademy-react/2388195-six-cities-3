@@ -6,7 +6,6 @@ import { offerSlice } from './slices/offer-slice';
 import { offersSlice } from './slices/offers-slice';
 import { userSlice } from './slices/user-slice';
 
-
 const reducer = combineReducers({
   [offersSlice.name]: offersSlice.reducer,
   [offerSlice.name]: offerSlice.reducer,

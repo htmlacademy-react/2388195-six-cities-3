@@ -1,18 +1,23 @@
-import CitiesMap from "@/components/cities-map";
-import Layout from "@/components/layout";
-import Offer from "@/components/offer";
-import OfferGallery from "@/components/offer-gallery";
-import OfferNearPlaces from "@/components/offer-near-places";
-import Spinner from "@/components/spinner/spinner";
-import { RequestStatus, MAX_NEARBY_COUNT, MAX_IMAGES_COUNT } from "@/const";
-import { useAppSelector, useAppDispatch } from "@/hooks/store-hooks";
-import { commentsActions } from "@/store/slices/comments-slice";
-import { selectOffer, selectOfferStatus, selectNearbyOffers, offerActions } from "@/store/slices/offer-slice";
-import { fetchOffer, fetchNearby, fetchComments } from "@/store/thunk/offer";
-import { CityName } from "@/types/offer";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import NotFoundPage from "../not-found-page/not-found-page";
+import CitiesMap from '@/components/cities-map';
+import Layout from '@/components/layout';
+import Offer from '@/components/offer';
+import OfferGallery from '@/components/offer-gallery';
+import OfferNearPlaces from '@/components/offer-near-places';
+import Spinner from '@/components/spinner/spinner';
+import { RequestStatus, MAX_NEARBY_COUNT, MAX_IMAGES_COUNT } from '@/const';
+import { useAppSelector, useAppDispatch } from '@/hooks/store-hooks';
+import { commentsActions } from '@/store/slices/comments-slice';
+import {
+  selectOffer,
+  selectOfferStatus,
+  selectNearbyOffers,
+  offerActions,
+} from '@/store/slices/offer-slice';
+import { fetchOffer, fetchNearby, fetchComments } from '@/store/thunk/offer';
+import { CityName } from '@/types/offer';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 interface OfferPageProps {
   randomCity: CityName;

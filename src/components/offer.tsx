@@ -1,12 +1,11 @@
-import { useAppSelector } from "@/hooks/store-hooks";
-import { useAuth } from "@/hooks/user-auth-hook";
-import { selectComments } from "@/store/slices/comments-slice";
-import { FullOffer } from "@/types/offer";
-import { getStarActiveWidth } from "@/util";
-import FavoriteButton from "./favorite-button";
-import OfferForm from "./offer-form";
-import OfferReviews from "./offer-reviews";
-
+import { useAppSelector } from '@/hooks/store-hooks';
+import { useAuth } from '@/hooks/user-auth-hook';
+import { selectComments } from '@/store/slices/comments-slice';
+import { FullOffer } from '@/types/offer';
+import { getStarActiveWidth } from '@/util';
+import FavoriteButton from './favorite-button';
+import OfferForm from './offer-form';
+import OfferReviews from './offer-reviews';
 
 interface OfferProps {
   offer: FullOffer;

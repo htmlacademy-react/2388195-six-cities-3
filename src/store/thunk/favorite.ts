@@ -3,7 +3,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute, FavoriteStatus } from '@/const';
 import { FullOffers, FullOffer } from '@/types/offer';
 
-
 export const fetchFavorites = createAsyncThunk<FullOffers, void, { extra: AxiosInstance }>(
   'fetchFavorites',
   async (_arg, { extra: api }) => {

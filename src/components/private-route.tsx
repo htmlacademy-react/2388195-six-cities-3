@@ -1,8 +1,8 @@
-import { AppRoute } from "@/const";
-import { useAppSelector } from "@/hooks/store-hooks";
-import { selectUserInfo } from "@/store/slices/user-slice";
-import { ReactNode } from "react";
-import { useLocation, Navigate } from "react-router-dom";
+import { AppRoute } from '@/const';
+import { useAppSelector } from '@/hooks/store-hooks';
+import { selectUserInfo } from '@/store/slices/user-slice';
+import { ReactNode } from 'react';
+import { useLocation, Navigate } from 'react-router-dom';
 
 type ProtectedRouteProps = {
   children: ReactNode;

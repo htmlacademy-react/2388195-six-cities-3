@@ -1,9 +1,9 @@
-import { AppRoute } from "@/const";
-import { useAppSelector, useAppDispatch } from "@/hooks/store-hooks";
-import { useAuth } from "@/hooks/user-auth-hook";
-import { selectUserInfo } from "@/store/slices/user-slice";
-import { logout } from "@/store/thunk/user-auth";
-import { Link } from "react-router-dom";
+import { AppRoute } from '@/const';
+import { useAppSelector, useAppDispatch } from '@/hooks/store-hooks';
+import { useAuth } from '@/hooks/user-auth-hook';
+import { selectUserInfo } from '@/store/slices/user-slice';
+import { logout } from '@/store/thunk/user-auth';
+import { Link } from 'react-router-dom';
 
 interface NavProps {
   favouriteCount: number;

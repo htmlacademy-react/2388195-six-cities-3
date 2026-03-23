@@ -4,7 +4,6 @@ import LoginLocation from '@/components/login-locaton';
 import { useDocumentTitle } from '@/hooks/store-hooks';
 import { CityName } from '@/types/offer';
 
-
 interface LoginPageProps {
   randomCity: CityName;
 }

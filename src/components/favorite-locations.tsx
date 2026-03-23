@@ -1,7 +1,7 @@
-import { AppRoute } from "@/const";
-import { CityName, FullOffers } from "@/types/offer";
-import { Link } from "react-router-dom";
-import PlaceCard from "./place-card";
+import { AppRoute } from '@/const';
+import { CityName, FullOffers } from '@/types/offer';
+import { Link } from 'react-router-dom';
+import PlaceCard from './place-card';
 
 interface FavouriteLocationsProps {
   city: CityName;
