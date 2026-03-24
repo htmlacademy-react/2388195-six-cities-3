@@ -31,15 +31,11 @@ export default function CitiesMap({
   currentOffers,
 }: CitiesMapProps): JSX.Element {
   const containerMapRef = useRef<HTMLElement>(null);
-  let city = CITIES.find((item) => item.name === currentCity);
-
-  if (!city) {
-    city = CITIES[0];
-  }
-
-  const map = useMap({ containerMapRef, location: city.location });
   const markerLayer = useRef<LayerGroup>(L.layerGroup());
   const activeOfferId = useAppSelector(selectActiveId);
+
+  const city = CITIES.find((item) => item.name === currentCity) || CITIES[0];
+  const map = useMap({ containerMapRef, location: city.location });
 
   useEffect(() => {
     if (map) {
