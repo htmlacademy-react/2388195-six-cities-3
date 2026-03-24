@@ -1,9 +1,10 @@
 import { SortType } from '@/const';
 import { ListOffers, CityName } from '@/types/offer';
 import { getSortedOffers } from '@/util';
-import { useState } from 'react';
 import PlaceCard from './place-card';
 import SortingOffers from './sorting-offers';
+import { useAppDispatch, useAppSelector } from '@/hooks/store-hooks';
+import { offersActions, selectActiveSort } from '@/store/slices/offers-slice';
 
 interface MainPlacesProps {
   currentOffers: ListOffers;
@@ -11,8 +12,14 @@ interface MainPlacesProps {
 }
 
 export default function MainPlaces({ currentOffers, currentCity }: MainPlacesProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const activeSort = useAppSelector(selectActiveSort);
   const formatedOffersNumber = (count: number): string => `${count} place${count !== 1 && 's'}`;
-  const [activeSort, setActiveSort] = useState(SortType.Popular);
+
+  const setSort = (type: SortType) => {
+    dispatch(offersActions.setActiveSort(type));
+  };
+
   const sortedOffers = getSortedOffers(currentOffers, activeSort);
 
   return (
@@ -21,7 +28,7 @@ export default function MainPlaces({ currentOffers, currentCity }: MainPlacesPro
       <b className="places__found">
         {formatedOffersNumber(currentOffers.length)} to stay in {currentCity}
       </b>
-      <SortingOffers currentSortType={activeSort} onChangeSort={setActiveSort} />
+      <SortingOffers currentSortType={activeSort} onChangeSort={setSort} />
       <div className="cities__places-list places__list tabs__content">
         {sortedOffers.map((currentOffer) => (
           <PlaceCard key={currentOffer.id} currentOffer={currentOffer} cardType="cities" hovered />

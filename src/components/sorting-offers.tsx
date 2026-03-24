@@ -35,7 +35,6 @@ export default function SortingOffers({
         className={classNames('places__options', 'places__options--custom', {
           'places__options--opened': isOpened,
         })}
-        role="listbox"
       >
         {Object.values(SortType).map((type) => (
           <li
