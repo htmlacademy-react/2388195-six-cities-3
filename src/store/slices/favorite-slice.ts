@@ -55,5 +55,4 @@ export const favoriteSlice = createSlice({
   },
 });
 
-export const favoriteOffersActions = { ...favoriteSlice.actions, fetchFavorites, postFavorite };
 export const { selectFavoriteOffers, selectFavoriteOffersStatus } = favoriteSlice.selectors;

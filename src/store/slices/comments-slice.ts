@@ -50,6 +50,5 @@ export const commentsSlice = createSlice({
   },
 });
 
-// export const commentsActions = {...commentsSlice.actions, ...fetchComments, ...postComment};
-export const commentsActions = { ...commentsSlice.actions };
+export const commentsActions = { ...commentsSlice.actions, ...fetchComments, ...postComment };
 export const { selectComments, selectCommentsStatus } = commentsSlice.selectors;

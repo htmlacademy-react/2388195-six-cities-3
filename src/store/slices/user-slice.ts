@@ -53,8 +53,8 @@ export const userSlice = createSlice({
   },
 });
 
-export const userActions = { ...userSlice.actions };
 export const { selectUserInfo, selectUserRequestStatus, selectAuthStatus } = userSlice.selectors;
+
 
 ////////////////////////////////////////////
 // "builder.addMatcher" - позволяет объединить все pending в один
