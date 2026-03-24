@@ -24,12 +24,8 @@ export default function App(): JSX.Element {
   useEffect(() => {
     dispatch(fetchAllOffers())
       .unwrap()
-      .then(() => {
-        console.log('success');
-      })
-      .catch(() => {
-        console.log('error');
-      });
+      .then(() => {})
+      .catch(() => {});
 
     if (token) {
       dispatch(checkAuth());
