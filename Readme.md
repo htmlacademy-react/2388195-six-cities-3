@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 - Студент: [Ирина Ильченко](https://up.htmlacademy.ru/react-individual/3/user/2388195).
-- Наставник: [Юрий Последов](https://htmlacademy.ru/profile/unidentifiedraccoon).
+- Наставник: [Алексей Хабиров](https://htmlacademy.ru/profile/alex_khab).
 
 ---
 
