@@ -1,9 +1,7 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { REQUEST_TIMEOUT } from '@/const';
 import { getToken } from './token';
-// import { BACKEND_URL } from '../const';
-
-const BACKEND_URL = import.meta.env.VITE_API_URL;
+import { BACKEND_URL } from '../const';
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
