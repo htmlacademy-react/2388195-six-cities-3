@@ -1,5 +1,4 @@
 import { ListOffers, CityName } from '@/types/offer';
-import classNames from 'classnames';
 import CitiesMap from './cities-map';
 import MainEmpty from './main-empty';
 import MainPlaces from './main-places';
@@ -15,17 +14,11 @@ export default function CurrentOffers({
   currentCity,
   isEmpty,
 }: ListCardsProps): JSX.Element {
-  return (
-    <div
-      className={classNames('cities__places-container', 'container', {
-        'cities__places-container--empty': isEmpty,
-      })}
-    >
-      {isEmpty ? (
-        <MainEmpty currentCity={currentCity} />
-      ) : (
-        <MainPlaces currentOffers={currentOffers} currentCity={currentCity} />
-      )}
+  return isEmpty ? (
+    <MainEmpty currentCity={currentCity} />
+  ) : (
+    <div className="cities__places-container container">
+      <MainPlaces currentOffers={currentOffers} currentCity={currentCity} />
       <div className="cities__right-section">
         <CitiesMap
           className="cities__map"
