@@ -1,4 +1,4 @@
-import { CITIES } from '@/const';
+import { AppRoute, CITIES } from '@/const';
 import { CityName } from '@/types/offer';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
@@ -19,7 +19,7 @@ export default function MainTabs({ currentCity }: MainTabsProps): JSX.Element {
                   'locations__item-link tabs__item',
                   name === currentCity && 'tabs__item--active',
                 )}
-                to={`/${id}`}
+                to={`${AppRoute.Root}${id}`}
               >
                 <span>{name}</span>
               </NavLink>

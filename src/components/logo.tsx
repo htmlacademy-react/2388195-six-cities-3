@@ -1,4 +1,4 @@
-import { AppRoute } from '@/const';
+import { AppRoute, DEFAULT_CITY } from '@/const';
 import { Link } from 'react-router-dom';
 
 interface LogoProps {
@@ -35,7 +35,10 @@ export default function Logo({ type, isPageMain }: LogoProps): JSX.Element {
   }
 
   return (
-    <Link className={`${type}__logo-link`} to={AppRoute.Root}>
+    <Link
+      className={`${type}__logo-link`}
+      to={`${AppRoute.Root}${DEFAULT_CITY.toLowerCase()}`}
+    >
       <span className="visually-hidden">На главную страницу</span>
       <img
         className={`${type}__logo`}

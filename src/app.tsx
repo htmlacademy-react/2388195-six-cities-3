@@ -1,7 +1,7 @@
-import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
+import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { useEffect } from 'react';
 import ProtectedRoute from './components/private-route';
-import { CITIES, AppRoute, DEFAULT_CITY } from './const';
+import { CITIES, AppRoute } from './const';
 import { useAppDispatch } from './hooks/store-hooks';
 import { useAuth } from './hooks/user-auth-hook';
 import FavouritePage from './pages/favourites-page/favourites-page';
@@ -9,16 +9,15 @@ import LoginPage from './pages/login-page/login-page';
 import MainPage from './pages/main-page/main-page';
 import NotFoundPage from './pages/not-found-page/not-found-page';
 import OfferPage from './pages/offer-page/offer-page';
-import { getToken } from './services/token';
+// import { getToken } from './services/token';
 import { fetchFavorites } from './store/thunk/favorite';
 import { fetchAllOffers } from './store/thunk/offers';
-import { checkAuth } from './store/thunk/user-auth';
 import getRandomCity from './util';
 
 export default function App(): JSX.Element {
   const dispatch = useAppDispatch();
   const isAuth = useAuth();
-  const token = getToken();
+  // const token = getToken();
   const randomCity = getRandomCity(CITIES);
 
   useEffect(() => {
@@ -27,25 +26,36 @@ export default function App(): JSX.Element {
       .then(() => {})
       .catch(() => {});
 
-    if (token) {
-      dispatch(checkAuth());
-    }
-  }, [dispatch, token]);
+    // if (token) {
+    //   dispatch(checkAuth());
+    // }
+  }, [dispatch]);
 
   useEffect(() => {
     if (isAuth) {
       dispatch(fetchFavorites());
     }
-  }, [dispatch, isAuth, token]);
+  }, [dispatch, isAuth]);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Root}>
-          <Route index element={<Navigate to={`/${DEFAULT_CITY}`} replace />} />
+        {/* <Route path={AppRoute.Root}> */}
+          {/* <Route index element={<Navigate to={`/${DEFAULT_CITY}`} replace />} />
           {CITIES.map((city) => (
-            <Route key={city.id} path={city.id} element={<MainPage currentCity={city.name} />} />
-          ))}
+            <Route
+              key={city.id}
+              path={city.id}
+              element={<MainPage currentCity={city.name} />}
+            /> */}
+
+            <Route
+              path={`${AppRoute.Root}:city?`}
+              element={<MainPage />}
+            />
+
+
+
 
           <Route
             path={AppRoute.Login}
@@ -63,9 +73,14 @@ export default function App(): JSX.Element {
               </ProtectedRoute>
             }
           />
-          <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage randomCity={randomCity} />} />
-          <Route path="*" element={<NotFoundPage randomCity={randomCity} type="page" />} />
-        </Route>
+          <Route
+            path={`${AppRoute.Offer}/:id`}
+            element={<OfferPage randomCity={randomCity} />}
+          />
+          <Route
+            path="*"
+            element={<NotFoundPage randomCity={randomCity} type="page" />}
+          />
       </Routes>
     </BrowserRouter>
   );
