@@ -11,10 +11,14 @@ interface MainPlacesProps {
   currentCity: CityName;
 }
 
-export default function MainPlaces({ currentOffers, currentCity }: MainPlacesProps): JSX.Element {
+export default function MainPlaces({
+  currentOffers,
+  currentCity,
+}: MainPlacesProps): JSX.Element {
   const dispatch = useAppDispatch();
   const activeSort = useAppSelector(selectActiveSort);
-  const formatedOffersNumber = (count: number): string => `${count} place${count !== 1 && 's'}`;
+  const formatedOffersNumber = (count: number): string =>
+    `${count} place${count !== 1 ? 's' : ''}`;
 
   const setSort = (type: SortType) => {
     dispatch(offersActions.setActiveSort(type));
@@ -26,12 +30,18 @@ export default function MainPlaces({ currentOffers, currentCity }: MainPlacesPro
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">
-        {formatedOffersNumber(currentOffers.length)} to stay in {formatedType(currentCity)}
+        {formatedOffersNumber(currentOffers.length)} to stay in{' '}
+        {formatedType(currentCity)}
       </b>
       <SortingOffers currentSortType={activeSort} onChangeSort={setSort} />
       <div className="cities__places-list places__list tabs__content">
         {sortedOffers.map((currentOffer) => (
-          <PlaceCard key={currentOffer.id} currentOffer={currentOffer} cardType="cities" hovered />
+          <PlaceCard
+            key={currentOffer.id}
+            currentOffer={currentOffer}
+            cardType="cities"
+            hovered
+          />
         ))}
       </div>
     </section>

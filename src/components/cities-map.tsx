@@ -33,7 +33,7 @@ export default function CitiesMap({
   const containerMapRef = useRef<HTMLElement>(null);
   const markerLayer = useRef<LayerGroup>(L.layerGroup());
   const activeOfferId = useAppSelector(selectActiveId);
-  const city = CITIES.find((item) => item.name.toLowerCase() === currentCity) || CITIES[0];
+  const city = CITIES.find((item) => item.name.toLowerCase() === currentCity.toLowerCase()) || CITIES[0];
   const map = useMap({ containerMapRef, location: city.location });
 
   useEffect(() => {

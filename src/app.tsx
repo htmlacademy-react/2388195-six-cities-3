@@ -1,7 +1,7 @@
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import ProtectedRoute from './components/private-route';
-import { CITIES, AppRoute } from './const';
+import { CITIES, AppRoute, DEFAULT_CITY } from './const';
 import { useAppDispatch } from './hooks/store-hooks';
 import { useAuth } from './hooks/user-auth-hook';
 import FavouritePage from './pages/favourites-page/favourites-page';
@@ -36,6 +36,7 @@ export default function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path={AppRoute.Root} element={<Navigate to={`${AppRoute.Root}${DEFAULT_CITY.toLowerCase()}`} replace />} />
         <Route path={`${AppRoute.Root}:city`} element={<MainPage />} />
         <Route
           path={AppRoute.Login}

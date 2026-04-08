@@ -55,7 +55,7 @@ export default function Offer({ offer }: OfferProps): JSX.Element {
             <span style={{ width: starActiveWidth }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
-          <span className="offer__rating-value rating__value">{roundedRating}</span>
+          <span className="offer__rating-value rating__value">{rating}</span>
         </div>
         <ul className="offer__features">
           <li className="offer__feature offer__feature--entire">{formatedType(type)}</li>

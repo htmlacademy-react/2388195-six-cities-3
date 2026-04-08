@@ -5,7 +5,11 @@ import OfferGallery from '@/components/offer-gallery';
 import OfferNearPlaces from '@/components/offer-near-places';
 import Spinner from '@/components/spinner/spinner';
 import { RequestStatus, MAX_NEARBY_COUNT, MAX_IMAGES_COUNT } from '@/const';
-import { useAppSelector, useAppDispatch, useDocumentTitle } from '@/hooks/store-hooks';
+import {
+  useAppSelector,
+  useAppDispatch,
+  useDocumentTitle,
+} from '@/hooks/store-hooks';
 import { commentsActions } from '@/store/slices/comments-slice';
 import {
   selectOffer,

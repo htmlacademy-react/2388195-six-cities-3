@@ -29,7 +29,7 @@ export default function FavouritePage(): JSX.Element {
   const groupedOffers = groupByCity(favoriteOffers);
 
   return (
-    <Layout>
+    <Layout isPageFavouriteEmpty>
       <main
         className={classNames(
           'page__main',
