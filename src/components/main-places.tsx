@@ -1,6 +1,6 @@
 import { SortType } from '@/const';
 import { ListOffers, CityName } from '@/types/offer';
-import { getSortedOffers } from '@/util';
+import { formatedType, getSortedOffers } from '@/util';
 import PlaceCard from './place-card';
 import SortingOffers from './sorting-offers';
 import { useAppDispatch, useAppSelector } from '@/hooks/store-hooks';
@@ -26,7 +26,7 @@ export default function MainPlaces({ currentOffers, currentCity }: MainPlacesPro
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">
-        {formatedOffersNumber(currentOffers.length)} to stay in {currentCity}
+        {formatedOffersNumber(currentOffers.length)} to stay in {formatedType(currentCity)}
       </b>
       <SortingOffers currentSortType={activeSort} onChangeSort={setSort} />
       <div className="cities__places-list places__list tabs__content">

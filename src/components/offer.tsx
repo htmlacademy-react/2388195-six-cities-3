@@ -2,7 +2,7 @@ import { useAppSelector } from '@/hooks/store-hooks';
 import { useAuth } from '@/hooks/user-auth-hook';
 import { selectComments } from '@/store/slices/comments-slice';
 import { FullOffer } from '@/types/offer';
-import { getStarActiveWidth } from '@/util';
+import { formatedType, getStarActiveWidth } from '@/util';
 import FavoriteButton from './favorite-button';
 import OfferForm from './offer-form';
 import OfferReviews from './offer-reviews';
@@ -32,9 +32,6 @@ export default function Offer({ offer }: OfferProps): JSX.Element {
 
   const roundedRating = Math.round(rating);
   const starActiveWidth: string = getStarActiveWidth(roundedRating);
-
-  const formatedType = (formatType: string): string =>
-    formatType ? formatType[0].toUpperCase() + formatType.slice(1) : '';
 
   const formatedBedrooms = (count: number): string =>
     `${count} ${count > 1 ? 'Bedrooms' : 'Bedroom'}`;

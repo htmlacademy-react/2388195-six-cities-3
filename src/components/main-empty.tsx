@@ -1,4 +1,5 @@
 import { CityName } from '@/types/offer';
+import { formatedType } from '@/util';
 
 interface MainEmptyProps {
   currentCity: CityName;
@@ -11,7 +12,7 @@ export default function MainEmpty({ currentCity }: MainEmptyProps): JSX.Element 
         <div className="cities__status-wrapper tabs__content">
           <b className="cities__status">No places to stay available</b>
           <p className="cities__status-description">
-            We could not find any property available at the moment in {currentCity}
+            We could not find any property available at the moment in {formatedType(currentCity)}
           </p>
         </div>
       </section>

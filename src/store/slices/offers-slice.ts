@@ -1,6 +1,6 @@
 import { RequestStatus, SortType } from '@/const';
 import { ListOffer, ListOffers } from '@/types/offer';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { postFavorite } from '../thunk/favorite';
 import { fetchAllOffers } from '../thunk/offers';
 
@@ -59,6 +59,15 @@ export const offersSlice = createSlice({
 
 export const offersActions = {...offersSlice.actions, fetchAllOffers};
 export const { selectActiveId, selectActiveSort, selectOffers, selectStatus } = offersSlice.selectors;
+
+export const selectOffersStatus = createSelector(
+  [selectStatus],
+  (status) => ({
+    isLoading: status === RequestStatus.Idle || status === RequestStatus.Loading,
+    isError: status === RequestStatus.Failed,
+    isSuccess: status === RequestStatus.Success,
+  })
+)
 
 ///////////////////////////////////////////////////////////////////////////
 // ListOffer['id'] - это индексный тип (index signature) в TypeScript. Он извлекает точный тип поля id из интерфейса ListOffer.
