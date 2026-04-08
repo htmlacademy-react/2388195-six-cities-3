@@ -1,4 +1,4 @@
-import { AppRoute } from '@/const';
+import { AppRoute, DEFAULT_CITY } from '@/const';
 import { useAppSelector } from '@/hooks/store-hooks';
 import { selectUserInfo } from '@/store/slices/user-slice';
 import { ReactNode } from 'react';
@@ -15,13 +15,18 @@ interface LocationState {
   };
 }
 
-export default function ProtectedRoute({ children, onlyUnauth }: ProtectedRouteProps) {
+export default function ProtectedRoute({
+  children,
+  onlyUnauth,
+}: ProtectedRouteProps) {
   const location = useLocation();
   const user = useAppSelector(selectUserInfo);
 
   if (onlyUnauth && user) {
     // есть авториз и стр логина
-    const from = (location.state as LocationState)?.from?.pathname || AppRoute.Root;
+    const from =
+      (location.state as LocationState)?.from?.pathname ||
+      `${AppRoute.Root}${DEFAULT_CITY.toLowerCase()}`;
     return <Navigate to={from} replace />;
   }
 

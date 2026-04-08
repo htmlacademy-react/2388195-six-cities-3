@@ -1,6 +1,7 @@
 import Layout from '@/components/layout';
 import LoginLocation from '@/components/login-locaton';
 import { AppRoute } from '@/const';
+import { useDocumentTitle } from '@/hooks/store-hooks';
 import { CityName } from '@/types/offer';
 import { Link } from 'react-router-dom';
 
@@ -14,7 +15,11 @@ interface NotFoundPageProps {
   type: keyof typeof variants;
 }
 
-export default function NotFoundPage({ randomCity, type }: NotFoundPageProps): JSX.Element {
+export default function NotFoundPage({
+  randomCity,
+  type,
+}: NotFoundPageProps): JSX.Element {
+  useDocumentTitle('Not found page');
   return (
     <Layout>
       <div className="page page--gray page--login">

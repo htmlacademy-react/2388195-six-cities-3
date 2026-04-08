@@ -17,7 +17,7 @@ export default function MainTabs({ currentCity }: MainTabsProps): JSX.Element {
               <NavLink
                 className={classNames(
                   'locations__item-link tabs__item',
-                  name === currentCity && 'tabs__item--active',
+                  name.toLowerCase() === currentCity && 'tabs__item--active',
                 )}
                 to={`${AppRoute.Root}${id}`}
               >

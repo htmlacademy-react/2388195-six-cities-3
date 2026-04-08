@@ -1,6 +1,6 @@
 import Layout from '@/components/layout';
 import Logo from '@/components/logo';
-import { useAppSelector } from '@/hooks/store-hooks';
+import { useAppSelector, useDocumentTitle } from '@/hooks/store-hooks';
 import { selectFavoriteOffers } from '@/store/slices/favorite-slice';
 import { FullOffers, CityName, FullOffer } from '@/types/offer';
 import classNames from 'classnames';
@@ -8,19 +8,23 @@ import FavouriteList from '../../components/favourites-list';
 import FavouriteEmpty from '../../components/favourite-empty';
 
 export default function FavouritePage(): JSX.Element {
+  useDocumentTitle('Favourite page');
   const favoriteOffers = useAppSelector(selectFavoriteOffers);
 
   const groupByCity = (offers: FullOffers): Record<CityName, FullOffer[]> =>
-    offers.reduce((acc: Record<string, FullOffer[]>, favoriteOffer: FullOffer) => {
-      const cityName = favoriteOffer.city.name;
+    offers.reduce(
+      (acc: Record<string, FullOffer[]>, favoriteOffer: FullOffer) => {
+        const cityName = favoriteOffer.city.name;
 
-      if (!acc[cityName]) {
-        acc[cityName] = [];
-      }
+        if (!acc[cityName]) {
+          acc[cityName] = [];
+        }
 
-      acc[cityName].push(favoriteOffer);
-      return acc;
-    }, {});
+        acc[cityName].push(favoriteOffer);
+        return acc;
+      },
+      {},
+    );
 
   const groupedOffers = groupByCity(favoriteOffers);
 

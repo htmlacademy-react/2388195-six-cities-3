@@ -4,7 +4,7 @@ import Layout from '@/components/layout';
 import MainTabs from '@/components/main-tabs';
 import Spinner from '@/components/spinner/spinner';
 import { DEFAULT_CITY } from '@/const';
-import { useAppSelector } from '@/hooks/store-hooks';
+import { useAppSelector, useDocumentTitle } from '@/hooks/store-hooks';
 import { selectOffers, selectOffersStatus } from '@/store/slices/offers-slice';
 import { CityName } from '@/types/offer';
 import classNames from 'classnames';
@@ -13,13 +13,13 @@ import { useParams } from 'react-router-dom';
 export default function MainPage(): JSX.Element {
   const { city } = useParams<{ city: CityName }>();
   const currentCity = city || DEFAULT_CITY;
-  const {isLoading, isError} = useAppSelector(selectOffersStatus);
+  const { isLoading, isError } = useAppSelector(selectOffersStatus);
   const listOffers = useAppSelector(selectOffers);
   const currentOffers = listOffers.filter(
     (listOffer) => listOffer.city.name.toLowerCase() === currentCity,
   );
   const isEmpty = currentOffers.length === 0;
-
+  useDocumentTitle('Main page');
   if (isLoading) {
     return <Spinner />;
   }

@@ -9,26 +9,22 @@ import LoginPage from './pages/login-page/login-page';
 import MainPage from './pages/main-page/main-page';
 import NotFoundPage from './pages/not-found-page/not-found-page';
 import OfferPage from './pages/offer-page/offer-page';
-// import { getToken } from './services/token';
 import { fetchFavorites } from './store/thunk/favorite';
 import { fetchAllOffers } from './store/thunk/offers';
+import { checkAuth } from './store/thunk/user-auth';
 import getRandomCity from './util';
 
 export default function App(): JSX.Element {
   const dispatch = useAppDispatch();
   const isAuth = useAuth();
-  // const token = getToken();
   const randomCity = getRandomCity(CITIES);
 
   useEffect(() => {
+    dispatch(checkAuth());
     dispatch(fetchAllOffers())
       .unwrap()
       .then(() => {})
       .catch(() => {});
-
-    // if (token) {
-    //   dispatch(checkAuth());
-    // }
   }, [dispatch]);
 
   useEffect(() => {
@@ -40,47 +36,31 @@ export default function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path={AppRoute.Root}> */}
-          {/* <Route index element={<Navigate to={`/${DEFAULT_CITY}`} replace />} />
-          {CITIES.map((city) => (
-            <Route
-              key={city.id}
-              path={city.id}
-              element={<MainPage currentCity={city.name} />}
-            /> */}
-
-            <Route
-              path={`${AppRoute.Root}:city?`}
-              element={<MainPage />}
-            />
-
-
-
-
-          <Route
-            path={AppRoute.Login}
-            element={
-              <ProtectedRoute onlyUnauth>
-                <LoginPage randomCity={randomCity} />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <ProtectedRoute>
-                <FavouritePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={`${AppRoute.Offer}/:id`}
-            element={<OfferPage randomCity={randomCity} />}
-          />
-          <Route
-            path="*"
-            element={<NotFoundPage randomCity={randomCity} type="page" />}
-          />
+        <Route path={`${AppRoute.Root}:city`} element={<MainPage />} />
+        <Route
+          path={AppRoute.Login}
+          element={
+            <ProtectedRoute onlyUnauth>
+              <LoginPage randomCity={randomCity} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <ProtectedRoute>
+              <FavouritePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={`${AppRoute.Offer}/:id`}
+          element={<OfferPage randomCity={randomCity} />}
+        />
+        <Route
+          path="*"
+          element={<NotFoundPage randomCity={randomCity} type="page" />}
+        />
       </Routes>
     </BrowserRouter>
   );

@@ -55,6 +55,3 @@ export const userSlice = createSlice({
 
 export const { selectUserInfo, selectUserRequestStatus, selectAuthStatus } = userSlice.selectors;
 
-
-////////////////////////////////////////////
-// "builder.addMatcher" - позволяет объединить все pending в один
