@@ -21,10 +21,7 @@ export default function App(): JSX.Element {
 
   useEffect(() => {
     dispatch(checkAuth());
-    dispatch(fetchAllOffers())
-      .unwrap()
-      .then(() => {})
-      .catch(() => {});
+    dispatch(fetchAllOffers());
   }, [dispatch]);
 
   useEffect(() => {
@@ -36,7 +33,15 @@ export default function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Root} element={<Navigate to={`${AppRoute.Root}${DEFAULT_CITY.toLowerCase()}`} replace />} />
+        <Route
+          path={AppRoute.Root}
+          element={
+            <Navigate
+              to={`${AppRoute.Root}${DEFAULT_CITY.toLowerCase()}`}
+              replace
+            />
+          }
+        />
         <Route path={`${AppRoute.Root}:city`} element={<MainPage />} />
         <Route
           path={AppRoute.Login}
