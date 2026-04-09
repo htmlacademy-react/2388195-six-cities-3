@@ -1,8 +1,27 @@
+export const BACKEND_URL = 'https://15.design.htmlacademy.pro/six-cities';
+export const REQUEST_TIMEOUT = 5000;
+export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
+
+export const enum RequestStatus {
+  Idle,
+  Loading,
+  Success,
+  Failed,
+}
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+  Comments = '/comments',
+  Favorite = '/favorite',
+}
+
 export enum AppRoute {
   Root = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Offer = '/offer'
+  Offer = '/offer',
 }
 
 export enum AuthorizationStatus {
@@ -11,68 +30,73 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export const CITIES_LIST: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const CITIES_LIST: string[] = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];
 
 export const CITIES = [
-  { id: 'paris',
+  {
+    id: 'paris',
     name: 'Paris',
     location: {
       latitude: 48.85661,
       longitude: 2.351499,
       zoom: 13,
-    }
+    },
   },
-  { id: 'cologne',
+  {
+    id: 'cologne',
     name: 'Cologne',
     location: {
       latitude: 50.938361,
       longitude: 6.959974,
       zoom: 13,
-    }
+    },
   },
-  { id: 'brussels',
+  {
+    id: 'brussels',
     name: 'Brussels',
     location: {
       latitude: 50.846557,
       longitude: 4.351697,
       zoom: 13,
-    }
+    },
   },
-  { id: 'amsterdam',
+  {
+    id: 'amsterdam',
     name: 'Amsterdam',
     location: {
       latitude: 52.37454,
       longitude: 4.897976,
       zoom: 13,
-    }
+    },
   },
-  { id: 'hamburg',
+  {
+    id: 'hamburg',
     name: 'Hamburg',
     location: {
       latitude: 53.550341,
       longitude: 10.000654,
       zoom: 13,
-    }
+    },
   },
-  { id: 'dusseldorf',
+  {
+    id: 'dusseldorf',
     name: 'Dusseldorf',
     location: {
       latitude: 51.225402,
       longitude: 6.776314,
       zoom: 13,
-    }
+    },
   },
 ] as const;
 
-export type CityName = (typeof CITIES)[number]['name'];
-// export type CityName = 'Paris' | 'Cologne' | 'Brussels' | 'Amsterdam' | 'Hamburg' | 'Dusseldorf';
-
-
-export const Setting = {
-  FAVOURITE_COUNT: 3,
-  USER_NAME: 'Oliver.conner@gmail.com',
-  DEFAULT_CITY: 'Paris',
-} as const;
+export const DEFAULT_CITY = 'Paris';
 
 export enum SortType {
   Popular = 'Popular',
@@ -82,11 +106,11 @@ export enum SortType {
 }
 
 export const RATING = [
-  {value: 5, label: 'perfect'},
-  {value: 4, label: 'good'},
-  {value: 3, label: 'not bad'},
-  {value: 2, label: 'badly'},
-  {value: 1, label: 'terribly'},
+  { value: 5, label: 'perfect' },
+  { value: 4, label: 'good' },
+  { value: 3, label: 'not bad' },
+  { value: 2, label: 'badly' },
+  { value: 1, label: 'terribly' },
 ];
 
 export const MIN_STAR_WIDTH: number = 20;
@@ -94,3 +118,12 @@ export const MIN_STAR_WIDTH: number = 20;
 export const URL_MARKER_DEFAULT = './img/pin.svg';
 
 export const URL_MARKER_CURRENT = './img/pin-active.svg';
+
+export enum FavoriteStatus {
+  Added = 1,
+  Removed = 0,
+}
+
+export const MAX_IMAGES_COUNT = 6;
+export const MAX_COMMENTS_COUNT = 10;
+export const MAX_NEARBY_COUNT = 3;

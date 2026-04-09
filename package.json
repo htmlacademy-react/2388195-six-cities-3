@@ -7,7 +7,9 @@
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx",
     "preview": "vite preview",
-    "test": "vitest --passWithNoTests"
+    "test": "vitest --passWithNoTests",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
   },
   "dependencies": {
     "@reduxjs/toolkit": "2.2.1",
@@ -37,12 +39,16 @@
     "axios-mock-adapter": "1.22.0",
     "eslint": "8.51.0",
     "eslint-config-htmlacademy": "9.1.1",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-react-refresh": "0.4.3",
     "faker": "5.5.3",
     "jsdom": "22.1.0",
+    "prettier": "^3.8.1",
     "typescript": "5.2.2",
     "vite": "4.4.11",
+    "vite-plugin-checker": "0.10.3",
+    "vite-tsconfig-paths": "6.1.1",
     "vitest": "0.34.6"
   },
   "browserslist": {

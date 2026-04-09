@@ -1,64 +1,113 @@
-import {Link} from 'react-router-dom';
-import { AppRoute } from '../const';
-import { ListOffer } from '../types';
-import { getStarActiveWidth } from '../util';
+import { AppRoute } from '@/const';
+import { useAppDispatch } from '@/hooks/store-hooks';
+import { offersActions } from '@/store/slices/offers-slice';
+import { ListOffer } from '@/types/offer';
+import { getStarActiveWidth, formatedType } from '@/util';
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
+import FavoriteButton from './favorite-button';
 
 interface PlaceCardProps {
   currentOffer: ListOffer;
-  handleHover?: (currentOffer?: ListOffer) => void;
-  block: string;
+  cardType: 'favorites' | 'cities' | 'near-places';
+  hovered?: boolean;
 }
 
-export default function PlaceCard({currentOffer, handleHover, block}: PlaceCardProps): JSX.Element {
-  const handleMouseOn = () => {
-    handleHover?.(currentOffer);
-  };
+const sizes = {
+  favorites: {
+    width: 150,
+    height: 110,
+  },
+  cities: {
+    width: 260,
+    height: 200,
+  },
+  'near-places': {
+    width: 260,
+    height: 200,
+  },
+};
 
-  const handleMouseOff = () => {
-    handleHover?.();
-  };
-
-  const {id, isPremium, previewImage, price, title, type, rating} = currentOffer;
-  const starActiveWidth: string = getStarActiveWidth(rating);
+export default function PlaceCard({
+  currentOffer,
+  cardType,
+  hovered,
+}: PlaceCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const { id, isPremium, previewImage, price, title, type, rating, isFavorite } = currentOffer;
+  const roundedRating = Math.round(rating);
+  const starActiveWidth = getStarActiveWidth(roundedRating);
+  const { width, height } = sizes[cardType];
 
   return (
     <Link to={`${AppRoute.Offer}/${id}`}>
       <article
-        className={`${block}__card place-card`}
-        onMouseEnter={handleMouseOn}
-        onMouseLeave={handleMouseOff}
+        className={`${cardType}__card place-card`}
+        onMouseEnter={() => hovered && dispatch(offersActions.setActiveId(id))}
+        onMouseLeave={() => hovered && dispatch(offersActions.setActiveId(null))}
       >
-        <div className="place-card__mark">
-          <span>{isPremium}</span>
+        {isPremium && (
+          <div className="place-card__mark">
+            <span>Premium</span>
+          </div>
+        )}
+        <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
+          <img
+            className="place-card__image"
+            src={previewImage}
+            width={width}
+            height={height}
+            alt="Place image"
+          />
         </div>
-        <div className="cities__image-wrapper place-card__image-wrapper">
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
-        </div>
-        <div className="place-card__info">
+        <div
+          className={classNames(
+            'place-card__info',
+            cardType === 'favorites' && 'favorites__card-info',
+          )}
+        >
           <div className="place-card__price-wrapper">
             <div className="place-card__price">
               <b className="place-card__price-value">&euro;{price}</b>
               <span className="place-card__price-text">&#47;&nbsp;night</span>
             </div>
-            <button className="place-card__bookmark-button button" type="button">
-              <svg className="place-card__bookmark-icon" width="18" height="19">
-                <use xlinkHref="#icon-bookmark"></use>
-              </svg>
-              <span className="visually-hidden">To bookmarks</span>
-            </button>
+            <FavoriteButton buttonType={'place-card'} offerId={id} isFavorite={isFavorite} />
           </div>
           <div className="place-card__rating rating">
             <div className="place-card__stars rating__stars">
-              <span style={{width: starActiveWidth}}></span>
+              <span style={{ width: starActiveWidth }}></span>
               <span className="visually-hidden">Rating</span>
             </div>
           </div>
-          <h2 className="place-card__name">
-            {title}
-          </h2>
-          <p className="place-card__type">{type}</p>
+          <h2 className="place-card__name">{title}</h2>
+          <p className="place-card__type">{formatedType(type)}</p>
         </div>
       </article>
     </Link>
   );
 }
+
+////////////////////////////////////////////////////////////////////////
+// onMouseEnter={() => hovered && dispatch(offersActions.setActiveId(id))}
+// onMouseLeave={() =>hovered && dispatch(offersActions.setActiveId(null))}
+
+// Использование стрелочной функции в данном контексте объясняется:
+//   1. Отложенное выполнение
+// Если написать onMouseEnter={dispatch(...)},
+// то функция dispatch выполнится мгновенно при рендеринге компонента.
+// Обертывание в стрелочную функцию () => ... создает «заготовку»,
+// которая сработает только в момент реального события (когда пользователь наведет курсор на карточку).
+//   2. Передача параметров
+// Стрелочная функция позволяет передать конкретные аргументы в экшен,
+// такие как id или null. Без анонимной функции было бы невозможно указать,
+// какой именно ID должен отправиться в Redux,
+// не создавая отдельную именованную функцию-обработчик выше в коде.
+//   3. Логика на месте (inline-условие)
+// В коде используется проверка условия hovered && ....
+// Стрелочная функция позволяет компактно описать эту логику прямо в атрибуте компонента:
+// действие выполнится только в том случае, если пропс hovered имеет значение true.
+//   4.  Замыкание (Closure)
+// Стрелочная функция имеет доступ к переменным из области видимости компонента,
+// таким как id, hovered, dispatch и offersActions.
+// Это позволяет коду внутри функции «видеть» актуальные
+// значения этих переменных без дополнительных сложностей.

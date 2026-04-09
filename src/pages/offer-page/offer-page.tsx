@@ -1,136 +1,98 @@
-import OfferForm from '../../components/offer-form';
-import OfferImage from '../../components/offer-image';
-import OfferNearPlaces from '../../components/offer-near-places';
-import OfferReviews from '../../components/offer-reviews';
-import { AuthorizationStatus, CityName } from '../../const';
-import { Offers, Offer, Comments, ListOffer } from '../../types';
-import { getNearOffers, getStarActiveWidth } from '../../util';
+import CitiesMap from '@/components/cities-map';
+import Layout from '@/components/layout';
+import Offer from '@/components/offer';
+import OfferGallery from '@/components/offer-gallery';
+import OfferNearPlaces from '@/components/offer-near-places';
+import Spinner from '@/components/spinner/spinner';
+import { RequestStatus, MAX_NEARBY_COUNT, MAX_IMAGES_COUNT } from '@/const';
+import {
+  useAppSelector,
+  useAppDispatch,
+  useDocumentTitle,
+} from '@/hooks/store-hooks';
+import { commentsActions } from '@/store/slices/comments-slice';
+import {
+  selectOffer,
+  selectOfferStatus,
+  selectNearbyOffers,
+  offerActions,
+} from '@/store/slices/offer-slice';
+import { fetchOffer, fetchNearby, fetchComments } from '@/store/thunk/offer';
+import { CityName } from '@/types/offer';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import NotFoundPage from '../not-found-page/not-found-page';
-import CitiesMap from '../../components/cities-map/cities-map';
-import { useAppSelector } from '../../hooks/store-hooks';
-import { selectActiveId, selectOffers } from '../../store/slices/offers-slice';
 
 interface OfferPageProps {
-  offers: Offers;
-  authorizationStatus: AuthorizationStatus;
   randomCity: CityName;
-  comments: Comments;
 }
 
-export default function OfferPage({offers, authorizationStatus, randomCity, comments}: OfferPageProps): JSX.Element {
+export default function OfferPage({ randomCity }: OfferPageProps): JSX.Element {
+  const { id } = useParams();
+  const offer = useAppSelector(selectOffer);
+  const offerStatus = useAppSelector(selectOfferStatus);
+  const nearbyOffers = useAppSelector(selectNearbyOffers);
+  const dispatch = useAppDispatch();
+  useDocumentTitle('Offer page');
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchOffer(id));
+      dispatch(fetchNearby(id));
+      dispatch(fetchComments(id));
+    }
 
-  const id = useAppSelector(selectActiveId);
-  const currentOffer = offers.find((offer: Offer) => offer.id === id);
-  const listOffers = useAppSelector(selectOffers);
+    return () => {
+      dispatch(offerActions.clear()); //очистка перед уходом
+      dispatch(commentsActions.clear());
+    };
+  }, [id, dispatch]);
 
-  if (!currentOffer) {
-    return <NotFoundPage type='offer' randomCity={randomCity} />;
+  if (offerStatus === RequestStatus.Loading) {
+    return <Spinner />;
   }
 
-  const currentListOffer = listOffers.find((listOffer: ListOffer) => listOffer.id === id);
-
-  if (!currentListOffer) {
-    return <NotFoundPage type='offer' randomCity={randomCity} />;
+  if (offerStatus === RequestStatus.Failed || !offer) {
+    return <NotFoundPage type="offer" randomCity={randomCity} />;
   }
 
-  const currentCity = currentListOffer.city.name;
-
-  const nearOffers = getNearOffers(listOffers, currentCity, id);
-  const nearOffersWithCurrent = [...nearOffers, currentListOffer];
-
-  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, city} = currentOffer;
-  const isAuth: boolean = authorizationStatus === AuthorizationStatus.Auth;
-  const starActiveWidth: string = getStarActiveWidth(rating);
+  const nearOffer = nearbyOffers.slice(0, MAX_NEARBY_COUNT);
+  const nearOffersWithCurrent = [...nearOffer, offer];
+  const { images, city } = offer;
+  const imagesToShow = images.slice(0, MAX_IMAGES_COUNT);
 
   return (
-    <main className="page__main page__main--offer">
-      <section className="offer">
-        <div className="offer__gallery-container container">
-          <div className="offer__gallery">
-            {images.map((image) => (
-              <OfferImage image={image} key={image}/>)
-            )}
-          </div>
+    <Layout>
+      <main className="page__main page__main--offer">
+        <section className="offer">
+          <OfferGallery imagesToShow={imagesToShow} />
+          <Offer offer={offer} />
+          <CitiesMap
+            className="offer__map"
+            currentOffers={nearOffersWithCurrent}
+            currentCity={city.name}
+          />
+        </section>
+        <div className="container">
+          <OfferNearPlaces nearOffers={nearOffer} />
         </div>
-        <div className="offer__container container">
-          <div className="offer__wrapper">
-            {isPremium &&
-            <div className="offer__mark">
-              <span>Premium</span>
-            </div>}
-            <div className="offer__name-wrapper">
-              <h1 className="offer__name">
-                {title}
-              </h1>
-              <button className="offer__bookmark-button button" type="button">
-                <svg className="offer__bookmark-icon" width="31" height="33">
-                  <use xlinkHref="#icon-bookmark"></use>
-                </svg>
-                <span className="visually-hidden">To bookmarks</span>
-              </button>
-            </div>
-            <div className="offer__rating rating">
-              <div className="offer__stars rating__stars">
-                <span style={{width: starActiveWidth}}></span>
-                <span className="visually-hidden">Rating</span>
-              </div>
-              <span className="offer__rating-value rating__value">{rating}</span>
-            </div>
-            <ul className="offer__features">
-              <li className="offer__feature offer__feature--entire">
-                {type ? type[0].toUpperCase() + type.slice(1) : ''}
-              </li>
-              <li className="offer__feature offer__feature--bedrooms">
-                {bedrooms > 1 ? `${bedrooms} Bedrooms` : `${bedrooms} Bedroom`}
-              </li>
-              <li className="offer__feature offer__feature--adults">
-                Max {maxAdults > 1 ? `${maxAdults} adults` : `${maxAdults} adult`}
-              </li>
-            </ul>
-            <div className="offer__price">
-              <b className="offer__price-value">&euro;{price}</b>
-              <span className="offer__price-text">&nbsp;night</span>
-            </div>
-            <div className="offer__inside">
-              <h2 className="offer__inside-title">What&apos;s inside</h2>
-              <ul className="offer__inside-list">
-                {goods.map((good) => (
-                  <li key={good} className="offer__inside-item">
-                    {good}
-                  </li>)
-                )}
-              </ul>
-            </div>
-            <div className="offer__host">
-              <h2 className="offer__host-title">Meet the host</h2>
-              <div className="offer__host-user user">
-                <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                  <img className="offer__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar"/>
-                </div>
-                <span className="offer__user-name">
-                  {host.name}
-                </span>
-                <span className="offer__user-status">
-                  {host.isPro && 'Pro'}
-                </span>
-              </div>
-              <div className="offer__description">
-                <p className="offer__text">
-                  {description}
-                </p>
-              </div>
-            </div>
-            <section className="offer__reviews reviews">
-              <OfferReviews comments={comments}/>
-              {isAuth && <OfferForm />}
-            </section>
-          </div>
-        </div>
-        <CitiesMap className='offer__map' currentOffers={nearOffersWithCurrent} currentCity={city.name} activeOfferId={currentListOffer.id} />
-      </section>
-      <div className="container">
-        <OfferNearPlaces nearOffers={nearOffers} />
-      </div>
-    </main>
+      </main>
+    </Layout>
   );
 }
+
+//useParams() возвращает объект с параметрами, а не строку
+//Деструктуризация параметра: const { id } = useParams(); - извлекает конкретный параметр id из объекта параметров.
+
+//[dispatch, id] - Массив зависимостей (выполняется при изменении зависимостей):
+// Перенос в useEffect: Вызовы dispatch должны быть внутри useEffect,
+// иначе они будут выполняться при каждом рендере компонента, что может привести к бесконечным запросам.
+
+//   Promise.all(
+//     [dispatch(fetchOffer(id)),
+//       dispatch(fetchNearby(id)),
+//       dispatch(fetchComments(id))]
+//   );
+//Promise.all - чтобы эти промисы отработали одновременно. (избежать лишний ререндер)
+
+// useDocumentTitle('Offer');
+// const id = useAppSelector(selectActiveId);

@@ -6,7 +6,8 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
-    "htmlacademy/react-typescript",
+    'htmlacademy/react-typescript',
+    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module', project: 'tsconfig.json' },
@@ -17,8 +18,8 @@ module.exports = {
   },
   overrides: [
     {
-      files: [ '*test*' ],
-      rules: { '@typescript-eslint/unbound-method': 'off' }
+      files: ['*test*'],
+      rules: { '@typescript-eslint/unbound-method': 'off' },
     },
   ],
-}
+};

@@ -1,28 +1,23 @@
-import { ListOffers } from '../types';
-import PlaceCard from './place-card';
+import { ListOffers } from '@/types/offer';
+import OfferNearPlacesList from './offer-near-places-list';
 
 interface OfferNearPlacesProps {
   nearOffers: ListOffers;
 }
 
-export default function OfferNearPlaces({nearOffers}: OfferNearPlacesProps): JSX.Element {
-
-  if (!nearOffers) {
-    <p>No offers found</p>;
+export default function OfferNearPlaces({ nearOffers }: OfferNearPlacesProps): JSX.Element {
+  if (nearOffers.length === 0) {
+    return (
+      <section className="near-places places">
+        <h2 className="near-places__title">No offers found</h2>
+      </section>
+    );
   }
 
   return (
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
-      <div className="near-places__list places__list">
-        {nearOffers.map((nearOffer) => (
-          <PlaceCard
-            currentOffer={nearOffer}
-            key={nearOffer.id}
-            block="near-places"
-          />
-        ))}
-      </div>
+      <OfferNearPlacesList nearOffers={nearOffers} />
     </section>
   );
 }

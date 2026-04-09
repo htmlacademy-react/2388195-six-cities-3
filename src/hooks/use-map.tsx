@@ -1,4 +1,4 @@
-import {useEffect, useState, useRef} from 'react';
+import { useEffect, useState, useRef } from 'react';
 import leaflet, { Map } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -11,11 +11,11 @@ interface UseMapProps {
   containerMapRef: React.RefObject<HTMLElement | null>;
 }
 
-export default function useMap({containerMapRef, location}: UseMapProps) {
+export default function useMap({ containerMapRef, location }: UseMapProps) {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef(false);
 
-  useEffect(() : void => {
+  useEffect((): void => {
     if (containerMapRef.current !== null && !isRenderedRef.current) {
       const instance = leaflet.map(containerMapRef.current, {
         center: {
@@ -26,12 +26,10 @@ export default function useMap({containerMapRef, location}: UseMapProps) {
       });
 
       leaflet
-        .tileLayer(
-          'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-          {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          },
-        )
+        .tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        })
         .addTo(instance);
 
       setMap(instance);
