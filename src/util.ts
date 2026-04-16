@@ -42,5 +42,5 @@ export const getSortedOffers = (offers: ListOffers, type: SortType) => {
   }
 };
 
-export const formatedType = (formatType: string): string =>
+export const formattedType = (formatType: string): string =>
   formatType ? formatType[0].toUpperCase() + formatType.slice(1) : '';

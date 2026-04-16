@@ -64,33 +64,10 @@ export default function App(): JSX.Element {
           element={<OfferPage randomCity={randomCity} />}
         />
         <Route
-          path="*"
+          path={AppRoute.NotFound}
           element={<NotFoundPage randomCity={randomCity} type="page" />}
         />
       </Routes>
     </BrowserRouter>
   );
 }
-
-//////////////////////////////////////////////////////////////////////////
-// все компоненты которые должны быть защищены - обернуты в protect route
-// а компоненты, которые должны быть защищены, но быть публичными - теперь с пропом onlyForUnAuth - только для неавторизованнных
-
-//dispatch(fetchAllOffers()) - асинхронный диспатч возвращает промис,
-// поэтому мы можем использовать then и catch,
-// но нужно использовать метод unwrap() чтобы обработать ошибку
-// именно внутри fetchAllOffers()
-//метод unwrap() - достает оригинальное состояние промиса then и catch - будут отрабатывать как надо
-
-//   const { fetchAllOffers } = useActionCreators(offersActions);
-//   useEffect(() => {
-//     fetchAllOffers()
-//       .unwrap()
-//       .then(() => {
-//         console.log('success');
-//       })
-//       .catch(()=> {
-//         console.log('error');
-//       });
-//   }, [fetchAllOffers]);
-// //зависимость [fetchAllOffers] в useEffect исправляет бесконечный цикл запросов

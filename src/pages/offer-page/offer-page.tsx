@@ -42,7 +42,7 @@ export default function OfferPage({ randomCity }: OfferPageProps): JSX.Element {
     }
 
     return () => {
-      dispatch(offerActions.clear()); //очистка перед уходом
+      dispatch(offerActions.clear());
       dispatch(commentsActions.clear());
     };
   }, [id, dispatch]);
@@ -79,20 +79,3 @@ export default function OfferPage({ randomCity }: OfferPageProps): JSX.Element {
     </Layout>
   );
 }
-
-//useParams() возвращает объект с параметрами, а не строку
-//Деструктуризация параметра: const { id } = useParams(); - извлекает конкретный параметр id из объекта параметров.
-
-//[dispatch, id] - Массив зависимостей (выполняется при изменении зависимостей):
-// Перенос в useEffect: Вызовы dispatch должны быть внутри useEffect,
-// иначе они будут выполняться при каждом рендере компонента, что может привести к бесконечным запросам.
-
-//   Promise.all(
-//     [dispatch(fetchOffer(id)),
-//       dispatch(fetchNearby(id)),
-//       dispatch(fetchComments(id))]
-//   );
-//Promise.all - чтобы эти промисы отработали одновременно. (избежать лишний ререндер)
-
-// useDocumentTitle('Offer');
-// const id = useAppSelector(selectActiveId);

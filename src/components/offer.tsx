@@ -2,10 +2,11 @@ import { useAppSelector } from '@/hooks/store-hooks';
 import { useAuth } from '@/hooks/user-auth-hook';
 import { selectComments } from '@/store/slices/comments-slice';
 import { FullOffer } from '@/types/offer';
-import { formatedType, getStarActiveWidth } from '@/util';
+import { formattedType, getStarActiveWidth } from '@/util';
 import FavoriteButton from './favorite-button';
 import OfferForm from './offer-form';
 import OfferReviews from './offer-reviews';
+import classNames from 'classnames';
 
 interface OfferProps {
   offer: FullOffer;
@@ -33,10 +34,11 @@ export default function Offer({ offer }: OfferProps): JSX.Element {
   const roundedRating = Math.round(rating);
   const starActiveWidth: string = getStarActiveWidth(roundedRating);
 
-  const formatedBedrooms = (count: number): string =>
+  const formattedBedrooms = (count: number): string =>
     `${count} ${count > 1 ? 'Bedrooms' : 'Bedroom'}`;
 
-  const formatedAdults = (count: number): string => `${count} ${count > 1 ? 'adults' : 'adult'}`;
+  const formattedAdults = (count: number): string =>
+    `${count} ${count > 1 ? 'adults' : 'adult'}`;
 
   return (
     <div className="offer__container container">
@@ -48,7 +50,11 @@ export default function Offer({ offer }: OfferProps): JSX.Element {
         )}
         <div className="offer__name-wrapper">
           <h1 className="offer__name">{title}</h1>
-          <FavoriteButton buttonType={'offer'} offerId={offerId} isFavorite={isFavorite} />
+          <FavoriteButton
+            buttonType={'offer'}
+            offerId={offerId}
+            isFavorite={isFavorite}
+          />
         </div>
         <div className="offer__rating rating">
           <div className="offer__stars rating__stars">
@@ -58,9 +64,15 @@ export default function Offer({ offer }: OfferProps): JSX.Element {
           <span className="offer__rating-value rating__value">{rating}</span>
         </div>
         <ul className="offer__features">
-          <li className="offer__feature offer__feature--entire">{formatedType(type)}</li>
-          <li className="offer__feature offer__feature--bedrooms">{formatedBedrooms(bedrooms)}</li>
-          <li className="offer__feature offer__feature--adults">Max {formatedAdults(maxAdults)}</li>
+          <li className="offer__feature offer__feature--entire">
+            {formattedType(type)}
+          </li>
+          <li className="offer__feature offer__feature--bedrooms">
+            {formattedBedrooms(bedrooms)}
+          </li>
+          <li className="offer__feature offer__feature--adults">
+            Max {formattedAdults(maxAdults)}
+          </li>
         </ul>
         <div className="offer__price">
           <b className="offer__price-value">&euro;{price}</b>
@@ -79,7 +91,14 @@ export default function Offer({ offer }: OfferProps): JSX.Element {
         <div className="offer__host">
           <h2 className="offer__host-title">Meet the host</h2>
           <div className="offer__host-user user">
-            <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+            <div
+              className={classNames(
+                'offer__avatar-wrapper user__avatar-wrapper',
+                {
+                  [`offer__avatar-wrapper--pro`]: host.isPro,
+                },
+              )}
+            >
               <img
                 className="offer__avatar user__avatar"
                 src={host.avatarUrl}
@@ -89,7 +108,11 @@ export default function Offer({ offer }: OfferProps): JSX.Element {
               />
             </div>
             <span className="offer__user-name">{host.name}</span>
-            <span className="offer__user-status">{host.isPro && 'Pro'}</span>
+            {host.isPro ? (
+              <span className="offer__user-status">{'Pro'}</span>
+            ) : (
+              ''
+            )}
           </div>
           <div className="offer__description">
             <p className="offer__text">{description}</p>

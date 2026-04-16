@@ -1,6 +1,6 @@
 import { SortType } from '@/const';
 import { ListOffers, CityName } from '@/types/offer';
-import { formatedType, getSortedOffers } from '@/util';
+import { formattedType, getSortedOffers } from '@/util';
 import PlaceCard from './place-card';
 import SortingOffers from './sorting-offers';
 import { useAppDispatch, useAppSelector } from '@/hooks/store-hooks';
@@ -17,7 +17,7 @@ export default function MainPlaces({
 }: MainPlacesProps): JSX.Element {
   const dispatch = useAppDispatch();
   const activeSort = useAppSelector(selectActiveSort);
-  const formatedOffersNumber = (count: number): string =>
+  const formattedOffersNumber = (count: number): string =>
     `${count} place${count !== 1 ? 's' : ''}`;
 
   const setSort = (type: SortType) => {
@@ -30,8 +30,8 @@ export default function MainPlaces({
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">
-        {formatedOffersNumber(currentOffers.length)} to stay in{' '}
-        {formatedType(currentCity)}
+        {formattedOffersNumber(currentOffers.length)} to stay in{' '}
+        {formattedType(currentCity)}
       </b>
       <SortingOffers currentSortType={activeSort} onChangeSort={setSort} />
       <div className="cities__places-list places__list tabs__content">
