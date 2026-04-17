@@ -6,11 +6,15 @@ import { fetchComments, postComment } from '../thunk/offer';
 interface CommentsState {
   comments: UserComments;
   status: RequestStatus;
+  fetchCommentsStatusCode: number | undefined;
+  postCommentStatusCode: number | undefined;
 }
 
 const initialState: CommentsState = {
   comments: [],
   status: RequestStatus.Idle,
+  fetchCommentsStatusCode: undefined,
+  postCommentStatusCode: undefined,
 };
 
 export const commentsSlice = createSlice({
@@ -31,8 +35,9 @@ export const commentsSlice = createSlice({
         state.status = RequestStatus.Success;
         state.comments = action.payload;
       })
-      .addCase(fetchComments.rejected, (state) => {
+      .addCase(fetchComments.rejected, (state, action) => {
         state.status = RequestStatus.Failed;
+        state.fetchCommentsStatusCode = action.payload?.status;
       })
       .addCase(postComment.pending, (state) => {
         state.status = RequestStatus.Loading;
@@ -41,14 +46,28 @@ export const commentsSlice = createSlice({
         state.status = RequestStatus.Success;
         state.comments.push(action.payload);
       })
-      .addCase(postComment.rejected, (state) => {
+      .addCase(postComment.rejected, (state, action) => {
         state.status = RequestStatus.Failed;
+        state.postCommentStatusCode = action.payload?.status;
       }),
   selectors: {
     selectComments: (state: CommentsState) => state.comments,
     selectCommentsStatus: (state: CommentsState) => state.status,
+    selectFetchCommentsStatusCode: (state: CommentsState) =>
+      state.fetchCommentsStatusCode,
+    selectPostCommentStatusCode: (state: CommentsState) =>
+      state.postCommentStatusCode,
   },
 });
 
-export const commentsActions = { ...commentsSlice.actions, ...fetchComments, ...postComment };
-export const { selectComments, selectCommentsStatus } = commentsSlice.selectors;
+export const commentsActions = {
+  ...commentsSlice.actions,
+  ...fetchComments,
+  ...postComment,
+};
+export const {
+  selectComments,
+  selectCommentsStatus,
+  selectFetchCommentsStatusCode,
+  selectPostCommentStatusCode,
+} = commentsSlice.selectors;

@@ -1,10 +1,10 @@
-import { SortType } from '@/const';
-import { ListOffers, CityName } from '@/types/offer';
-import { formattedType, getSortedOffers } from '@/util';
-import PlaceCard from './place-card';
-import SortingOffers from './sorting-offers';
-import { useAppDispatch, useAppSelector } from '@/hooks/store-hooks';
-import { offersActions, selectActiveSort } from '@/store/slices/offers-slice';
+import { SortType } from "@/const";
+import { useAppDispatch, useAppSelector } from "@/hooks/store-hooks";
+import { appActions, selectActiveSort } from "@/store/slices/app-slice";
+import { ListOffers, CityName } from "@/types/offer";
+import { getSortedOffers, formattedType } from "@/util";
+import PlaceCard from "./place-card";
+import SortingOffers from "./sorting-offers";
 
 interface MainPlacesProps {
   currentOffers: ListOffers;
@@ -21,7 +21,7 @@ export default function MainPlaces({
     `${count} place${count !== 1 ? 's' : ''}`;
 
   const setSort = (type: SortType) => {
-    dispatch(offersActions.setActiveSort(type));
+    dispatch(appActions.setActiveSort(type));
   };
 
   const sortedOffers = getSortedOffers(currentOffers, activeSort);

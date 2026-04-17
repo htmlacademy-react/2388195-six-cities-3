@@ -1,11 +1,11 @@
 import { AppRoute } from '@/const';
 import { useAppDispatch } from '@/hooks/store-hooks';
-import { offersActions } from '@/store/slices/offers-slice';
 import { ListOffer } from '@/types/offer';
-import { getStarActiveWidth, formatedType } from '@/util';
+import { getStarActiveWidth, formattedType } from '@/util';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import FavoriteButton from './favorite-button';
+import { appActions } from '@/store/slices/app-slice';
 
 interface PlaceCardProps {
   currentOffer: ListOffer;
@@ -51,8 +51,8 @@ export default function PlaceCard({
   return (
     <article
       className={`${cardType}__card place-card`}
-      onMouseEnter={() => hovered && dispatch(offersActions.setActiveId(id))}
-      onMouseLeave={() => hovered && dispatch(offersActions.setActiveId(null))}
+      onMouseEnter={() => hovered && dispatch(appActions.setActiveId(id))}
+      onMouseLeave={() => hovered && dispatch(appActions.setActiveId(null))}
     >
       {isPremium && (
         <div className="place-card__mark">
@@ -93,36 +93,11 @@ export default function PlaceCard({
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <Link to={`${AppRoute.Offer}/${id}`}>
-          <h2 className="place-card__name">{title}</h2>
-        </Link>
-        <p className="place-card__type">{formatedType(type)}</p>
+        <h2 className="place-card__name">
+          <Link to={`${AppRoute.Offer}/${id}`}>{title}</Link>
+        </h2>
+        <p className="place-card__type">{formattedType(type)}</p>
       </div>
     </article>
   );
 }
-
-////////////////////////////////////////////////////////////////////////
-// onMouseEnter={() => hovered && dispatch(offersActions.setActiveId(id))}
-// onMouseLeave={() =>hovered && dispatch(offersActions.setActiveId(null))}
-
-// Использование стрелочной функции в данном контексте объясняется:
-//   1. Отложенное выполнение
-// Если написать onMouseEnter={dispatch(...)},
-// то функция dispatch выполнится мгновенно при рендеринге компонента.
-// Обертывание в стрелочную функцию () => ... создает «заготовку»,
-// которая сработает только в момент реального события (когда пользователь наведет курсор на карточку).
-//   2. Передача параметров
-// Стрелочная функция позволяет передать конкретные аргументы в экшен,
-// такие как id или null. Без анонимной функции было бы невозможно указать,
-// какой именно ID должен отправиться в Redux,
-// не создавая отдельную именованную функцию-обработчик выше в коде.
-//   3. Логика на месте (inline-условие)
-// В коде используется проверка условия hovered && ....
-// Стрелочная функция позволяет компактно описать эту логику прямо в атрибуте компонента:
-// действие выполнится только в том случае, если пропс hovered имеет значение true.
-//   4.  Замыкание (Closure)
-// Стрелочная функция имеет доступ к переменным из области видимости компонента,
-// таким как id, hovered, dispatch и offersActions.
-// Это позволяет коду внутри функции «видеть» актуальные
-// значения этих переменных без дополнительных сложностей.

@@ -5,8 +5,10 @@ import { favoriteSlice } from './slices/favorite-slice';
 import { offerSlice } from './slices/offer-slice';
 import { offersSlice } from './slices/offers-slice';
 import { userSlice } from './slices/user-slice';
+import { appSlice } from './slices/app-slice';
 
 const reducer = combineReducers({
+  [appSlice.name]: appSlice.reducer,
   [offersSlice.name]: offersSlice.reducer,
   [offerSlice.name]: offerSlice.reducer,
   [commentsSlice.name]: commentsSlice.reducer,

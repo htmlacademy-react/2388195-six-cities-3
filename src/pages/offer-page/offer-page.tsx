@@ -4,7 +4,12 @@ import Offer from '@/components/offer';
 import OfferGallery from '@/components/offer-gallery';
 import OfferNearPlaces from '@/components/offer-near-places';
 import Spinner from '@/components/spinner/spinner';
-import { RequestStatus, MAX_NEARBY_COUNT, MAX_IMAGES_COUNT } from '@/const';
+import {
+  RequestStatus,
+  MAX_NEARBY_COUNT,
+  MAX_IMAGES_COUNT,
+  AppRoute,
+} from '@/const';
 import {
   useAppSelector,
   useAppDispatch,
@@ -16,24 +21,23 @@ import {
   selectOfferStatus,
   selectNearbyOffers,
   offerActions,
+  selectofferStatusCode,
 } from '@/store/slices/offer-slice';
 import { fetchOffer, fetchNearby, fetchComments } from '@/store/thunk/offer';
-import { CityName } from '@/types/offer';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import NotFoundPage from '../not-found-page/not-found-page';
+import { Navigate, useParams } from 'react-router-dom';
+import ErrorPage from '../error-page/error-page';
 
-interface OfferPageProps {
-  randomCity: CityName;
-}
-
-export default function OfferPage({ randomCity }: OfferPageProps): JSX.Element {
+export default function OfferPage(): JSX.Element {
   const { id } = useParams();
   const offer = useAppSelector(selectOffer);
   const offerStatus = useAppSelector(selectOfferStatus);
+  const offerStatusCode = useAppSelector(selectofferStatusCode);
   const nearbyOffers = useAppSelector(selectNearbyOffers);
   const dispatch = useAppDispatch();
+
   useDocumentTitle('Offer page');
+
   useEffect(() => {
     if (id) {
       dispatch(fetchOffer(id));
@@ -47,16 +51,22 @@ export default function OfferPage({ randomCity }: OfferPageProps): JSX.Element {
     };
   }, [id, dispatch]);
 
-  if (offerStatus === RequestStatus.Loading) {
+  if (
+    offerStatus === RequestStatus.Loading ||
+    offerStatus === RequestStatus.Idle
+  ) {
     return <Spinner />;
   }
 
   if (offerStatus === RequestStatus.Failed || !offer) {
-    return <NotFoundPage type="offer" randomCity={randomCity} />;
+    if (offerStatusCode === 404) {
+      return <Navigate to={AppRoute.NotFound} />;
+    }
+    return <ErrorPage />;
   }
 
   const nearOffer = nearbyOffers.slice(0, MAX_NEARBY_COUNT);
-  const nearOffersWithCurrent = [...nearOffer, offer];
+  // const nearOffersWithCurrent = [...nearOffer, offer];
   const { images, city } = offer;
   const imagesToShow = images.slice(0, MAX_IMAGES_COUNT);
 
@@ -68,7 +78,8 @@ export default function OfferPage({ randomCity }: OfferPageProps): JSX.Element {
           <Offer offer={offer} />
           <CitiesMap
             className="offer__map"
-            currentOffers={nearOffersWithCurrent}
+            currentOffers={nearOffer}
+            currentOffer={offer}
             currentCity={city.name}
           />
         </section>
