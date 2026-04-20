@@ -19,7 +19,7 @@ export default function MainPage(): JSX.Element {
   const listOffers = useAppSelector(selectOffers);
 
   if (city?.toLowerCase && !CITIES_LIST.includes(city)) {
-    return <Navigate to={AppRoute.NotFound} replace />;
+    return <Navigate to={AppRoute.NotFound} />;
   }
 
   const currentCity = city || DEFAULT_CITY;

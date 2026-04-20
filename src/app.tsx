@@ -58,7 +58,7 @@ export default function App(): JSX.Element {
           }
         />
         <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage />} />
-        <Route path="*" element={<NotFoundPage type="page" />} />
+        <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

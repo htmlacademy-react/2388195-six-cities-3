@@ -66,7 +66,6 @@ export default function OfferPage(): JSX.Element {
   }
 
   const nearOffer = nearbyOffers.slice(0, MAX_NEARBY_COUNT);
-  // const nearOffersWithCurrent = [...nearOffer, offer];
   const { images, city } = offer;
   const imagesToShow = images.slice(0, MAX_IMAGES_COUNT);
 

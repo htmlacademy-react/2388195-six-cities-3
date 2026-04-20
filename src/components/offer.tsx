@@ -5,7 +5,7 @@ import { FullOffer } from '@/types/offer';
 import { formattedType, getStarActiveWidth } from '@/util';
 import FavoriteButton from './favorite-button';
 import OfferForm from './offer-form';
-import OfferReviews from './offer-reviews';
+import OfferReviews from './offer-rewiews/offer-reviews';
 import classNames from 'classnames';
 
 interface OfferProps {

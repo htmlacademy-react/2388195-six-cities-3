@@ -36,10 +36,10 @@ export default function LoginForm(): JSX.Element {
 
     if (name === 'password') {
       if (!value.trim()) {
-        return 'Введите пароль';
+        return 'Enter password';
       }
       if (!/^(?=.*[A-Za-z])(?=.*\d).+$/.test(value)) {
-        return 'Пароль должен содержать минимум одну английскую букву и одну цифру';
+        return 'The password must contain at least one English letter and one digit';
       }
     }
 
@@ -110,8 +110,8 @@ export default function LoginForm(): JSX.Element {
         <label className="visually-hidden">Password</label>
         <input
           className={classNames('login__input', 'form__input', {
-    'form__input--invalid': errors.password,
-  })}
+            'form__input--invalid': errors.password,
+          })}
           type="password"
           name="password"
           placeholder="Password"

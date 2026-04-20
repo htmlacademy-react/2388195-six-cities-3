@@ -5,16 +5,7 @@ import { useDocumentTitle } from '@/hooks/store-hooks';
 import { Link } from 'react-router-dom';
 import './not-found-page.css';
 
-const variants = {
-  page: '404 Not Found',
-  offer: 'We have no offers with that ID',
-};
-
-interface NotFoundPageProps {
-  type: keyof typeof variants;
-}
-
-export default function NotFoundPage({ type }: NotFoundPageProps): JSX.Element {
+export default function NotFoundPage(): JSX.Element {
   useDocumentTitle('Not found page');
   return (
     <Layout>
@@ -22,9 +13,7 @@ export default function NotFoundPage({ type }: NotFoundPageProps): JSX.Element {
         <main className="page__main page__main--login">
           <div className="page__login-container container">
             <section className="login">
-              <h1 className="login__title not-found__title">
-                {variants[type]}
-              </h1>
+              <h1 className="login__title not-found__title">404 Not Found</h1>
               <Link className="login__title not-found__link" to={AppRoute.Root}>
                 Вернуться на главную
               </Link>

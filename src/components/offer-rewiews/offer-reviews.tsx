@@ -1,6 +1,6 @@
 import { MAX_COMMENTS_COUNT } from '@/const';
 import { UserComments } from '@/types/user-comment';
-import OfferReviewsItem from './offer-reviews-item';
+import OfferReviewsItem from '../offer-reviews-item';
 
 interface OfferReviewsProps {
   comments: UserComments;
@@ -12,7 +12,6 @@ export default function OfferReviews({
   const sortedComments = comments
     .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, MAX_COMMENTS_COUNT);
-
 
   if (sortedComments.length === 0) {
     return (

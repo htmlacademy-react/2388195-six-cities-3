@@ -50,24 +50,6 @@ export default function CitiesMap({
     }
   }, [city, map]);
 
-  // useEffect(() => {
-  //   if (map) {
-  //     markerLayer.current.clearLayers();
-  //     markerLayer.current.addTo(map);
-  //     currentOffers.forEach((currentOffer) => {
-  //       L.marker(
-  //         {
-  //           lat: currentOffer.location.latitude,
-  //           lng: currentOffer.location.longitude,
-  //         },
-  //         {
-  //           icon: currentOffer.id === activeOfferId ? currentCustomIcon : defaultCustomIcon,
-  //         },
-  //       ).addTo(markerLayer.current);
-  //     });
-  //   }
-  // }, [activeOfferId, map, currentOffers]);
-
   useEffect(() => {
     if (map) {
       markerLayer.current.clearLayers();

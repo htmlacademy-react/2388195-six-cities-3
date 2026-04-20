@@ -1,7 +1,19 @@
-import { MIN_REVIEW_RATING, RATING, ReviewLength } from '@/const';
+import {
+  MIN_REVIEW_RATING,
+  RATING,
+  ReviewLength,
+  TIMEOUT_SHOW_ERROR,
+} from '@/const';
 import { useAppDispatch } from '@/hooks/store-hooks';
 import { postComment } from '@/store/thunk/offer';
-import { ReactEventHandler, useState, FormEvent, Fragment } from 'react';
+import {
+  ReactEventHandler,
+  useState,
+  FormEvent,
+  Fragment,
+  useEffect,
+} from 'react';
+import '@/components/offer-rewiews/offer-rewiews.css';
 
 interface OfferFormProps {
   offerId: string;
@@ -15,12 +27,27 @@ export default function OfferForm({ offerId }: OfferFormProps): JSX.Element {
     review: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const isSubmitDisabled =
     isSubmitting ||
     review.review.length < ReviewLength.Min ||
     review.rating === MIN_REVIEW_RATING ||
     review.review.length > ReviewLength.Max;
+
+  useEffect(() => {
+    if (!errorMessage) {
+      return;
+    }
+
+    const timerId = setTimeout(() => {
+      setErrorMessage('');
+    }, TIMEOUT_SHOW_ERROR);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [errorMessage]);
 
   const handleChange: ChangeHandler = (event) => {
     const { name, value } = event.currentTarget;
@@ -34,6 +61,7 @@ export default function OfferForm({ offerId }: OfferFormProps): JSX.Element {
     event.preventDefault();
 
     setIsSubmitting(true);
+    setErrorMessage('');
 
     const prevRating = Number(review.rating);
     const prevReview = review.review;
@@ -50,10 +78,10 @@ export default function OfferForm({ offerId }: OfferFormProps): JSX.Element {
       .unwrap()
       .then(() => {
         setReview({ rating: MIN_REVIEW_RATING, review: '' });
+        setErrorMessage('');
       })
       .catch(() => {
-        //диспатчить action 7/13 29.07 и сделать отдельный стор ошибки
-        setReview({ rating: prevRating, review: prevReview });
+        setErrorMessage('Failed to send review. Please try again later.');
       })
       .finally(() => {
         setIsSubmitting(false);
@@ -104,6 +132,7 @@ export default function OfferForm({ offerId }: OfferFormProps): JSX.Element {
         onChange={handleChange}
         disabled={isSubmitting}
       ></textarea>
+      {errorMessage && <p className="reviews__error">{errorMessage}</p>}
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set

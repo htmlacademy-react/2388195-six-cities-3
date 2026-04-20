@@ -22,7 +22,7 @@ export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer',
-  NotFound = '404',
+  NotFound = '/404',
 }
 
 export enum AuthorizationStatus {
@@ -136,4 +136,4 @@ export const ReviewLength = {
 
 export const MIN_REVIEW_RATING = 0;
 
-export const TIMEOUT_SHOW_ERROR = 2000;
+export const TIMEOUT_SHOW_ERROR = 5000;
