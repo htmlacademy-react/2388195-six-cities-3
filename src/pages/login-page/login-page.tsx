@@ -1,6 +1,6 @@
 import MemoizedLayout from '@/components/layout';
 import LoginForm from '@/components/login-form/login-form';
-import LoginLocation from '@/components/login-locaton';
+import MemoizedLoginLocation from '@/components/login-locaton';
 import { useDocumentTitle } from '@/hooks/store-hooks';
 
 export default function LoginPage(): JSX.Element {
@@ -14,7 +14,7 @@ export default function LoginPage(): JSX.Element {
             <h1 className="login__title">Sign in</h1>
             <LoginForm />
           </section>
-          <LoginLocation />
+          <MemoizedLoginLocation />
         </div>
       </main>
     </MemoizedLayout>

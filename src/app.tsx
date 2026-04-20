@@ -7,7 +7,7 @@ import { useAuth } from './hooks/user-auth-hook';
 import FavouritePage from './pages/favourites-page/favourites-page';
 import LoginPage from './pages/login-page/login-page';
 import MainPage from './pages/main-page/main-page';
-import NotFoundPage from './pages/not-found-page/not-found-page';
+import MemoizedNotFoundPage from './pages/not-found-page/not-found-page';
 import OfferPage from './pages/offer-page/offer-page';
 import { fetchFavorites } from './store/thunk/favorite';
 import { fetchAllOffers } from './store/thunk/offers';
@@ -58,7 +58,7 @@ export default function App(): JSX.Element {
           }
         />
         <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage />} />
-        <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
+        <Route path={AppRoute.NotFound} element={<MemoizedNotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

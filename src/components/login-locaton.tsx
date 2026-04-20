@@ -1,9 +1,10 @@
 import { AppRoute } from '@/const';
 import { useAppSelector } from '@/hooks/store-hooks';
 import { selectRandomCity } from '@/store/slices/app-slice';
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function LoginLocation(): JSX.Element {
+function LoginLocation(): JSX.Element {
   const randomCity = useAppSelector(selectRandomCity);
   const randomCityRoute = randomCity.toLowerCase();
 
@@ -20,3 +21,6 @@ export default function LoginLocation(): JSX.Element {
     </section>
   );
 }
+
+const MemoizedLoginLocation = memo(LoginLocation);
+export default MemoizedLoginLocation;
