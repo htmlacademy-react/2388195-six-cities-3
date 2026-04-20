@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/user-auth-hook';
 import { postFavorite } from '@/store/thunk/favorite';
 import { FullOffer } from '@/types/offer';
 import classNames from 'classnames';
+import { memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface FavoriteButtonProps {
@@ -22,7 +23,7 @@ const sizes = {
   },
 };
 
-export default function FavoriteButton({
+function FavoriteButton({
   buttonType,
   offerId,
   isFavorite,
@@ -32,13 +33,15 @@ export default function FavoriteButton({
   const isAuth = useAuth();
   const navigate = useNavigate();
 
-  const favoriteButtonHandler = () => {
+  const favoriteButtonHandler = useCallback(() => {
     if (!isAuth) {
       navigate(AppRoute.Login);
+      return;
     }
+
     const favoriteStatus = Number(!isFavorite);
     dispatch(postFavorite({ offerId, favoriteStatus }));
-  };
+  }, [dispatch, isAuth, navigate, offerId, isFavorite]);
 
   return (
     <button
@@ -48,10 +51,19 @@ export default function FavoriteButton({
       type="button"
       onClick={favoriteButtonHandler}
     >
-      <svg className={`${buttonType}__bookmark-icon`} width={width} height={height}>
+      <svg
+        className={`${buttonType}__bookmark-icon`}
+        width={width}
+        height={height}
+      >
         <use xlinkHref="#icon-bookmark"></use>
       </svg>
-      <span className="visually-hidden">{isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
+      <span className="visually-hidden">
+        {isFavorite ? 'In bookmarks' : 'To bookmarks'}
+      </span>
     </button>
   );
 }
+
+const MemoizedFavoriteButton = memo(FavoriteButton);
+export default MemoizedFavoriteButton;

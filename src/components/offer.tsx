@@ -3,7 +3,7 @@ import { useAuth } from '@/hooks/user-auth-hook';
 import { selectComments } from '@/store/slices/comments-slice';
 import { FullOffer } from '@/types/offer';
 import { formattedType, getStarActiveWidth } from '@/util';
-import FavoriteButton from './favorite-button';
+import MemoizedFavoriteButton from './favorite-button';
 import OfferForm from './offer-form';
 import OfferReviews from './offer-rewiews/offer-reviews';
 import classNames from 'classnames';
@@ -50,7 +50,7 @@ export default function Offer({ offer }: OfferProps): JSX.Element {
         )}
         <div className="offer__name-wrapper">
           <h1 className="offer__name">{title}</h1>
-          <FavoriteButton
+          <MemoizedFavoriteButton
             buttonType={'offer'}
             offerId={offerId}
             isFavorite={isFavorite}

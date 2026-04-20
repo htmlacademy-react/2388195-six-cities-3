@@ -1,10 +1,10 @@
-import { SortType } from "@/const";
-import { useAppDispatch, useAppSelector } from "@/hooks/store-hooks";
-import { appActions, selectActiveSort } from "@/store/slices/app-slice";
-import { ListOffers, CityName } from "@/types/offer";
-import { getSortedOffers, formattedType } from "@/util";
-import PlaceCard from "./place-card";
-import SortingOffers from "./sorting-offers";
+import { SortType } from '@/const';
+import { useAppDispatch, useAppSelector } from '@/hooks/store-hooks';
+import { appActions, selectActiveSort } from '@/store/slices/app-slice';
+import { ListOffers, CityName } from '@/types/offer';
+import { getSortedOffers, formattedType } from '@/util';
+import MemoizedPlaceCard from './place-card';
+import SortingOffers from './sorting-offers';
 
 interface MainPlacesProps {
   currentOffers: ListOffers;
@@ -36,7 +36,7 @@ export default function MainPlaces({
       <SortingOffers currentSortType={activeSort} onChangeSort={setSort} />
       <div className="cities__places-list places__list tabs__content">
         {sortedOffers.map((currentOffer) => (
-          <PlaceCard
+          <MemoizedPlaceCard
             key={currentOffer.id}
             currentOffer={currentOffer}
             cardType="cities"

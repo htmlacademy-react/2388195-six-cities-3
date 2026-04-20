@@ -1,5 +1,5 @@
 import { CITIES, MIN_STAR_WIDTH, SortType } from './const';
-import { CityName, ListOffers } from './types/offer';
+import { CityName, FullOffer, FullOffers, ListOffers } from './types/offer';
 
 export default function getRandomCity(array: typeof CITIES): CityName {
   return array[Math.floor(Math.random() * array.length)].name;
@@ -44,3 +44,20 @@ export const getSortedOffers = (offers: ListOffers, type: SortType) => {
 
 export const formattedType = (formatType: string): string =>
   formatType ? formatType[0].toUpperCase() + formatType.slice(1) : '';
+
+export const groupOffersByCity = (
+  offers: FullOffers,
+): Record<CityName, FullOffer[]> =>
+  offers.reduce(
+    (acc: Record<string, FullOffer[]>, favoriteOffer: FullOffer) => {
+      const cityName = favoriteOffer.city.name;
+
+      if (!acc[cityName]) {
+        acc[cityName] = [];
+      }
+
+      acc[cityName].push(favoriteOffer);
+      return acc;
+    },
+    {},
+  );

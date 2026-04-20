@@ -4,8 +4,9 @@ import { ListOffer } from '@/types/offer';
 import { getStarActiveWidth, formattedType } from '@/util';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import FavoriteButton from './favorite-button';
+import MemoizedFavoriteButton from './favorite-button';
 import { appActions } from '@/store/slices/app-slice';
+import { memo, useCallback, useMemo } from 'react';
 
 interface PlaceCardProps {
   currentOffer: ListOffer;
@@ -28,12 +29,13 @@ const sizes = {
   },
 };
 
-export default function PlaceCard({
+function PlaceCard({
   currentOffer,
   cardType,
   hovered,
 }: PlaceCardProps): JSX.Element {
   const dispatch = useAppDispatch();
+
   const {
     id,
     isPremium,
@@ -44,15 +46,32 @@ export default function PlaceCard({
     rating,
     isFavorite,
   } = currentOffer;
-  const roundedRating = Math.round(rating);
-  const starActiveWidth = getStarActiveWidth(roundedRating);
+
+  const starActiveWidth = useMemo(
+    () => getStarActiveWidth(Math.round(rating)),
+    [rating],
+  );
+
   const { width, height } = sizes[cardType];
+  const placeType = useMemo(() => formattedType(type), [type]);
+
+  const handleMouseEnter = useCallback(() => {
+    if (hovered) {
+      dispatch(appActions.setActiveId(id));
+    }
+  }, [dispatch, hovered, id]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (hovered) {
+      dispatch(appActions.setActiveId(null));
+    }
+  }, [dispatch, hovered]);
 
   return (
     <article
       className={`${cardType}__card place-card`}
-      onMouseEnter={() => hovered && dispatch(appActions.setActiveId(id))}
-      onMouseLeave={() => hovered && dispatch(appActions.setActiveId(null))}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {isPremium && (
         <div className="place-card__mark">
@@ -81,7 +100,7 @@ export default function PlaceCard({
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <FavoriteButton
+          <MemoizedFavoriteButton
             buttonType={'place-card'}
             offerId={id}
             isFavorite={isFavorite}
@@ -96,8 +115,11 @@ export default function PlaceCard({
         <h2 className="place-card__name">
           <Link to={`${AppRoute.Offer}/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{formattedType(type)}</p>
+        <p className="place-card__type">{placeType}</p>
       </div>
     </article>
   );
 }
+
+const MemoizedPlaceCard = memo(PlaceCard);
+export default MemoizedPlaceCard;

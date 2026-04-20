@@ -1,4 +1,6 @@
-export default function FavouriteEmpty(): JSX.Element {
+import { memo } from "react";
+
+function FavouriteEmpty(): JSX.Element {
   return (
     <section className="favorites favorites--empty">
       <h1 className="visually-hidden">Favorites (empty)</h1>
@@ -11,3 +13,7 @@ export default function FavouriteEmpty(): JSX.Element {
     </section>
   );
 }
+
+
+const MemoizedFavouriteEmpty = memo(FavouriteEmpty);
+export default MemoizedFavouriteEmpty;

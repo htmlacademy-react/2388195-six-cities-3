@@ -1,21 +1,31 @@
-import FavouriteLocations from '@/components/favorite-locations';
-import { CityName, FullOffer } from '@/types/offer';
+import MemoizedFavouriteLocations from '@/components/favorite-locations';
+import { useAppSelector } from '@/hooks/store-hooks';
+import { selectGroupedFavoriteOffers } from '@/store/slices/favorite-slice';
+import { CityName } from '@/types/offer';
+import { memo, useMemo } from 'react';
 
-interface FavouriteListProps {
-  groupedOffers: Record<
-    'Paris' | 'Cologne' | 'Brussels' | 'Amsterdam' | 'Hamburg' | 'Dusseldorf',
-    FullOffer[]
-  >;
-}
-export default function FavouriteList({ groupedOffers }: FavouriteListProps): JSX.Element {
+function FavouriteList(): JSX.Element {
+  const groupedOffers = useAppSelector(selectGroupedFavoriteOffers);
+  const groupedOfferEntries = useMemo(
+    () => Object.entries(groupedOffers),
+    [groupedOffers],
+  );
+
   return (
     <section className="favorites">
       <h1 className="favorites__title">Saved listing</h1>
       <ul className="favorites__list">
-        {Object.entries(groupedOffers).map(([cityName, offers]) => (
-          <FavouriteLocations city={cityName as CityName} key={cityName} offers={offers} />
+        {groupedOfferEntries.map(([cityName, offers]) => (
+          <MemoizedFavouriteLocations
+            city={cityName as CityName}
+            key={cityName}
+            offers={offers}
+          />
         ))}
       </ul>
     </section>
   );
 }
+
+const MemoizedFavouriteList = memo(FavouriteList);
+export default MemoizedFavouriteList;
