@@ -25,7 +25,7 @@ import {
 import { fetchOffer, fetchNearby, fetchComments } from '@/store/thunk/offer';
 import { useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import ErrorPage from '../error-page/error-page';
+import MemoizedErrorPage from '../error-page/error-page';
 import MemoizedCitiesMap from '@/components/cities-map';
 
 export default function OfferPage(): JSX.Element {
@@ -62,7 +62,7 @@ export default function OfferPage(): JSX.Element {
     if (offerStatusCode === 404) {
       return <Navigate to={AppRoute.NotFound} />;
     }
-    return <ErrorPage />;
+    return <MemoizedErrorPage />;
   }
 
   const nearOffer = nearbyOffers.slice(0, MAX_NEARBY_COUNT);

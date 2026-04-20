@@ -1,6 +1,7 @@
 import MemoizedLogo from '@/components/logo';
+import { memo } from 'react';
 
-export default function ErrorPage(): JSX.Element {
+function ErrorPage(): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -33,3 +34,6 @@ export default function ErrorPage(): JSX.Element {
     </div>
   );
 }
+
+const MemoizedErrorPage = memo(ErrorPage);
+export default MemoizedErrorPage;

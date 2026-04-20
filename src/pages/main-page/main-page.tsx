@@ -10,7 +10,7 @@ import {
 import { CityName } from '@/types/offer';
 import classNames from 'classnames';
 import { Navigate, useParams } from 'react-router-dom';
-import ErrorPage from '../error-page/error-page';
+import MemoizedErrorPage from '../error-page/error-page';
 import { useMemo } from 'react';
 import MemoizedMainTabs from '@/components/main-tabs';
 
@@ -37,7 +37,7 @@ export default function MainPage(): JSX.Element {
   }
 
   if (isError) {
-    return <ErrorPage />;
+    return <MemoizedErrorPage />;
   }
 
   return (
