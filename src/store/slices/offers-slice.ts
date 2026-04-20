@@ -3,6 +3,7 @@ import { ListOffers } from '@/types/offer';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { postFavorite } from '../thunk/favorite';
 import { fetchAllOffers } from '../thunk/offers';
+import { RootState } from '@/types/store';
 
 interface OffersState {
   offers: ListOffers;
@@ -56,3 +57,8 @@ export const selectOffersStatus = createSelector(
     isSuccess: status === RequestStatus.Success,
   })
 )
+
+export const selectOffersByCity = createSelector(
+  [selectOffers, (_state: RootState, city: string) => city],
+  (offers, city) => offers.filter((offer) => offer.city.name.toLowerCase() === city.toLowerCase())
+);
