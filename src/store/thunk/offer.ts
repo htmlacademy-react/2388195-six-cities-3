@@ -4,14 +4,6 @@ import { APIRoute } from '@/const';
 import { FullOffer, ListOffers } from '@/types/offer';
 import { UserComments, UserComment } from '@/types/user-comment';
 
-// export const fetchOffer = createAsyncThunk<FullOffer, string, { extra: AxiosInstance }>(
-//   'fetchOffer/offer',
-//   async (offerId, { extra: api }) => {
-//     const { data } = await api.get<FullOffer>(`${APIRoute.Offers}/${offerId}`);
-//     return data;
-//   },
-// );
-
 interface RejectValue {
   status: number;
   message: string;

@@ -1,5 +1,5 @@
 import Layout from '@/components/layout';
-import LoginForm from '@/components/login-form';
+import LoginForm from '@/components/login-form/login-form';
 import LoginLocation from '@/components/login-locaton';
 import { useDocumentTitle } from '@/hooks/store-hooks';
 
