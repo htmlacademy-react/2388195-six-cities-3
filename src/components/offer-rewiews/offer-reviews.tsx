@@ -1,17 +1,21 @@
 import { MAX_COMMENTS_COUNT } from '@/const';
-import { UserComments } from '@/types/user-comment';
-import OfferReviewsItem from '../offer-reviews-item';
+import MemoizedOfferReviewsItem from '../offer-reviews-item';
+import { memo, useMemo } from 'react';
+import { useAppSelector } from '@/hooks/store-hooks';
+import { selectComments } from '@/store/slices/comments-slice';
 
-interface OfferReviewsProps {
-  comments: UserComments;
-}
+function OfferReviews(): JSX.Element {
+  const comments = useAppSelector(selectComments);
 
-export default function OfferReviews({
-  comments,
-}: OfferReviewsProps): JSX.Element {
-  const sortedComments = comments
-    .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, MAX_COMMENTS_COUNT);
+  const sortedComments = useMemo(
+    () =>
+      comments
+        .toSorted(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+        )
+        .slice(0, MAX_COMMENTS_COUNT),
+    [comments],
+  );
 
   if (sortedComments.length === 0) {
     return (
@@ -30,7 +34,7 @@ export default function OfferReviews({
       </h2>
       <ul className="reviews__list">
         {sortedComments.map((comment, index) => (
-          <OfferReviewsItem
+          <MemoizedOfferReviewsItem
             key={comment.id || `comment-${index}`}
             commentItem={comment}
           />
@@ -39,3 +43,6 @@ export default function OfferReviews({
     </>
   );
 }
+
+const MemoizedOfferReviews = memo(OfferReviews);
+export default MemoizedOfferReviews;

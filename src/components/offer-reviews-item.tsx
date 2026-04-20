@@ -1,11 +1,12 @@
 import { UserComment } from '@/types/user-comment';
 import { getStarActiveWidth } from '@/util';
+import { memo } from 'react';
 
 interface OfferReviewsItemProps {
   commentItem?: UserComment;
 }
 
-export default function OfferReviewsItem({ commentItem }: OfferReviewsItemProps) {
+function OfferReviewsItem({ commentItem }: OfferReviewsItemProps) {
   if (!commentItem) {
     return null;
   }
@@ -13,8 +14,7 @@ export default function OfferReviewsItem({ commentItem }: OfferReviewsItemProps)
   const { user, comment, date, rating } = commentItem;
   const { avatarUrl, name } = user;
 
-  const roundedRating = Math.round(rating);
-  const starActiveWidth: string = getStarActiveWidth(roundedRating);
+  const starActiveWidth: string = getStarActiveWidth(Math.round(rating));
 
   const commentDate = new Date(date);
   const formattedDateNumeric = commentDate.toLocaleDateString('sv-SE');
@@ -52,3 +52,6 @@ export default function OfferReviewsItem({ commentItem }: OfferReviewsItemProps)
     </li>
   );
 }
+
+const MemoizedOfferReviewsItem = memo(OfferReviewsItem);
+export default MemoizedOfferReviewsItem;

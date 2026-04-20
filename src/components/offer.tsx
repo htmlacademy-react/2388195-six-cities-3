@@ -1,20 +1,35 @@
 import { useAppSelector } from '@/hooks/store-hooks';
 import { useAuth } from '@/hooks/user-auth-hook';
-import { selectComments } from '@/store/slices/comments-slice';
-import { FullOffer } from '@/types/offer';
 import { formattedType, getStarActiveWidth } from '@/util';
 import MemoizedFavoriteButton from './favorite-button';
-import OfferForm from './offer-form';
-import OfferReviews from './offer-rewiews/offer-reviews';
+import MemoizedOfferForm from './offer-form';
+import MemoizedOfferReviews from './offer-rewiews/offer-reviews';
 import classNames from 'classnames';
+import { memo, useMemo } from 'react';
+import { selectOffer } from '@/store/slices/offer-slice';
 
-interface OfferProps {
-  offer: FullOffer;
-}
-
-export default function Offer({ offer }: OfferProps): JSX.Element {
-  const comments = useAppSelector(selectComments);
+function Offer() {
+  const offer = useAppSelector(selectOffer);
   const isAuth = useAuth();
+
+  const starActiveWidth = useMemo(
+    () => (offer ? getStarActiveWidth(Math.round(offer.rating)) : ''),
+    [offer],
+  );
+
+  const renderedGoods = useMemo(
+    () =>
+      offer?.goods.map((good) => (
+        <li key={good} className="offer__inside-item">
+          {good}
+        </li>
+      )),
+    [offer?.goods],
+  );
+
+  if (!offer) {
+    return null;
+  }
 
   const {
     isPremium,
@@ -24,15 +39,11 @@ export default function Offer({ offer }: OfferProps): JSX.Element {
     bedrooms,
     maxAdults,
     price,
-    goods,
     host,
     description,
     id: offerId,
     isFavorite,
   } = offer;
-
-  const roundedRating = Math.round(rating);
-  const starActiveWidth: string = getStarActiveWidth(roundedRating);
 
   const formattedBedrooms = (count: number): string =>
     `${count} ${count > 1 ? 'Bedrooms' : 'Bedroom'}`;
@@ -80,13 +91,7 @@ export default function Offer({ offer }: OfferProps): JSX.Element {
         </div>
         <div className="offer__inside">
           <h2 className="offer__inside-title">What&apos;s inside</h2>
-          <ul className="offer__inside-list">
-            {goods.map((good) => (
-              <li key={good} className="offer__inside-item">
-                {good}
-              </li>
-            ))}
-          </ul>
+          <ul className="offer__inside-list">{renderedGoods}</ul>
         </div>
         <div className="offer__host">
           <h2 className="offer__host-title">Meet the host</h2>
@@ -108,21 +113,20 @@ export default function Offer({ offer }: OfferProps): JSX.Element {
               />
             </div>
             <span className="offer__user-name">{host.name}</span>
-            {host.isPro ? (
-              <span className="offer__user-status">{'Pro'}</span>
-            ) : (
-              ''
-            )}
+            {host.isPro && <span className="offer__user-status">{'Pro'}</span>}
           </div>
           <div className="offer__description">
             <p className="offer__text">{description}</p>
           </div>
         </div>
         <section className="offer__reviews reviews">
-          <OfferReviews comments={comments} />
-          {isAuth && <OfferForm offerId={offerId} />}
+          <MemoizedOfferReviews />
+          {isAuth && <MemoizedOfferForm />}
         </section>
       </div>
     </div>
   );
 }
+
+const MemoizedOffer = memo(Offer);
+export default MemoizedOffer;

@@ -4,7 +4,7 @@ import {
   ReviewLength,
   TIMEOUT_SHOW_ERROR,
 } from '@/const';
-import { useAppDispatch } from '@/hooks/store-hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks/store-hooks';
 import { postComment } from '@/store/thunk/offer';
 import {
   ReactEventHandler,
@@ -12,16 +12,19 @@ import {
   FormEvent,
   Fragment,
   useEffect,
+  memo,
+  useCallback,
 } from 'react';
 import '@/components/offer-rewiews/offer-rewiews.css';
+import { selectOffer } from '@/store/slices/offer-slice';
 
-interface OfferFormProps {
-  offerId: string;
-}
 type ChangeHandler = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 
-export default function OfferForm({ offerId }: OfferFormProps): JSX.Element {
+function OfferForm(): JSX.Element {
   const dispatch = useAppDispatch();
+
+  const offerId = useAppSelector(selectOffer)?.id;
+
   const [review, setReview] = useState({
     rating: MIN_REVIEW_RATING,
     review: '',
@@ -49,44 +52,53 @@ export default function OfferForm({ offerId }: OfferFormProps): JSX.Element {
     };
   }, [errorMessage]);
 
-  const handleChange: ChangeHandler = (event) => {
-    const { name, value } = event.currentTarget;
-    setReview({
-      ...review,
-      [name]: value,
-    });
-  };
-
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    setIsSubmitting(true);
-    setErrorMessage('');
-
-    const prevRating = Number(review.rating);
-    const prevReview = review.review;
-
-    dispatch(
-      postComment({
-        body: {
-          comment: prevReview,
-          rating: prevRating,
-        },
-        offerId,
-      }),
-    )
-      .unwrap()
-      .then(() => {
-        setReview({ rating: MIN_REVIEW_RATING, review: '' });
-        setErrorMessage('');
-      })
-      .catch(() => {
-        setErrorMessage('Failed to send review. Please try again later.');
-      })
-      .finally(() => {
-        setIsSubmitting(false);
+  const handleChange: ChangeHandler = useCallback(
+    (event) => {
+      const { name, value } = event.currentTarget;
+      setReview({
+        ...review,
+        [name]: value,
       });
-  };
+    },
+    [review],
+  );
+
+  const handleFormSubmit = useCallback(
+    (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+
+      setIsSubmitting(true);
+      setErrorMessage('');
+
+      const prevRating = Number(review.rating);
+      const prevReview = review.review;
+
+      if (!offerId) {
+        return null;
+      }
+      dispatch(
+        postComment({
+          body: {
+            comment: prevReview,
+            rating: prevRating,
+          },
+          offerId,
+        }),
+      )
+        .unwrap()
+        .then(() => {
+          setReview({ rating: MIN_REVIEW_RATING, review: '' });
+          setErrorMessage('');
+        })
+        .catch(() => {
+          setErrorMessage('Failed to send review. Please try again later.');
+        })
+        .finally(() => {
+          setIsSubmitting(false);
+        });
+    },
+    [dispatch, offerId, review.rating, review.review],
+  );
 
   return (
     <form
@@ -152,3 +164,6 @@ export default function OfferForm({ offerId }: OfferFormProps): JSX.Element {
     </form>
   );
 }
+
+const MemoizedOfferForm = memo(OfferForm);
+export default MemoizedOfferForm;
