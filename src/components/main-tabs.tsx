@@ -1,13 +1,14 @@
 import { AppRoute, CITIES } from '@/const';
 import { CityName } from '@/types/offer';
 import classNames from 'classnames';
+import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 
 interface MainTabsProps {
   currentCity: CityName;
 }
 
-export default function MainTabs({ currentCity }: MainTabsProps): JSX.Element {
+function MainTabs({ currentCity }: MainTabsProps): JSX.Element {
   return (
     <div className="tabs">
       <section className="locations container">
@@ -30,3 +31,6 @@ export default function MainTabs({ currentCity }: MainTabsProps): JSX.Element {
     </div>
   );
 }
+
+const MemoizedMainTabs = memo(MainTabs);
+export default MemoizedMainTabs;

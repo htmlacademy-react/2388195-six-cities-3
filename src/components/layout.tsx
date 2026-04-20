@@ -1,11 +1,10 @@
 import { RequestStatus } from '@/const';
 import { useAppSelector } from '@/hooks/store-hooks';
-import { selectFavoriteOffers } from '@/store/slices/favorite-slice';
+import { selectFavoriteCount } from '@/store/slices/favorite-slice';
 import { selectStatus } from '@/store/slices/offers-slice';
 import classNames from 'classnames';
-import { ReactNode } from 'react';
-import { useSelector } from 'react-redux';
-import Header from './header';
+import { memo, ReactNode } from 'react';
+import MemoizedHeader from './header';
 
 interface LayoutProps {
   isPageMain?: boolean;
@@ -14,13 +13,13 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-export default function Layout({
+function Layout({
   children,
   isPageMain,
   isPageLogin,
   isPageFavouriteEmpty,
 }: LayoutProps): JSX.Element | ReactNode {
-  const favouriteCount = useSelector(selectFavoriteOffers).length;
+  const favouriteCount = useAppSelector(selectFavoriteCount);
   const status = useAppSelector(selectStatus);
 
   if (status === RequestStatus.Loading) {
@@ -36,7 +35,7 @@ export default function Layout({
         { 'page--favorites-empty': isPageFavouriteEmpty },
       )}
     >
-      <Header
+      <MemoizedHeader
         favouriteCount={favouriteCount}
         typeLogo={'header'}
         isPageMain={isPageMain}
@@ -46,3 +45,6 @@ export default function Layout({
     </div>
   );
 }
+
+const MemoizedLayout = memo(Layout);
+export default MemoizedLayout;

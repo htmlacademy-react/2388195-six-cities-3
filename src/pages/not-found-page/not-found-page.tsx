@@ -1,4 +1,4 @@
-import Layout from '@/components/layout';
+import MemoizedLayout from '@/components/layout';
 import LoginLocation from '@/components/login-locaton';
 import { AppRoute } from '@/const';
 import { useDocumentTitle } from '@/hooks/store-hooks';
@@ -8,7 +8,7 @@ import './not-found-page.css';
 export default function NotFoundPage(): JSX.Element {
   useDocumentTitle('Not found page');
   return (
-    <Layout>
+    <MemoizedLayout>
       <div className="page page--gray page--login">
         <main className="page__main page__main--login">
           <div className="page__login-container container">
@@ -22,6 +22,6 @@ export default function NotFoundPage(): JSX.Element {
           </div>
         </main>
       </div>
-    </Layout>
+    </MemoizedLayout>
   );
 }

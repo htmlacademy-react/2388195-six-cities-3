@@ -1,11 +1,12 @@
 import { CityName } from '@/types/offer';
 import { formattedType } from '@/util';
+import { memo } from 'react';
 
 interface MainEmptyProps {
   currentCity: CityName;
 }
 
-export default function MainEmpty({ currentCity }: MainEmptyProps): JSX.Element {
+function MainEmpty({ currentCity }: MainEmptyProps): JSX.Element {
   return (
     <div className="cities__places-container cities__places-container--empty container">
       <section className="cities__no-places">
@@ -20,3 +21,6 @@ export default function MainEmpty({ currentCity }: MainEmptyProps): JSX.Element 
     </div>
   );
 }
+
+const MemoizedMainEmpty = memo(MainEmpty);
+export default MemoizedMainEmpty;

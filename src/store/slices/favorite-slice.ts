@@ -1,6 +1,6 @@
 import { RequestStatus, FavoriteStatus } from '@/const';
 import { FullOffer, FullOffers } from '@/types/offer';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { fetchFavorites, postFavorite } from '../thunk/favorite';
 
 interface FavoriteState {
@@ -56,3 +56,8 @@ export const favoriteSlice = createSlice({
 });
 
 export const { selectFavoriteOffers, selectFavoriteOffersStatus } = favoriteSlice.selectors;
+
+export const selectFavoriteCount = createSelector(
+  [selectFavoriteOffers],
+  (favoriteOffers) => favoriteOffers.length
+);

@@ -1,6 +1,5 @@
-import CurrentOffers from '@/components/current-offers';
-import Layout from '@/components/layout';
-import MainTabs from '@/components/main-tabs';
+import MemoizedCurrentOffers from '@/components/current-offers';
+import MemoizedLayout from '@/components/layout';
 import Spinner from '@/components/spinner/spinner';
 import { AppRoute, CITIES_LIST, DEFAULT_CITY } from '@/const';
 import { useAppSelector, useDocumentTitle } from '@/hooks/store-hooks';
@@ -13,6 +12,7 @@ import classNames from 'classnames';
 import { Navigate, useParams } from 'react-router-dom';
 import ErrorPage from '../error-page/error-page';
 import { useMemo } from 'react';
+import MemoizedMainTabs from '@/components/main-tabs';
 
 export default function MainPage(): JSX.Element {
   const { city } = useParams<{ city: CityName }>();
@@ -41,22 +41,22 @@ export default function MainPage(): JSX.Element {
   }
 
   return (
-    <Layout isPageMain>
+    <MemoizedLayout isPageMain>
       <main
         className={classNames('page__main', 'page__main--index', {
           'page__main--index-empty': isEmpty,
         })}
       >
         <h1 className="visually-hidden">Cities</h1>
-        <MainTabs currentCity={currentCity} />
+        <MemoizedMainTabs currentCity={currentCity} />
         <div className="cities">
-          <CurrentOffers
+          <MemoizedCurrentOffers
             currentOffers={currentOffers}
             currentCity={currentCity}
             isEmpty={isEmpty}
           />
         </div>
       </main>
-    </Layout>
+    </MemoizedLayout>
   );
 }

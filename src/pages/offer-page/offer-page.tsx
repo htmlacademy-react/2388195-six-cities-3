@@ -1,5 +1,4 @@
-import CitiesMap from '@/components/cities-map';
-import Layout from '@/components/layout';
+import MemoizedLayout from '@/components/layout';
 import Offer from '@/components/offer';
 import OfferGallery from '@/components/offer-gallery';
 import OfferNearPlaces from '@/components/offer-near-places';
@@ -27,6 +26,7 @@ import { fetchOffer, fetchNearby, fetchComments } from '@/store/thunk/offer';
 import { useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import ErrorPage from '../error-page/error-page';
+import MemoizedCitiesMap from '@/components/cities-map';
 
 export default function OfferPage(): JSX.Element {
   const { id } = useParams();
@@ -70,12 +70,12 @@ export default function OfferPage(): JSX.Element {
   const imagesToShow = images.slice(0, MAX_IMAGES_COUNT);
 
   return (
-    <Layout>
+    <MemoizedLayout>
       <main className="page__main page__main--offer">
         <section className="offer">
           <OfferGallery imagesToShow={imagesToShow} />
           <Offer offer={offer} />
-          <CitiesMap
+          <MemoizedCitiesMap
             className="offer__map"
             currentOffers={nearOffer}
             currentOffer={offer}
@@ -86,6 +86,6 @@ export default function OfferPage(): JSX.Element {
           <OfferNearPlaces nearOffers={nearOffer} />
         </div>
       </main>
-    </Layout>
+    </MemoizedLayout>
   );
 }

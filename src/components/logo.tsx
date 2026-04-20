@@ -1,4 +1,5 @@
 import { AppRoute, DEFAULT_CITY } from '@/const';
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
 interface LogoProps {
@@ -17,7 +18,7 @@ const sizes = {
   },
 };
 
-export default function Logo({ type, isPageMain }: LogoProps): JSX.Element {
+function Logo({ type, isPageMain }: LogoProps): JSX.Element {
   const { width, height } = sizes[type];
 
   if (isPageMain) {
@@ -50,3 +51,6 @@ export default function Logo({ type, isPageMain }: LogoProps): JSX.Element {
     </Link>
   );
 }
+
+const MemoizedLogo = memo(Logo);
+export default MemoizedLogo;

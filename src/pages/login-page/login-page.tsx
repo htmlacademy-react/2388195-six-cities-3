@@ -1,4 +1,4 @@
-import Layout from '@/components/layout';
+import MemoizedLayout from '@/components/layout';
 import LoginForm from '@/components/login-form/login-form';
 import LoginLocation from '@/components/login-locaton';
 import { useDocumentTitle } from '@/hooks/store-hooks';
@@ -7,7 +7,7 @@ export default function LoginPage(): JSX.Element {
   useDocumentTitle('Login');
 
   return (
-    <Layout isPageLogin>
+    <MemoizedLayout isPageLogin>
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
@@ -17,6 +17,6 @@ export default function LoginPage(): JSX.Element {
           <LoginLocation />
         </div>
       </main>
-    </Layout>
+    </MemoizedLayout>
   );
 }

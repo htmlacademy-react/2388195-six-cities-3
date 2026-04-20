@@ -1,4 +1,4 @@
-import Logo from '@/components/logo';
+import MemoizedLogo from '@/components/logo';
 
 export default function ErrorPage(): JSX.Element {
   return (
@@ -7,7 +7,7 @@ export default function ErrorPage(): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Logo type={'header'} />
+              <MemoizedLogo type={'header'} />
             </div>
           </div>
         </div>

@@ -1,11 +1,11 @@
-import Layout from '@/components/layout';
-import Logo from '@/components/logo';
+import MemoizedLogo from '@/components/logo';
 import { useAppSelector, useDocumentTitle } from '@/hooks/store-hooks';
 import { selectFavoriteOffers } from '@/store/slices/favorite-slice';
 import { FullOffers, CityName, FullOffer } from '@/types/offer';
 import classNames from 'classnames';
 import FavouriteList from '../../components/favourites-list';
 import FavouriteEmpty from '../../components/favourite-empty';
+import MemoizedLayout from '@/components/layout';
 
 export default function FavouritePage(): JSX.Element {
   useDocumentTitle('Favourite page');
@@ -29,7 +29,7 @@ export default function FavouritePage(): JSX.Element {
   const groupedOffers = groupByCity(favoriteOffers);
 
   return (
-    <Layout isPageFavouriteEmpty>
+    <MemoizedLayout isPageFavouriteEmpty>
       <main
         className={classNames(
           'page__main',
@@ -46,8 +46,8 @@ export default function FavouritePage(): JSX.Element {
         </div>
       </main>
       <footer className="footer">
-        <Logo type="footer" />
+        <MemoizedLogo type="footer" />
       </footer>
-    </Layout>
+    </MemoizedLayout>
   );
 }
