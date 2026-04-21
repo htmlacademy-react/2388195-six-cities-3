@@ -1,31 +1,41 @@
 import { SortType } from '@/const';
+import { useAppSelector } from '@/hooks/store-hooks';
+import { selectActiveSort } from '@/store/slices/app-slice';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
+import MemoizedSortingOption from './sorting-option';
 
 interface SortingOffersProps {
   onChangeSort: (type: SortType) => void;
-  currentSortType: SortType;
 }
 
-export default function SortingOffers({
-  onChangeSort,
-  currentSortType,
-}: SortingOffersProps): JSX.Element {
+function SortingOffers({ onChangeSort }: SortingOffersProps): JSX.Element {
+  const currentSortType = useAppSelector(selectActiveSort);
   const [isOpened, setIsOpened] = useState(false);
 
-  const handleTypeClick = () => {
-    setIsOpened((prev) => !prev);
-  };
+  const sortTypes = useMemo(() => Object.values(SortType), []);
 
-  const handleOptionClick = (type: SortType) => {
-    onChangeSort(type);
-    setIsOpened(false);
-  };
+  const handleTypeClick = useCallback(() => {
+    setIsOpened((prev) => !prev);
+  }, []);
+
+  const handleOptionClick = useCallback(
+    (type: SortType) => {
+      onChangeSort(type);
+      setIsOpened(false);
+    },
+    [onChangeSort],
+  );
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by </span>
-      <span className="places__sorting-type" tabIndex={0} onClick={handleTypeClick} role="button">
+      <span
+        className="places__sorting-type"
+        tabIndex={0}
+        onClick={handleTypeClick}
+        role="button"
+      >
         {currentSortType}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
@@ -36,20 +46,18 @@ export default function SortingOffers({
           'places__options--opened': isOpened,
         })}
       >
-        {Object.values(SortType).map((type) => (
-          <li
+        {sortTypes.map((type) => (
+          <MemoizedSortingOption
             key={type}
-            className={classNames(
-              'places__option',
-              type === currentSortType && 'places__option--active',
-            )}
-            tabIndex={0}
-            onClick={() => handleOptionClick(type)}
-          >
-            {type}
-          </li>
+            sortType={type}
+            currentSortType={currentSortType}
+            handleOptionClick={handleOptionClick}
+          />
         ))}
       </ul>
     </form>
   );
 }
+
+const MemoizedSortingOffers = memo(SortingOffers);
+export default MemoizedSortingOffers;

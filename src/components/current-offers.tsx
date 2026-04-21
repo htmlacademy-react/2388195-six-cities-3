@@ -1,5 +1,5 @@
 import { ListOffers, CityName } from '@/types/offer';
-import MainPlaces from './main-places';
+import MemoizedMainPlaces from './main-places';
 import { memo } from 'react';
 import MemoizedMainEmpty from './main-empty';
 import MemoizedCitiesMap from './cities-map';
@@ -19,7 +19,10 @@ function CurrentOffers({
     <MemoizedMainEmpty currentCity={currentCity} />
   ) : (
     <div className="cities__places-container container">
-      <MainPlaces currentOffers={currentOffers} currentCity={currentCity} />
+      <MemoizedMainPlaces
+        currentOffers={currentOffers}
+        currentCity={currentCity}
+      />
       <div className="cities__right-section">
         <MemoizedCitiesMap
           className="cities__map"

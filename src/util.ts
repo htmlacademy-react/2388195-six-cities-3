@@ -61,3 +61,6 @@ export const groupOffersByCity = (
     },
     {},
   );
+
+export const formattedOffersNumber = (count: number): string =>
+  `${count} place${count !== 1 ? 's' : ''}`;
