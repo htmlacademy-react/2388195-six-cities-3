@@ -1,6 +1,6 @@
 import { AppRoute } from '@/const';
-import { useAppDispatch } from '@/hooks/store-hooks';
-import { useAuth } from '@/hooks/user-auth-hook';
+import { useAppDispatch, useAppSelector } from '@/hooks/store-hooks';
+import { selectIsAuthorized } from '@/store/slices/user-slice';
 import { postFavorite } from '@/store/thunk/favorite';
 import { FullOffer } from '@/types/offer';
 import classNames from 'classnames';
@@ -30,7 +30,7 @@ function FavoriteButton({
 }: FavoriteButtonProps): JSX.Element {
   const { width, height } = sizes[buttonType];
   const dispatch = useAppDispatch();
-  const isAuth = useAuth();
+  const isAuth = useAppSelector(selectIsAuthorized);
   const navigate = useNavigate();
 
   const favoriteButtonHandler = useCallback(() => {

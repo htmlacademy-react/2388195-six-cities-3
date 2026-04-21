@@ -1,5 +1,4 @@
 import { useAppSelector } from '@/hooks/store-hooks';
-import { useAuth } from '@/hooks/user-auth-hook';
 import { formattedType, getStarActiveWidth } from '@/util';
 import MemoizedFavoriteButton from './favorite-button';
 import MemoizedOfferForm from './offer-form';
@@ -7,10 +6,11 @@ import MemoizedOfferReviews from './offer-rewiews/offer-reviews';
 import classNames from 'classnames';
 import { memo, useMemo } from 'react';
 import { selectOffer } from '@/store/slices/offer-slice';
+import { selectIsAuthorized } from '@/store/slices/user-slice';
 
 function Offer() {
   const offer = useAppSelector(selectOffer);
-  const isAuth = useAuth();
+  const isAuth = useAppSelector(selectIsAuthorized);
 
   const starActiveWidth = useMemo(
     () => (offer ? getStarActiveWidth(Math.round(offer.rating)) : ''),

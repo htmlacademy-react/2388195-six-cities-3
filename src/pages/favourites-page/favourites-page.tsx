@@ -7,8 +7,9 @@ import classNames from 'classnames';
 import MemoizedFavouriteList from '../../components/favourites-list';
 import MemoizedFavouriteEmpty from '../../components/favourite-empty';
 import MemoizedLayout from '@/components/layout';
+import { memo } from 'react';
 
-export default function FavouritePage(): JSX.Element {
+function FavouritePage(): JSX.Element {
   useDocumentTitle('Favourite page');
   const favouriteCount = useAppSelector(selectFavoriteCount);
 
@@ -35,3 +36,6 @@ export default function FavouritePage(): JSX.Element {
     </MemoizedLayout>
   );
 }
+
+const MemoizedFavouritePage = memo(FavouritePage);
+export default MemoizedFavouritePage;

@@ -2,8 +2,9 @@ import MemoizedLayout from '@/components/layout';
 import LoginForm from '@/components/login-form/login-form';
 import MemoizedLoginLocation from '@/components/login-locaton';
 import { useDocumentTitle } from '@/hooks/store-hooks';
+import { memo } from 'react';
 
-export default function LoginPage(): JSX.Element {
+function LoginPage(): JSX.Element {
   useDocumentTitle('Login');
 
   return (
@@ -20,3 +21,6 @@ export default function LoginPage(): JSX.Element {
     </MemoizedLayout>
   );
 }
+
+const MemoizedLoginPage = memo(LoginPage);
+export default MemoizedLoginPage;

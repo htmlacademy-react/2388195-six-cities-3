@@ -1,21 +1,21 @@
 import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import ProtectedRoute from './components/private-route';
+import MemoizedProtectedRoute from './components/private-route';
 import { AppRoute, DEFAULT_CITY } from './const';
-import { useAppDispatch } from './hooks/store-hooks';
-import { useAuth } from './hooks/user-auth-hook';
-import FavouritePage from './pages/favourites-page/favourites-page';
-import LoginPage from './pages/login-page/login-page';
-import MainPage from './pages/main-page/main-page';
+import { useAppDispatch, useAppSelector } from './hooks/store-hooks';
+import MemoizedFavouritePage from './pages/favourites-page/favourites-page';
+import MemoizedLoginPage from './pages/login-page/login-page';
+import MemoizedMainPage from './pages/main-page/main-page';
 import MemoizedNotFoundPage from './pages/not-found-page/not-found-page';
-import OfferPage from './pages/offer-page/offer-page';
+import MemoizedOfferPage from './pages/offer-page/offer-page';
 import { fetchFavorites } from './store/thunk/favorite';
 import { fetchAllOffers } from './store/thunk/offers';
 import { checkAuth } from './store/thunk/user-auth';
+import { selectIsAuthorized } from './store/slices/user-slice';
 
 export default function App(): JSX.Element {
   const dispatch = useAppDispatch();
-  const isAuth = useAuth();
+  const isAuth = useAppSelector(selectIsAuthorized);
 
   useEffect(() => {
     dispatch(checkAuth());
@@ -40,24 +40,24 @@ export default function App(): JSX.Element {
             />
           }
         />
-        <Route path={`${AppRoute.Root}:city`} element={<MainPage />} />
+        <Route path={`${AppRoute.Root}:city`} element={<MemoizedMainPage />} />
         <Route
           path={AppRoute.Login}
           element={
-            <ProtectedRoute onlyUnauth>
-              <LoginPage />
-            </ProtectedRoute>
+            <MemoizedProtectedRoute onlyUnauth>
+              <MemoizedLoginPage />
+            </MemoizedProtectedRoute>
           }
         />
         <Route
           path={AppRoute.Favorites}
           element={
-            <ProtectedRoute>
-              <FavouritePage />
-            </ProtectedRoute>
+            <MemoizedProtectedRoute>
+              <MemoizedFavouritePage />
+            </MemoizedProtectedRoute>
           }
         />
-        <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage />} />
+        <Route path={`${AppRoute.Offer}/:id`} element={<MemoizedOfferPage />} />
         <Route path={AppRoute.NotFound} element={<MemoizedNotFoundPage />} />
       </Routes>
     </BrowserRouter>

@@ -1,7 +1,7 @@
 import { AppRoute, DEFAULT_CITY } from '@/const';
 import { useAppSelector } from '@/hooks/store-hooks';
 import { selectUserInfo } from '@/store/slices/user-slice';
-import { ReactNode } from 'react';
+import { memo, ReactNode } from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
 
 type ProtectedRouteProps = {
@@ -15,10 +15,7 @@ interface LocationState {
   };
 }
 
-export default function ProtectedRoute({
-  children,
-  onlyUnauth,
-}: ProtectedRouteProps) {
+function ProtectedRoute({ children, onlyUnauth }: ProtectedRouteProps) {
   const location = useLocation();
   const user = useAppSelector(selectUserInfo);
 
@@ -35,3 +32,6 @@ export default function ProtectedRoute({
 
   return children;
 }
+
+const MemoizedProtectedRoute = memo(ProtectedRoute);
+export default MemoizedProtectedRoute;

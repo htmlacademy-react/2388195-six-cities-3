@@ -11,10 +11,10 @@ import { CityName } from '@/types/offer';
 import classNames from 'classnames';
 import { Navigate, useParams } from 'react-router-dom';
 import MemoizedErrorPage from '../error-page/error-page';
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import MemoizedMainTabs from '@/components/main-tabs';
 
-export default function MainPage(): JSX.Element {
+function MainPage(): JSX.Element {
   const { city } = useParams<{ city: CityName }>();
 
   useDocumentTitle('Main page');
@@ -60,3 +60,6 @@ export default function MainPage(): JSX.Element {
     </MemoizedLayout>
   );
 }
+
+const MemoizedMainPage = memo(MainPage);
+export default MemoizedMainPage;

@@ -18,12 +18,12 @@ import {
   selectLimitedNearbyOffers,
 } from '@/store/slices/offer-slice';
 import { fetchOffer, fetchNearby, fetchComments } from '@/store/thunk/offer';
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import MemoizedErrorPage from '../error-page/error-page';
 import MemoizedCitiesMap from '@/components/cities-map';
 
-export default function OfferPage(): JSX.Element {
+function OfferPage(): JSX.Element {
   const { id } = useParams();
   const offer = useAppSelector(selectOffer);
   const offerStatus = useAppSelector(selectOfferStatus);
@@ -80,3 +80,6 @@ export default function OfferPage(): JSX.Element {
     </MemoizedLayout>
   );
 }
+
+const MemoizedOfferPage = memo(OfferPage);
+export default MemoizedOfferPage;
