@@ -2,7 +2,6 @@ import MemoizedLayout from '@/components/layout';
 import MemoizedOffer from '@/components/offer';
 import MemoizedOfferGallery from '@/components/offer-gallery';
 import MemoizedOfferNearPlaces from '@/components/offer-near-places';
-import Spinner from '@/components/spinner/spinner';
 import { RequestStatus, AppRoute } from '@/const';
 import {
   useAppSelector,
@@ -22,6 +21,7 @@ import { memo, useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import MemoizedErrorPage from '../error-page/error-page';
 import MemoizedCitiesMap from '@/components/cities-map';
+import MemoizedSpinner from '@/components/spinner/spinner';
 
 function OfferPage(): JSX.Element {
   const { id } = useParams();
@@ -50,7 +50,7 @@ function OfferPage(): JSX.Element {
     offerStatus === RequestStatus.Loading ||
     offerStatus === RequestStatus.Idle
   ) {
-    return <Spinner />;
+    return <MemoizedSpinner />;
   }
 
   if (offerStatus === RequestStatus.Failed || !offer) {

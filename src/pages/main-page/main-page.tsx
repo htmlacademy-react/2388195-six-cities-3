@@ -1,6 +1,5 @@
 import MemoizedCurrentOffers from '@/components/current-offers';
 import MemoizedLayout from '@/components/layout';
-import Spinner from '@/components/spinner/spinner';
 import { AppRoute, CITIES_LIST, DEFAULT_CITY } from '@/const';
 import { useAppSelector, useDocumentTitle } from '@/hooks/store-hooks';
 import {
@@ -13,6 +12,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import MemoizedErrorPage from '../error-page/error-page';
 import { memo, useMemo } from 'react';
 import MemoizedMainTabs from '@/components/main-tabs';
+import MemoizedSpinner from '@/components/spinner/spinner';
 
 function MainPage(): JSX.Element {
   const { city } = useParams<{ city: CityName }>();
@@ -33,7 +33,7 @@ function MainPage(): JSX.Element {
   const isEmpty = currentOffers.length === 0;
 
   if (isLoading) {
-    return <Spinner />;
+    return <MemoizedSpinner />;
   }
 
   if (isError) {
