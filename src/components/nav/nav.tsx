@@ -16,6 +16,7 @@ function Nav({ favouriteCount, isPageLogin }: NavProps): JSX.Element | null {
   const isAuth = useAppSelector(selectIsAuthorized);
   const data = useAppSelector(selectUserInfo);
   const email = data?.email;
+  const avatarUrl = data?.avatarUrl;
 
   const dispatch = useAppDispatch();
 
@@ -46,7 +47,12 @@ function Nav({ favouriteCount, isPageLogin }: NavProps): JSX.Element | null {
                 className="header__nav-link header__nav-link--profile"
                 to={AppRoute.Favorites}
               >
-                <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                <div
+                  className="header__avatar-wrapper user__avatar-wrapper"
+                  style={{
+                    backgroundImage: `url(${avatarUrl})`,
+                  }}
+                ></div>
                 <span className="header__user-name user__name">{email}</span>
                 <span className="header__favorite-count">{favouriteCount}</span>
               </Link>
