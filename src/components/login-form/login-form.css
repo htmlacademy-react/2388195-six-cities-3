@@ -1,0 +1,18 @@
+.form__error {
+  display: block;
+  margin-top: -18px;
+  margin-bottom: 24px;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #de2e2e;
+}
+
+.form__input--invalid {
+  border-color: #de2e2e;
+}
+
+.form__input--invalid:focus {
+  border-color: #de2e2e;
+  outline: none;
+  box-shadow: 0 0 0 1px #de2e2e;
+}

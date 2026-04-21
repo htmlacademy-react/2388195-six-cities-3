@@ -8,12 +8,14 @@ interface OfferState {
   offer: FullOffer | null;
   nearbyOffers: ListOffers;
   offerStatus: RequestStatus;
+  offerStatusCode: number | undefined;
 }
 
 const initialState: OfferState = {
   offer: null,
   nearbyOffers: [],
   offerStatus: RequestStatus.Idle,
+  offerStatusCode: undefined,
 };
 
 export const offerSlice = createSlice({
@@ -24,6 +26,7 @@ export const offerSlice = createSlice({
       state.offer = null;
       state.nearbyOffers = [];
       state.offerStatus = RequestStatus.Idle;
+      state.offerStatusCode = undefined;
     },
   },
   extraReducers: (builder) =>
@@ -35,8 +38,9 @@ export const offerSlice = createSlice({
         state.offerStatus = RequestStatus.Success;
         state.offer = action.payload;
       })
-      .addCase(fetchOffer.rejected, (state) => {
+      .addCase(fetchOffer.rejected, (state, action) => {
         state.offerStatus = RequestStatus.Failed;
+        state.offerStatusCode = action.payload?.status;
       })
       .addCase(fetchNearby.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;
@@ -50,8 +54,14 @@ export const offerSlice = createSlice({
     selectNearbyOffers: (state: OfferState) => state.nearbyOffers,
     selectOffer: (state: OfferState) => state.offer,
     selectOfferStatus: (state: OfferState) => state.offerStatus,
+    selectofferStatusCode: (state: OfferState) => state.offerStatusCode,
   },
 });
 
 export const offerActions = { ...offerSlice.actions, fetchOffer, fetchNearby };
-export const { selectNearbyOffers, selectOffer, selectOfferStatus } = offerSlice.selectors;
+export const {
+  selectNearbyOffers,
+  selectOffer,
+  selectOfferStatus,
+  selectofferStatusCode,
+} = offerSlice.selectors;

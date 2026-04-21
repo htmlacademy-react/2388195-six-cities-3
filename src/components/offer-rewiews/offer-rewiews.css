@@ -1,0 +1,9 @@
+.reviews__error {
+  display: block;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.2;
+  color: #de2e2e;
+}

@@ -43,6 +43,7 @@ export const commentsSlice = createSlice({
       })
       .addCase(postComment.rejected, (state) => {
         state.status = RequestStatus.Failed;
+
       }),
   selectors: {
     selectComments: (state: CommentsState) => state.comments,
@@ -50,5 +51,12 @@ export const commentsSlice = createSlice({
   },
 });
 
-export const commentsActions = { ...commentsSlice.actions, ...fetchComments, ...postComment };
-export const { selectComments, selectCommentsStatus } = commentsSlice.selectors;
+export const commentsActions = {
+  ...commentsSlice.actions,
+  ...fetchComments,
+  ...postComment,
+};
+export const {
+  selectComments,
+  selectCommentsStatus,
+} = commentsSlice.selectors;

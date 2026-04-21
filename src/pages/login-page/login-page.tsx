@@ -1,14 +1,9 @@
 import Layout from '@/components/layout';
-import LoginForm from '@/components/login-form';
+import LoginForm from '@/components/login-form/login-form';
 import LoginLocation from '@/components/login-locaton';
 import { useDocumentTitle } from '@/hooks/store-hooks';
-import { CityName } from '@/types/offer';
 
-interface LoginPageProps {
-  randomCity: CityName;
-}
-
-export default function LoginPage({ randomCity }: LoginPageProps): JSX.Element {
+export default function LoginPage(): JSX.Element {
   useDocumentTitle('Login');
 
   return (
@@ -19,7 +14,7 @@ export default function LoginPage({ randomCity }: LoginPageProps): JSX.Element {
             <h1 className="login__title">Sign in</h1>
             <LoginForm />
           </section>
-          <LoginLocation randomCity={randomCity} />
+          <LoginLocation />
         </div>
       </main>
     </Layout>

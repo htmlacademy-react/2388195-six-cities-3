@@ -1,25 +1,34 @@
 import CurrentOffers from '@/components/current-offers';
-import ErrorPage from '@/components/error-page';
+
 import Layout from '@/components/layout';
 import MainTabs from '@/components/main-tabs';
 import Spinner from '@/components/spinner/spinner';
-import { DEFAULT_CITY } from '@/const';
+import { AppRoute, CITIES_LIST, DEFAULT_CITY } from '@/const';
 import { useAppSelector, useDocumentTitle } from '@/hooks/store-hooks';
 import { selectOffers, selectOffersStatus } from '@/store/slices/offers-slice';
 import { CityName } from '@/types/offer';
 import classNames from 'classnames';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
+import ErrorPage from '../error-page/error-page';
 
 export default function MainPage(): JSX.Element {
   const { city } = useParams<{ city: CityName }>();
-  const currentCity = city || DEFAULT_CITY;
+
+  useDocumentTitle('Main page');
   const { isLoading, isError } = useAppSelector(selectOffersStatus);
   const listOffers = useAppSelector(selectOffers);
+
+  if (city?.toLowerCase && !CITIES_LIST.includes(city)) {
+    return <Navigate to={AppRoute.NotFound} />;
+  }
+
+  const currentCity = city || DEFAULT_CITY;
+
   const currentOffers = listOffers.filter(
     (listOffer) => listOffer.city.name.toLowerCase() === currentCity,
   );
   const isEmpty = currentOffers.length === 0;
-  useDocumentTitle('Main page');
+
   if (isLoading) {
     return <Spinner />;
   }

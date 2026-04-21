@@ -53,5 +53,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { selectUserInfo, selectUserRequestStatus, selectAuthStatus } = userSlice.selectors;
-
+export const { selectUserInfo, selectUserRequestStatus, selectAuthStatus } =
+  userSlice.selectors;

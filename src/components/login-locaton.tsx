@@ -1,18 +1,19 @@
 import { AppRoute } from '@/const';
-import { CityName } from '@/types/offer';
+import { useAppSelector } from '@/hooks/store-hooks';
+import { selectRandomCity } from '@/store/slices/app-slice';
 import { Link } from 'react-router-dom';
 
-interface LoginLocationProps {
-  randomCity: CityName;
-}
-
-export default function LoginLocation({ randomCity }: LoginLocationProps): JSX.Element {
+export default function LoginLocation(): JSX.Element {
+  const randomCity = useAppSelector(selectRandomCity);
   const randomCityRoute = randomCity.toLowerCase();
 
   return (
     <section className="locations locations--login locations--current">
       <div className="locations__item">
-        <Link to={`${AppRoute.Root}${randomCityRoute}`} className="locations__item-link">
+        <Link
+          to={`${AppRoute.Root}${randomCityRoute}`}
+          className="locations__item-link"
+        >
           <span>{randomCity}</span>
         </Link>
       </div>

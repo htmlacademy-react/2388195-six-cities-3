@@ -1,6 +1,7 @@
 import { AppRoute } from '@/const';
 import { useAppSelector, useAppDispatch } from '@/hooks/store-hooks';
 import { useAuth } from '@/hooks/user-auth-hook';
+import { appActions } from '@/store/slices/app-slice';
 import { selectUserInfo } from '@/store/slices/user-slice';
 import { logout } from '@/store/thunk/user-auth';
 import { Link } from 'react-router-dom';
@@ -10,7 +11,10 @@ interface NavProps {
   isPageLogin?: boolean;
 }
 
-export default function Nav({ favouriteCount, isPageLogin }: NavProps): JSX.Element | null {
+export default function Nav({
+  favouriteCount,
+  isPageLogin,
+}: NavProps): JSX.Element | null {
   const isAuth = useAuth();
   const data = useAppSelector(selectUserInfo);
   const email = data?.email;
@@ -20,6 +24,11 @@ export default function Nav({ favouriteCount, isPageLogin }: NavProps): JSX.Elem
   const handleLogOut = (evt: React.MouseEvent) => {
     evt.preventDefault();
     dispatch(logout());
+    dispatch(appActions.setRandomCity());
+  };
+
+  const handleClick = () => {
+    dispatch(appActions.setRandomCity());
   };
 
   if (isPageLogin) {
@@ -32,7 +41,10 @@ export default function Nav({ favouriteCount, isPageLogin }: NavProps): JSX.Elem
         {isAuth ? (
           <>
             <li className="header__nav-item user">
-              <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
+              <Link
+                className="header__nav-link header__nav-link--profile"
+                to={AppRoute.Favorites}
+              >
                 <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                 <span className="header__user-name user__name">{email}</span>
                 <span className="header__favorite-count">{favouriteCount}</span>
@@ -60,7 +72,11 @@ export default function Nav({ favouriteCount, isPageLogin }: NavProps): JSX.Elem
           </>
         ) : (
           <li className="header__nav-item user">
-            <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Login}>
+            <Link
+              className="header__nav-link header__nav-link--profile"
+              to={AppRoute.Login}
+              onClick={handleClick}
+            >
               <span className="header__login">Sign in</span>
             </Link>
           </li>

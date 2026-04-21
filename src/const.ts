@@ -22,6 +22,7 @@ export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer',
+  NotFound = '/404',
 }
 
 export enum AuthorizationStatus {
@@ -31,12 +32,12 @@ export enum AuthorizationStatus {
 }
 
 export const CITIES_LIST: string[] = [
-  'Paris',
-  'Cologne',
-  'Brussels',
-  'Amsterdam',
-  'Hamburg',
-  'Dusseldorf',
+  'paris',
+  'cologne',
+  'brussels',
+  'amsterdam',
+  'hamburg',
+  'dusseldorf',
 ];
 
 export const CITIES = [
@@ -127,3 +128,12 @@ export enum FavoriteStatus {
 export const MAX_IMAGES_COUNT = 6;
 export const MAX_COMMENTS_COUNT = 10;
 export const MAX_NEARBY_COUNT = 3;
+
+export const ReviewLength = {
+  Min: 50,
+  Max: 300,
+};
+
+export const MIN_REVIEW_RATING = 0;
+
+export const TIMEOUT_SHOW_ERROR = 5000;

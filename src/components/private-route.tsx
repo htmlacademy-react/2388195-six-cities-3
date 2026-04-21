@@ -23,7 +23,6 @@ export default function ProtectedRoute({
   const user = useAppSelector(selectUserInfo);
 
   if (onlyUnauth && user) {
-    // есть авториз и стр логина
     const from =
       (location.state as LocationState)?.from?.pathname ||
       `${AppRoute.Root}${DEFAULT_CITY.toLowerCase()}`;
@@ -31,7 +30,6 @@ export default function ProtectedRoute({
   }
 
   if (!onlyUnauth && !user) {
-    // Нет авторизации и не стр логина
     return <Navigate state={{ from: location }} to={AppRoute.Login} replace />;
   }
 
