@@ -50,7 +50,7 @@
     "vite": "4.4.11",
     "vite-plugin-checker": "0.10.3",
     "vite-tsconfig-paths": "6.1.1",
-    "vitest": "0.34.6"
+    "vitest": "1.4.0"
   },
   "browserslist": {
     "production": [
