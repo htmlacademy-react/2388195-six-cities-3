@@ -1,7 +1,8 @@
 import { ListOffers, CityName } from '@/types/offer';
-import CitiesMap from './cities-map';
-import MainEmpty from './main-empty';
-import MainPlaces from './main-places';
+import MemoizedMainPlaces from './main-places';
+import { memo } from 'react';
+import MemoizedMainEmpty from './main-empty';
+import MemoizedCitiesMap from './cities-map';
 
 interface ListCardsProps {
   currentOffers: ListOffers;
@@ -9,18 +10,21 @@ interface ListCardsProps {
   isEmpty: boolean;
 }
 
-export default function CurrentOffers({
+function CurrentOffers({
   currentOffers,
   currentCity,
   isEmpty,
 }: ListCardsProps): JSX.Element {
   return isEmpty ? (
-    <MainEmpty currentCity={currentCity} />
+    <MemoizedMainEmpty currentCity={currentCity} />
   ) : (
     <div className="cities__places-container container">
-      <MainPlaces currentOffers={currentOffers} currentCity={currentCity} />
+      <MemoizedMainPlaces
+        currentOffers={currentOffers}
+        currentCity={currentCity}
+      />
       <div className="cities__right-section">
-        <CitiesMap
+        <MemoizedCitiesMap
           className="cities__map"
           currentOffers={currentOffers}
           currentCity={currentCity}
@@ -29,3 +33,6 @@ export default function CurrentOffers({
     </div>
   );
 }
+
+const MemoizedCurrentOffers = memo(CurrentOffers);
+export default MemoizedCurrentOffers;

@@ -1,5 +1,6 @@
-import Logo from './logo';
-import Nav from './nav';
+import { memo } from 'react';
+import MemoizedLogo from './logo';
+import MemoizedNav from './nav/nav';
 
 interface HeaderProps {
   favouriteCount: number;
@@ -8,7 +9,7 @@ interface HeaderProps {
   isPageLogin?: boolean;
 }
 
-export default function Header({
+function Header({
   favouriteCount,
   typeLogo,
   isPageMain,
@@ -19,11 +20,17 @@ export default function Header({
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <Logo type={typeLogo} isPageMain={isPageMain} />
+            <MemoizedLogo type={typeLogo} isPageMain={isPageMain} />
           </div>
-          <Nav favouriteCount={favouriteCount} isPageLogin={isPageLogin} />
+          <MemoizedNav
+            favouriteCount={favouriteCount}
+            isPageLogin={isPageLogin}
+          />
         </div>
       </div>
     </header>
   );
 }
+
+const MemoizedHeader = memo(Header);
+export default MemoizedHeader;

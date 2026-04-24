@@ -1,35 +1,37 @@
 import { AppRoute } from '@/const';
 import { useAppSelector, useAppDispatch } from '@/hooks/store-hooks';
-import { useAuth } from '@/hooks/user-auth-hook';
 import { appActions } from '@/store/slices/app-slice';
-import { selectUserInfo } from '@/store/slices/user-slice';
+import { selectIsAuthorized, selectUserInfo } from '@/store/slices/user-slice';
 import { logout } from '@/store/thunk/user-auth';
+import { memo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import './nav.css';
 
 interface NavProps {
   favouriteCount: number;
   isPageLogin?: boolean;
 }
 
-export default function Nav({
-  favouriteCount,
-  isPageLogin,
-}: NavProps): JSX.Element | null {
-  const isAuth = useAuth();
+function Nav({ favouriteCount, isPageLogin }: NavProps): JSX.Element | null {
+  const isAuth = useAppSelector(selectIsAuthorized);
   const data = useAppSelector(selectUserInfo);
   const email = data?.email;
+  const avatarUrl = data?.avatarUrl;
 
   const dispatch = useAppDispatch();
 
-  const handleLogOut = (evt: React.MouseEvent) => {
-    evt.preventDefault();
-    dispatch(logout());
-    dispatch(appActions.setRandomCity());
-  };
+  const handleLogOut = useCallback(
+    (evt: React.MouseEvent) => {
+      evt.preventDefault();
+      dispatch(logout());
+      dispatch(appActions.setRandomCity());
+    },
+    [dispatch],
+  );
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     dispatch(appActions.setRandomCity());
-  };
+  }, [dispatch]);
 
   if (isPageLogin) {
     return null;
@@ -45,7 +47,12 @@ export default function Nav({
                 className="header__nav-link header__nav-link--profile"
                 to={AppRoute.Favorites}
               >
-                <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                <div
+                  className="header__avatar-wrapper user__avatar-wrapper"
+                  style={{
+                    backgroundImage: `url(${avatarUrl})`,
+                  }}
+                ></div>
                 <span className="header__user-name user__name">{email}</span>
                 <span className="header__favorite-count">{favouriteCount}</span>
               </Link>
@@ -53,17 +60,6 @@ export default function Nav({
             <li className="header__nav-item">
               <button
                 className="header__nav-link header__nav-link--profile"
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  padding: 0,
-                  margin: 0,
-                  font: 'inherit',
-                  color: 'inherit',
-                  cursor: 'pointer',
-                  textDecoration: 'none',
-                  display: 'inline-block',
-                }}
                 onClick={handleLogOut}
               >
                 <span className="header__signout">Sign out</span>
@@ -85,3 +81,6 @@ export default function Nav({
     </nav>
   );
 }
+
+const MemoizedNav = memo(Nav);
+export default MemoizedNav;

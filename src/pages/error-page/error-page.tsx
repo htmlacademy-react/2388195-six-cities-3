@@ -1,13 +1,14 @@
-import Logo from '@/components/logo';
+import MemoizedLogo from '@/components/logo';
+import { memo } from 'react';
 
-export default function ErrorPage(): JSX.Element {
+function ErrorPage(): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Logo type={'header'} />
+              <MemoizedLogo type={'header'} />
             </div>
           </div>
         </div>
@@ -33,3 +34,6 @@ export default function ErrorPage(): JSX.Element {
     </div>
   );
 }
+
+const MemoizedErrorPage = memo(ErrorPage);
+export default MemoizedErrorPage;

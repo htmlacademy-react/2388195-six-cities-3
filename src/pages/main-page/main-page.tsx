@@ -1,59 +1,65 @@
-import CurrentOffers from '@/components/current-offers';
-
-import Layout from '@/components/layout';
-import MainTabs from '@/components/main-tabs';
-import Spinner from '@/components/spinner/spinner';
+import MemoizedCurrentOffers from '@/components/current-offers';
+import MemoizedLayout from '@/components/layout';
 import { AppRoute, CITIES_LIST, DEFAULT_CITY } from '@/const';
 import { useAppSelector, useDocumentTitle } from '@/hooks/store-hooks';
-import { selectOffers, selectOffersStatus } from '@/store/slices/offers-slice';
+import {
+  selectOffersByCity,
+  selectOffersStatus,
+} from '@/store/slices/offers-slice';
 import { CityName } from '@/types/offer';
 import classNames from 'classnames';
 import { Navigate, useParams } from 'react-router-dom';
-import ErrorPage from '../error-page/error-page';
+import MemoizedErrorPage from '../error-page/error-page';
+import { memo, useMemo } from 'react';
+import MemoizedMainTabs from '@/components/main-tabs';
+import MemoizedSpinner from '@/components/spinner/spinner';
 
-export default function MainPage(): JSX.Element {
+function MainPage(): JSX.Element {
   const { city } = useParams<{ city: CityName }>();
 
   useDocumentTitle('Main page');
+
+  const currentCity = useMemo(() => city || DEFAULT_CITY, [city]);
+
   const { isLoading, isError } = useAppSelector(selectOffersStatus);
-  const listOffers = useAppSelector(selectOffers);
+  const currentOffers = useAppSelector((state) =>
+    selectOffersByCity(state, currentCity),
+  );
 
   if (city?.toLowerCase && !CITIES_LIST.includes(city)) {
     return <Navigate to={AppRoute.NotFound} />;
   }
 
-  const currentCity = city || DEFAULT_CITY;
-
-  const currentOffers = listOffers.filter(
-    (listOffer) => listOffer.city.name.toLowerCase() === currentCity,
-  );
   const isEmpty = currentOffers.length === 0;
 
   if (isLoading) {
-    return <Spinner />;
+    return <MemoizedSpinner />;
   }
 
   if (isError) {
-    return <ErrorPage />;
+    return <MemoizedErrorPage />;
   }
 
   return (
-    <Layout isPageMain>
+    <MemoizedLayout isPageMain>
       <main
         className={classNames('page__main', 'page__main--index', {
           'page__main--index-empty': isEmpty,
         })}
       >
         <h1 className="visually-hidden">Cities</h1>
-        <MainTabs currentCity={currentCity} />
+        <MemoizedMainTabs currentCity={currentCity} />
         <div className="cities">
-          <CurrentOffers
+          <MemoizedCurrentOffers
             currentOffers={currentOffers}
             currentCity={currentCity}
             isEmpty={isEmpty}
           />
         </div>
       </main>
-    </Layout>
+    </MemoizedLayout>
   );
 }
+
+const MemoizedMainPage = memo(MainPage);
+export default MemoizedMainPage;

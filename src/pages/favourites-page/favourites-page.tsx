@@ -1,53 +1,41 @@
-import Layout from '@/components/layout';
-import Logo from '@/components/logo';
+import MemoizedLogo from '@/components/logo';
 import { useAppSelector, useDocumentTitle } from '@/hooks/store-hooks';
-import { selectFavoriteOffers } from '@/store/slices/favorite-slice';
-import { FullOffers, CityName, FullOffer } from '@/types/offer';
+import {
+  selectFavoriteCount,
+} from '@/store/slices/favorite-slice';
 import classNames from 'classnames';
-import FavouriteList from '../../components/favourites-list';
-import FavouriteEmpty from '../../components/favourite-empty';
+import MemoizedFavouriteList from '../../components/favourites-list';
+import MemoizedFavouriteEmpty from '../../components/favourite-empty';
+import MemoizedLayout from '@/components/layout';
+import { memo } from 'react';
 
-export default function FavouritePage(): JSX.Element {
+function FavouritePage(): JSX.Element {
   useDocumentTitle('Favourite page');
-  const favoriteOffers = useAppSelector(selectFavoriteOffers);
-
-  const groupByCity = (offers: FullOffers): Record<CityName, FullOffer[]> =>
-    offers.reduce(
-      (acc: Record<string, FullOffer[]>, favoriteOffer: FullOffer) => {
-        const cityName = favoriteOffer.city.name;
-
-        if (!acc[cityName]) {
-          acc[cityName] = [];
-        }
-
-        acc[cityName].push(favoriteOffer);
-        return acc;
-      },
-      {},
-    );
-
-  const groupedOffers = groupByCity(favoriteOffers);
+  const favouriteCount = useAppSelector(selectFavoriteCount);
 
   return (
-    <Layout isPageFavouriteEmpty>
+    <MemoizedLayout isPageFavouriteEmpty>
       <main
         className={classNames(
           'page__main',
           'page__main--favorites',
-          favoriteOffers.length === 0 && 'page__main--favorites-empty',
+          favouriteCount === 0 && 'page__main--favorites-empty',
         )}
       >
         <div className="page__favorites-container container">
-          {favoriteOffers.length === 0 ? (
-            <FavouriteEmpty />
+          {favouriteCount === 0 ? (
+            <MemoizedFavouriteEmpty />
           ) : (
-            <FavouriteList groupedOffers={groupedOffers} />
+            <MemoizedFavouriteList />
           )}
         </div>
       </main>
       <footer className="footer">
-        <Logo type="footer" />
+        <MemoizedLogo type="footer" />
       </footer>
-    </Layout>
+    </MemoizedLayout>
   );
 }
+
+const MemoizedFavouritePage = memo(FavouritePage);
+export default MemoizedFavouritePage;

@@ -1,6 +1,6 @@
 import { RequestStatus, AuthorizationStatus } from '@/const';
 import { User } from '@/types/user';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { checkAuth, login, logout } from '../thunk/user-auth';
 
 interface UserState {
@@ -55,3 +55,8 @@ export const userSlice = createSlice({
 
 export const { selectUserInfo, selectUserRequestStatus, selectAuthStatus } =
   userSlice.selectors;
+
+export const selectIsAuthorized = createSelector(
+  [selectAuthStatus],
+  (status) => status === AuthorizationStatus.Auth,
+);

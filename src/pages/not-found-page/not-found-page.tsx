@@ -1,14 +1,15 @@
-import Layout from '@/components/layout';
-import LoginLocation from '@/components/login-locaton';
+import MemoizedLayout from '@/components/layout';
+import MemoizedLoginLocation from '@/components/login-locaton';
 import { AppRoute } from '@/const';
 import { useDocumentTitle } from '@/hooks/store-hooks';
 import { Link } from 'react-router-dom';
 import './not-found-page.css';
+import { memo } from 'react';
 
-export default function NotFoundPage(): JSX.Element {
+function NotFoundPage(): JSX.Element {
   useDocumentTitle('Not found page');
   return (
-    <Layout>
+    <MemoizedLayout>
       <div className="page page--gray page--login">
         <main className="page__main page__main--login">
           <div className="page__login-container container">
@@ -18,10 +19,13 @@ export default function NotFoundPage(): JSX.Element {
                 Вернуться на главную
               </Link>
             </section>
-            <LoginLocation />
+            <MemoizedLoginLocation />
           </div>
         </main>
       </div>
-    </Layout>
+    </MemoizedLayout>
   );
 }
+
+const MemoizedNotFoundPage = memo(NotFoundPage);
+export default MemoizedNotFoundPage;

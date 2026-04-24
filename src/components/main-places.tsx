@@ -1,30 +1,35 @@
-import { SortType } from "@/const";
-import { useAppDispatch, useAppSelector } from "@/hooks/store-hooks";
-import { appActions, selectActiveSort } from "@/store/slices/app-slice";
-import { ListOffers, CityName } from "@/types/offer";
-import { getSortedOffers, formattedType } from "@/util";
-import PlaceCard from "./place-card";
-import SortingOffers from "./sorting-offers";
+import { SortType } from '@/const';
+import { useAppDispatch, useAppSelector } from '@/hooks/store-hooks';
+import { appActions, selectActiveSort } from '@/store/slices/app-slice';
+import { ListOffers, CityName } from '@/types/offer';
+import { getSortedOffers, formattedType, formattedOffersNumber } from '@/util';
+import MemoizedPlaceCard from './place-card';
+import MemoizedSortingOffers from './sorting-offers';
+import { memo, useCallback, useMemo } from 'react';
 
 interface MainPlacesProps {
   currentOffers: ListOffers;
   currentCity: CityName;
 }
 
-export default function MainPlaces({
+function MainPlaces({
   currentOffers,
   currentCity,
 }: MainPlacesProps): JSX.Element {
   const dispatch = useAppDispatch();
   const activeSort = useAppSelector(selectActiveSort);
-  const formattedOffersNumber = (count: number): string =>
-    `${count} place${count !== 1 ? 's' : ''}`;
 
-  const setSort = (type: SortType) => {
-    dispatch(appActions.setActiveSort(type));
-  };
+  const setSort = useCallback(
+    (type: SortType) => {
+      dispatch(appActions.setActiveSort(type));
+    },
+    [dispatch],
+  );
 
-  const sortedOffers = getSortedOffers(currentOffers, activeSort);
+  const sortedOffers = useMemo(
+    () => getSortedOffers(currentOffers, activeSort),
+    [currentOffers, activeSort],
+  );
 
   return (
     <section className="cities__places places">
@@ -33,10 +38,10 @@ export default function MainPlaces({
         {formattedOffersNumber(currentOffers.length)} to stay in{' '}
         {formattedType(currentCity)}
       </b>
-      <SortingOffers currentSortType={activeSort} onChangeSort={setSort} />
+      <MemoizedSortingOffers onChangeSort={setSort} />
       <div className="cities__places-list places__list tabs__content">
         {sortedOffers.map((currentOffer) => (
-          <PlaceCard
+          <MemoizedPlaceCard
             key={currentOffer.id}
             currentOffer={currentOffer}
             cardType="cities"
@@ -47,3 +52,6 @@ export default function MainPlaces({
     </section>
   );
 }
+
+const MemoizedMainPlaces = memo(MainPlaces);
+export default MemoizedMainPlaces;

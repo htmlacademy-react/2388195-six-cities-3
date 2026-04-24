@@ -1,15 +1,8 @@
-import CitiesMap from '@/components/cities-map';
-import Layout from '@/components/layout';
-import Offer from '@/components/offer';
-import OfferGallery from '@/components/offer-gallery';
-import OfferNearPlaces from '@/components/offer-near-places';
-import Spinner from '@/components/spinner/spinner';
-import {
-  RequestStatus,
-  MAX_NEARBY_COUNT,
-  MAX_IMAGES_COUNT,
-  AppRoute,
-} from '@/const';
+import MemoizedLayout from '@/components/layout';
+import MemoizedOffer from '@/components/offer';
+import MemoizedOfferGallery from '@/components/offer-gallery';
+import MemoizedOfferNearPlaces from '@/components/offer-near-places';
+import { RequestStatus, AppRoute } from '@/const';
 import {
   useAppSelector,
   useAppDispatch,
@@ -19,21 +12,23 @@ import { commentsActions } from '@/store/slices/comments-slice';
 import {
   selectOffer,
   selectOfferStatus,
-  selectNearbyOffers,
   offerActions,
   selectofferStatusCode,
+  selectLimitedNearbyOffers,
 } from '@/store/slices/offer-slice';
 import { fetchOffer, fetchNearby, fetchComments } from '@/store/thunk/offer';
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import ErrorPage from '../error-page/error-page';
+import MemoizedErrorPage from '../error-page/error-page';
+import MemoizedCitiesMap from '@/components/cities-map';
+import MemoizedSpinner from '@/components/spinner/spinner';
 
-export default function OfferPage(): JSX.Element {
+function OfferPage(): JSX.Element {
   const { id } = useParams();
   const offer = useAppSelector(selectOffer);
   const offerStatus = useAppSelector(selectOfferStatus);
   const offerStatusCode = useAppSelector(selectofferStatusCode);
-  const nearbyOffers = useAppSelector(selectNearbyOffers);
+  const nearOffers = useAppSelector(selectLimitedNearbyOffers);
   const dispatch = useAppDispatch();
 
   useDocumentTitle('Offer page');
@@ -55,37 +50,36 @@ export default function OfferPage(): JSX.Element {
     offerStatus === RequestStatus.Loading ||
     offerStatus === RequestStatus.Idle
   ) {
-    return <Spinner />;
+    return <MemoizedSpinner />;
   }
 
   if (offerStatus === RequestStatus.Failed || !offer) {
     if (offerStatusCode === 404) {
       return <Navigate to={AppRoute.NotFound} />;
     }
-    return <ErrorPage />;
+    return <MemoizedErrorPage />;
   }
 
-  const nearOffer = nearbyOffers.slice(0, MAX_NEARBY_COUNT);
-  const { images, city } = offer;
-  const imagesToShow = images.slice(0, MAX_IMAGES_COUNT);
-
   return (
-    <Layout>
+    <MemoizedLayout>
       <main className="page__main page__main--offer">
         <section className="offer">
-          <OfferGallery imagesToShow={imagesToShow} />
-          <Offer offer={offer} />
-          <CitiesMap
+          <MemoizedOfferGallery />
+          <MemoizedOffer />
+          <MemoizedCitiesMap
             className="offer__map"
-            currentOffers={nearOffer}
+            currentOffers={nearOffers}
             currentOffer={offer}
-            currentCity={city.name}
+            currentCity={offer.city.name}
           />
         </section>
         <div className="container">
-          <OfferNearPlaces nearOffers={nearOffer} />
+          <MemoizedOfferNearPlaces />
         </div>
       </main>
-    </Layout>
+    </MemoizedLayout>
   );
 }
+
+const MemoizedOfferPage = memo(OfferPage);
+export default MemoizedOfferPage;

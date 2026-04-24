@@ -2,8 +2,8 @@ import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CITIES } from '@/const';
 import { useAppSelector } from '@/hooks/store-hooks';
 import useMap from '@/hooks/use-map';
 import { CityName, FullOffer, ListOffers } from '@/types/offer';
-import { LayerGroup } from 'leaflet';
-import { useRef, useEffect } from 'react';
+import { icon, LayerGroup } from 'leaflet';
+import { useRef, useEffect, useMemo, memo } from 'react';
 import L from 'leaflet';
 import { selectActiveId } from '@/store/slices/app-slice';
 
@@ -14,19 +14,7 @@ interface CitiesMapProps {
   currentOffer?: FullOffer;
 }
 
-const defaultCustomIcon = L.icon({
-  iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [27, 39],
-  iconAnchor: [13.5, 39],
-});
-
-const currentCustomIcon = L.icon({
-  iconUrl: URL_MARKER_CURRENT,
-  iconSize: [27, 39],
-  iconAnchor: [13.5, 39],
-});
-
-export default function CitiesMap({
+function CitiesMap({
   className,
   currentCity,
   currentOffers,
@@ -35,11 +23,27 @@ export default function CitiesMap({
   const containerMapRef = useRef<HTMLElement>(null);
   const markerLayer = useRef<LayerGroup>(L.layerGroup());
   const activeOfferId = useAppSelector(selectActiveId);
-  const city =
-    CITIES.find(
-      (item) => item.name.toLowerCase() === currentCity.toLowerCase(),
-    ) || CITIES[0];
+  const city = useMemo(
+    () =>
+      CITIES.find(
+        (item) => item.name.toLowerCase() === currentCity.toLowerCase(),
+      ) || CITIES[0],
+    [currentCity],
+  );
+
   const map = useMap({ containerMapRef, location: city.location });
+
+  const defaultCustomIcon = useMemo(() => icon({
+    iconUrl: URL_MARKER_DEFAULT,
+    iconSize: [27, 39],
+    iconAnchor: [13.5, 39],
+  }), []);
+
+  const currentCustomIcon = useMemo(() => icon({
+    iconUrl: URL_MARKER_CURRENT,
+    iconSize: [27, 39],
+    iconAnchor: [13.5, 39],
+  }), []);
 
   useEffect(() => {
     if (map) {
@@ -78,9 +82,12 @@ export default function CitiesMap({
         },
       ).addTo(markerLayer.current);
     }
-  }, [activeOfferId, map, currentOffers, currentOffer]);
+  }, [activeOfferId, map, currentOffers, currentOffer, currentCustomIcon, defaultCustomIcon]);
 
   return (
     <section className={`map ${className}`} ref={containerMapRef}></section>
   );
 }
+
+const MemoizedCitiesMap = memo(CitiesMap);
+export default MemoizedCitiesMap;

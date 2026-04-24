@@ -1,11 +1,11 @@
-import { ListOffers } from '@/types/offer';
 import OfferNearPlacesList from './offer-near-places-list';
+import { useAppSelector } from '@/hooks/store-hooks';
+import { selectLimitedNearbyOffers } from '@/store/slices/offer-slice';
+import { memo } from 'react';
 
-interface OfferNearPlacesProps {
-  nearOffers: ListOffers;
-}
+function OfferNearPlaces(): JSX.Element {
+  const nearOffers = useAppSelector(selectLimitedNearbyOffers);
 
-export default function OfferNearPlaces({ nearOffers }: OfferNearPlacesProps): JSX.Element {
   if (nearOffers.length === 0) {
     return (
       <section className="near-places places">
@@ -21,3 +21,6 @@ export default function OfferNearPlaces({ nearOffers }: OfferNearPlacesProps): J
     </section>
   );
 }
+
+const MemoizedOfferNearPlaces = memo(OfferNearPlaces);
+export default MemoizedOfferNearPlaces;
